@@ -40,6 +40,12 @@
     <Filter Include="Resources\Mesh">
       <UniqueIdentifier>{b6a7ef25-9584-4e1c-8000-e96aac2862e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\RenderingSetting">
+      <UniqueIdentifier>{2648cbc0-99f7-4c71-9d9e-9346fa3dbf7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shader">
+      <UniqueIdentifier>{125f614c-00c8-4509-a5b3-317ad4d34c9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineCore.cpp">
@@ -105,6 +111,30 @@
     <ClCompile Include="EngineVertexBuffer.cpp">
       <Filter>Resources\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXHelper.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineInputLayOut.cpp">
+      <Filter>Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineVertex.cpp">
+      <Filter>Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineRasterizer.cpp">
+      <Filter>Resources\RenderingSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePixelShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineVertexShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineMaterial.cpp">
+      <Filter>Resources\RenderingSetting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h">
@@ -169,6 +199,27 @@
     </ClInclude>
     <ClInclude Include="EngineVertex.h">
       <Filter>Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXHelper.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInputLayOut.h">
+      <Filter>Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineRasterizer.h">
+      <Filter>Resources\RenderingSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePixelShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineVertexShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMaterial.h">
+      <Filter>Resources\RenderingSetting</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -40,8 +40,8 @@ void BlockManager::Move()
 	for (Block* b : ControledBlock)
 	{
 		Board[b->GetPos().Y][b->GetPos().X] = nullptr;
-		b->AddPos(int2::Down);
 
+		b->AddPos(int2::Down);
 
 		Board[b->GetPos().Y][b->GetPos().X] = b;
 	}
@@ -53,28 +53,28 @@ void BlockManager::SpawnControledBlock()
 		Block* b = GetCore()->CreateObject<Block>();
 		b->SetPos({ 5,0 });
 		ControledBlock.push_back(b);
-		Board[5][0] = b;
+		Board[0][5] = b;
 	}
 
 	{
 		Block* b = GetCore()->CreateObject<Block>();
 		b->SetPos({ 5,1 });
 		ControledBlock.push_back(b);
-		Board[5][1] = b;
+		Board[1][5] = b;
 	}
 
 	{
 		Block* b = GetCore()->CreateObject<Block>();
 		b->SetPos({ 4,1 });
 		ControledBlock.push_back(b);
-		Board[4][1] = b;
+		Board[1][4] = b;
 	}
 
 	{
 		Block* b = GetCore()->CreateObject<Block>();
 		b->SetPos({ 6,1 });
 		ControledBlock.push_back(b);
-		Board[6][1] = b;
+		Board[1][6] = b;
 	}
 }
 
@@ -91,7 +91,7 @@ void BlockManager::LandCheck()
 			break;
 		}
 
-		if (Board[Y + 1][X] != nullptr && Board[Y+1][X]->GetState() == BlockState::Landed)
+		if (Board[Y+1][X]->GetState() == BlockState::Landed)
 		{
 			Y;
 			X;
