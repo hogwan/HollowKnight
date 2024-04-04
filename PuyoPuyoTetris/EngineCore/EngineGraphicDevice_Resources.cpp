@@ -39,7 +39,7 @@ void MeshInit()
 		VertexData.resize(4);
 
 		{
-			VertexData[0] = { {-0.5f, 0.5f, 0.0f, 1.0f} };
+			VertexData[0] = { {-0.5f, 0.5f, 0.0f, 1.0f}};
 			VertexData[1] = { {0.5f, 0.5f, 0.0f, 1.0f} };
 			VertexData[2] = { {0.5f, -0.5f, 0.0f, 1.0f} };
 			VertexData[3] = { {-0.5f, -0.5f, 0.0f, 1.0f} };
