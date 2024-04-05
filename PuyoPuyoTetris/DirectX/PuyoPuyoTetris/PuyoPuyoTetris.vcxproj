@@ -171,10 +171,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="PlayGameMode.h">
       <SubType>
       </SubType>
@@ -214,10 +210,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Element.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -1,6 +1,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
-#include "Element.h"
+#include <EngineCore/SpriteRenderer.h>
 
 // Ό³Έν :
 class ABoard : public AActor
@@ -20,9 +20,9 @@ public:
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-	std::vector<std::vector<AElement*>> Board;
+	std::vector<std::vector<class AElement*>> Board;
 
 private:
-
+	USpriteRenderer* Renderer = nullptr;
 };
 

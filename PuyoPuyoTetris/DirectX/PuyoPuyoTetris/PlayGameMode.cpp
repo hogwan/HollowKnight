@@ -1,6 +1,5 @@
 #include "PreCompile.h"
 #include "PlayGameMode.h"
-#include "Player.h"
 #include "TetrisBoard.h"
 #include <EngineCore/Camera.h>
 
@@ -18,7 +17,6 @@ void APlayGameMode::BeginPlay()
 	std::shared_ptr<UCamera> Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation(FVector(0.0f, 0.0f, -100.0f));
 
-	GetWorld()->SpawnActor<APlayer>("Player");
 	GetWorld()->SpawnActor<ATetrisBoard>("TB");
 }
 
