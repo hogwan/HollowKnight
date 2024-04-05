@@ -54,6 +54,9 @@
     <ClInclude Include="TetrisBoard.h">
       <Filter>Level\PlayLevel\Object\Tetris</Filter>
     </ClInclude>
+    <ClInclude Include="TetrisElementBundle.h">
+      <Filter>Level\PlayLevel\Object\Tetris</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -84,6 +87,9 @@
       <Filter>Level\PlayLevel\Object\Puyo</Filter>
     </ClCompile>
     <ClCompile Include="TetrisBoard.cpp">
+      <Filter>Level\PlayLevel\Object\Tetris</Filter>
+    </ClCompile>
+    <ClCompile Include="TetrisElementBundle.cpp">
       <Filter>Level\PlayLevel\Object\Tetris</Filter>
     </ClCompile>
   </ItemGroup>
