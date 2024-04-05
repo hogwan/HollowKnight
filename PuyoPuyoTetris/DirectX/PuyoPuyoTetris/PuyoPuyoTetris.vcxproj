@@ -163,6 +163,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Board.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Element.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -175,12 +183,36 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PuyoBoard.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PuyoElement.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PuyoPuyoTetrisCore.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TetrisBoard.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TetrisElement.h">
       <SubType>
       </SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Board.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Element.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
@@ -197,7 +229,23 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PuyoBoard.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PuyoElement.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PuyoPuyoTetrisCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TetrisBoard.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TetrisElement.cpp">
       <SubType>
       </SubType>
     </ClCompile>

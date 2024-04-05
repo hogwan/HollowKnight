@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "PlayGameMode.h"
 #include "Player.h"
+#include "TetrisBoard.h"
 #include <EngineCore/Camera.h>
 
 APlayGameMode::APlayGameMode()
@@ -18,6 +19,7 @@ void APlayGameMode::BeginPlay()
 	Camera->SetActorLocation(FVector(0.0f, 0.0f, -100.0f));
 
 	GetWorld()->SpawnActor<APlayer>("Player");
+	GetWorld()->SpawnActor<ATetrisBoard>("TB");
 }
 
 void APlayGameMode::Tick(float _DeltaTime)
