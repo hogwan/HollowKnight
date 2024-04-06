@@ -2,6 +2,7 @@
 #include "Knight.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineBase/EngineRandom.h>
+#include "KnightAnimation.h"
 
 AKnight::AKnight()
 {
@@ -20,8 +21,52 @@ void AKnight::BeginPlay()
 
 	SetActorScale3D(FVector(60.0f, 130.0f, 100.0f));
 
-	Renderer->CreateAnimation("Idle", "Idle", 0.08f);
-	Renderer->ChangeAnimation("Idle");
+	Renderer->CreateAnimation("Idle", "Idle", 0.08f, true);
+	Renderer->CreateAnimation("LookUp", "LookUp", 0.08f, true);
+	Renderer->CreateAnimation("LookUpToIdle", "LookUpToIdle", 0.08f, false);
+	Renderer->CreateAnimation("LookDown", "LookDown", 0.08f, false);
+	Renderer->CreateAnimation("LookDownToIdle", "LookDownToIdle", 0.08f, false);
+	Renderer->CreateAnimation("Run", "Run", 0.08f, false);
+	Renderer->CreateAnimation("Walk", "Walk", 0.08f, true);
+	Renderer->CreateAnimation("RunToIdle", "RunToIdle", 0.08f, false);
+	Renderer->CreateAnimation("Turn", "Turn", 0.08f, false);
+	Renderer->CreateAnimation("Airborne", "Airborne", 0.08f, false);
+	Renderer->CreateAnimation("Fall", "Fall", 0.08f, true);
+	Renderer->CreateAnimation("Land", "Land", 0.08f, false);
+	Renderer->CreateAnimation("HardLand", "HardLand", 0.08f, false);
+	Renderer->CreateAnimation("Slash", "Slash", 0.08f, false);
+	Renderer->CreateAnimation("SlashAlt", "SlashAlt", 0.08f, false);
+	Renderer->CreateAnimation("UpSlash", "UpSlash", 0.08f, false);
+	Renderer->CreateAnimation("DownSlash", "DownSlash", 0.08f, false);
+	Renderer->CreateAnimation("Dash", "Dash", 0.08f, false);
+	Renderer->CreateAnimation("WallSlide", "WallSlide", 0.08f, true);
+	Renderer->CreateAnimation("WallJump", "WallJump", 0.08f, false);
+	Renderer->CreateAnimation("Sit", "Sit", 0.08f, false);
+	Renderer->CreateAnimation("SitOff", "SitOff", 0.08f, false);
+	Renderer->CreateAnimation("MapOpen", "MapOpen", 0.08f, false);
+	Renderer->CreateAnimation("MapIdle", "MapIdle", 0.08f, true);
+	Renderer->CreateAnimation("MapWalk", "MapWalk", 0.08f, true);
+	Renderer->CreateAnimation("MapAway", "MapAway", 0.08f, false);
+	Renderer->CreateAnimation("MapTurn", "MapTurn", 0.08f, false);
+	Renderer->CreateAnimation("SitMapOpen", "SitMapOpen", 0.08f, false);
+	Renderer->CreateAnimation("SitMapClose", "SitMapClose", 0.08f, false);
+	Renderer->CreateAnimation("MapUpdate", "MapUpdate", 0.08f, false);
+	Renderer->CreateAnimation("Focus", "Focus", 0.08f, false);
+	Renderer->CreateAnimation("FocusGet", "FocusGet", 0.08f, false);
+	Renderer->CreateAnimation("FocusEnd", "FocusEnd", 0.08f, false);
+	Renderer->CreateAnimation("CollectMagical1", "CollectMagical1", 0.08f, false);
+	Renderer->CreateAnimation("CollectMagical2", "CollectMagical2", 0.08f, false);
+	Renderer->CreateAnimation("CollectMagical3", "CollectMagical3", 0.08f, false);
+	Renderer->CreateAnimation("CollectNormal1", "CollectNormal1", 0.08f, false);
+	Renderer->CreateAnimation("CollectNormal2", "CollectNormal2", 0.08f, false);
+	Renderer->CreateAnimation("CollectNormal3", "CollectNormal3", 0.08f, false);
+	Renderer->CreateAnimation("Enter", "Enter", 0.08f, false);
+	Renderer->CreateAnimation("Prostrate", "Prostrate", 0.08f, false);
+	Renderer->CreateAnimation("ProstrateRise", "ProstrateRise", 0.08f, false);
+	Renderer->CreateAnimation("FireballAntic", "FireballAntic", 0.08f, false);
+	Renderer->CreateAnimation("FireballCast", "FireballCast", 0.08f, false);
+	Renderer->CreateAnimation("Recoil", "Recoil", 0.08f, false);
+	Renderer->CreateAnimation("Death", "Death", 0.08f, false);
 
 }
 
@@ -35,7 +80,7 @@ void AKnight::Tick(float _DeltaTime)
 		ManupulateUpdate(_DeltaTime);
 	}
 
-	//StateUpdate(_DeltaTime);
+	StateUpdate(_DeltaTime);
 }
 
 void AKnight::ManupulateUpdate(float _DeltaTime)
@@ -94,6 +139,8 @@ void AKnight::ManupulateUpdate(float _DeltaTime)
 	if (!IsAirborneStart && !IsLanded)
 	{
 		AddActorLocation(FVector::Down * AirborneSpeed * _DeltaTime);
+		StateChange(EKnightState::Fall);
+		return;
 	}
 }
 
@@ -111,7 +158,7 @@ void AKnight::LandCheck()
 	}
 }
 
-void AKnight::ChangeState(EKnightState _State)
+void AKnight::StateChange(EKnightState _State)
 {
 	if (CurState != _State)
 	{
@@ -138,14 +185,14 @@ void AKnight::ChangeState(EKnightState _State)
 		case EKnightState::Run:
 			RunStart();
 			break;
+		case EKnightState::Walk:
+			WalkStart();
+			break;
 		case EKnightState::RunToIdle:
 			RunToIdleStart();
 			break;
 		case EKnightState::Turn:
 			TurnStart();
-			break;
-		case EKnightState::TurnToIdle:
-			TurnToIdleStart();
 			break;
 		case EKnightState::Airborne:
 			AirborneStart();
@@ -292,14 +339,14 @@ void AKnight::StateUpdate(float _DeltaTime)
 	case EKnightState::Run:
 		Run(_DeltaTime);
 		break;
+	case EKnightState::Walk:
+		Walk(_DeltaTime);
+		break;
 	case EKnightState::RunToIdle:
 		RunToIdle(_DeltaTime);
 		break;
 	case EKnightState::Turn:
 		Turn(_DeltaTime);
-		break;
-	case EKnightState::TurnToIdle:
-		TurnToIdle(_DeltaTime);
 		break;
 	case EKnightState::Airborne:
 		Airborne(_DeltaTime);
@@ -420,41 +467,55 @@ void AKnight::StateUpdate(float _DeltaTime)
 
 void AKnight::None(float _DeltaTime)
 {
-	ChangeState(EKnightState::Idle);
+	StateChange(EKnightState::Idle);
 	return;
 }
 
 void AKnight::Idle(float _DeltaTime)
 {
-	if (UEngineInput::IsPress(VK_RIGHT)
-		|| UEngineInput::IsPress(VK_LEFT))
+	if ((Dir.X > 0.f && UEngineInput::IsPress(VK_LEFT))
+		|| Dir.X < 0.f && UEngineInput::IsPress(VK_RIGHT))
 	{
-		ChangeState(EKnightState::Run);
+		StateChange(EKnightState::Turn);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_RIGHT)
+		&& UEngineInput::IsFree(VK_LEFT))
+	{
+		StateChange(EKnightState::Run);
+		return;
+	}
+
+	if (UEngineInput::IsFree(VK_RIGHT)
+		&& UEngineInput::IsPress(VK_LEFT))
+	{
+		StateChange(EKnightState::Run);
 		return;
 	}
 
 	if (UEngineInput::IsPress(VK_UP))
 	{
-		ChangeState(EKnightState::LookUp);
+		StateChange(EKnightState::LookUp);
 		return;
 	}
 
 	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		ChangeState(EKnightState::LookDown);
+		StateChange(EKnightState::LookDown);
 		return;
 	}
 
 	if (UEngineInput::IsDown('z') ||
 		UEngineInput::IsDown('Z'))
 	{
-		ChangeState(EKnightState::Airborne);
+		StateChange(EKnightState::Airborne);
 		return;
 	}
 
-	if (IsLanded)
+	if (!IsLanded)
 	{
-		ChangeState(EKnightState::Fall);
+		StateChange(EKnightState::Fall);
 		return;
 	}
 
@@ -464,12 +525,12 @@ void AKnight::Idle(float _DeltaTime)
 		int Random = UEngineRandom::MainRandom.RandomInt(0,1);
 		if (Random == 0)
 		{
-			ChangeState(EKnightState::Slash);
+			StateChange(EKnightState::Slash);
 			return;
 		}
 		else
 		{
-			ChangeState(EKnightState::SlashAlt);
+			StateChange(EKnightState::SlashAlt);
 			return;
 		}
 	}
@@ -477,7 +538,7 @@ void AKnight::Idle(float _DeltaTime)
 	if (UEngineInput::IsDown('c') ||
 		UEngineInput::IsDown('C'))
 	{
-		ChangeState(EKnightState::Dash);
+		StateChange(EKnightState::Dash);
 		return;
 	}
 
@@ -488,7 +549,7 @@ void AKnight::Idle(float _DeltaTime)
 		if (PressTime > FocusTime)
 		{
 			PressTime = 0.f;
-			ChangeState(EKnightState::Focus);
+			StateChange(EKnightState::Focus);
 			return;
 		}
 	}
@@ -497,7 +558,7 @@ void AKnight::Idle(float _DeltaTime)
 		UEngineInput::IsUp('A'))
 	{
 		PressTime = 0.f;
-		ChangeState(EKnightState::FireballAntic);
+		StateChange(EKnightState::FireballAntic);
 		return;
 	}
 }
@@ -506,50 +567,41 @@ void AKnight::LookUp(float _DeltaTime)
 {
 	if (UEngineInput::IsFree(VK_UP))
 	{
-		ChangeState(EKnightState::LookUpToIdle);
+		StateChange(EKnightState::LookUpToIdle);
 		return;
 	}
 
 	if (UEngineInput::IsPress(VK_RIGHT)
 		|| UEngineInput::IsPress(VK_LEFT))
 	{
-		ChangeState(EKnightState::Run);
+		StateChange(EKnightState::Run);
 		return;
 	}
 
 	if (UEngineInput::IsDown('z') ||
 		UEngineInput::IsDown('Z'))
 	{
-		ChangeState(EKnightState::Airborne);
+		StateChange(EKnightState::Airborne);
 		return;
 	}
 
-	if (IsLanded)
+	if (!IsLanded)
 	{
-		ChangeState(EKnightState::Fall);
+		StateChange(EKnightState::Fall);
 		return;
 	}
 
 	if (UEngineInput::IsDown('x') ||
 		UEngineInput::IsDown('X'))
 	{
-		int Random = UEngineRandom::MainRandom.RandomInt(0, 1);
-		if (Random == 0)
-		{
-			ChangeState(EKnightState::Slash);
-			return;
-		}
-		else
-		{
-			ChangeState(EKnightState::SlashAlt);
-			return;
-		}
+		StateChange(EKnightState::UpSlash);
+		return;
 	}
 
 	if (UEngineInput::IsDown('c') ||
 		UEngineInput::IsDown('C'))
 	{
-		ChangeState(EKnightState::Dash);
+		StateChange(EKnightState::Dash);
 		return;
 	}
 
@@ -560,7 +612,7 @@ void AKnight::LookUp(float _DeltaTime)
 		if (PressTime > FocusTime)
 		{
 			PressTime = 0.f;
-			ChangeState(EKnightState::Focus);
+			StateChange(EKnightState::Focus);
 			return;
 		}
 	}
@@ -569,14 +621,15 @@ void AKnight::LookUp(float _DeltaTime)
 		UEngineInput::IsUp('A'))
 	{
 		PressTime = 0.f;
-		ChangeState(EKnightState::FireballAntic);
+		StateChange(EKnightState::FireballAntic);
 		return;
 	}
 }
 
 void AKnight::LookUpToIdle(float _DeltaTime)
 {
-	ChangeState(EKnightState::Idle);
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
 	return;
 }
 
@@ -584,33 +637,33 @@ void AKnight::LookDown(float _DeltaTime)
 {
 	if (UEngineInput::IsFree(VK_DOWN))
 	{
-		ChangeState(EKnightState::LookDownToIdle);
+		StateChange(EKnightState::LookDownToIdle);
 		return;
 	}
 
 	if (UEngineInput::IsPress(VK_UP))
 	{
-		ChangeState(EKnightState::LookUp);
+		StateChange(EKnightState::LookUp);
 		return;
 	}
 
 	if (UEngineInput::IsPress(VK_RIGHT)
 		|| UEngineInput::IsPress(VK_LEFT))
 	{
-		ChangeState(EKnightState::Run);
+		StateChange(EKnightState::Run);
 		return;
 	}
 
 	if (UEngineInput::IsDown('z') ||
 		UEngineInput::IsDown('Z'))
 	{
-		ChangeState(EKnightState::Airborne);
+		StateChange(EKnightState::Airborne);
 		return;
 	}
 
-	if (IsLanded)
+	if (!IsLanded)
 	{
-		ChangeState(EKnightState::Fall);
+		StateChange(EKnightState::Fall);
 		return;
 	}
 
@@ -620,12 +673,12 @@ void AKnight::LookDown(float _DeltaTime)
 		int Random = UEngineRandom::MainRandom.RandomInt(0, 1);
 		if (Random == 0)
 		{
-			ChangeState(EKnightState::Slash);
+			StateChange(EKnightState::Slash);
 			return;
 		}
 		else
 		{
-			ChangeState(EKnightState::SlashAlt);
+			StateChange(EKnightState::SlashAlt);
 			return;
 		}
 	}
@@ -633,7 +686,7 @@ void AKnight::LookDown(float _DeltaTime)
 	if (UEngineInput::IsDown('c') ||
 		UEngineInput::IsDown('C'))
 	{
-		ChangeState(EKnightState::Dash);
+		StateChange(EKnightState::Dash);
 		return;
 	}
 
@@ -644,7 +697,7 @@ void AKnight::LookDown(float _DeltaTime)
 		if (PressTime > FocusTime)
 		{
 			PressTime = 0.f;
-			ChangeState(EKnightState::Focus);
+			StateChange(EKnightState::Focus);
 			return;
 		}
 	}
@@ -653,72 +706,369 @@ void AKnight::LookDown(float _DeltaTime)
 		UEngineInput::IsUp('A'))
 	{
 		PressTime = 0.f;
-		ChangeState(EKnightState::FireballAntic);
+		StateChange(EKnightState::FireballAntic);
 		return;
 	}
 }
 
 void AKnight::LookDownToIdle(float _DeltaTime)
 {
-	ChangeState(EKnightState::Idle);
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
 	return;
 }
 
 void AKnight::Run(float _DeltaTime)
 {
-	
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Walk);
+	return;
+
+	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
+	{
+		StateChange(EKnightState::RunToIdle);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_LEFT) && UEngineInput::IsPress(VK_RIGHT))
+	{
+		StateChange(EKnightState::RunToIdle);
+		return;
+	}
+
+	if (UEngineInput::IsDown('z') ||
+		UEngineInput::IsDown('Z'))
+	{
+		StateChange(EKnightState::Airborne);
+		return;
+	}
+
+	if (!IsLanded)
+	{
+		StateChange(EKnightState::Fall);
+		return;
+	}
+
+	if (UEngineInput::IsDown('x') ||
+		UEngineInput::IsDown('X'))
+	{
+		int Random = UEngineRandom::MainRandom.RandomInt(0, 1);
+		if (Random == 0)
+		{
+			StateChange(EKnightState::Slash);
+			return;
+		}
+		else
+		{
+			StateChange(EKnightState::SlashAlt);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsDown('c') ||
+		UEngineInput::IsDown('C'))
+	{
+		StateChange(EKnightState::Dash);
+		return;
+	}
+
+	if (UEngineInput::IsPress('a') ||
+		UEngineInput::IsPress('A'))
+	{
+		PressTime += _DeltaTime;
+		if (PressTime > FocusTime)
+		{
+			PressTime = 0.f;
+			StateChange(EKnightState::Focus);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsUp('a') ||
+		UEngineInput::IsUp('A'))
+	{
+		PressTime = 0.f;
+		StateChange(EKnightState::FireballAntic);
+		return;
+	}
+}
+
+void AKnight::Walk(float _DeltaTime)
+{
+	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
+	{
+		StateChange(EKnightState::RunToIdle);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_LEFT) && UEngineInput::IsPress(VK_RIGHT))
+	{
+		StateChange(EKnightState::RunToIdle);
+		return;
+	}
+
+	if (UEngineInput::IsDown('z') ||
+		UEngineInput::IsDown('Z'))
+	{
+		StateChange(EKnightState::Airborne);
+		return;
+	}
+
+	if (!IsLanded)
+	{
+		StateChange(EKnightState::Fall);
+		return;
+	}
+
+	if (UEngineInput::IsDown('x') ||
+		UEngineInput::IsDown('X'))
+	{
+		int Random = UEngineRandom::MainRandom.RandomInt(0, 1);
+		if (Random == 0)
+		{
+			StateChange(EKnightState::Slash);
+			return;
+		}
+		else
+		{
+			StateChange(EKnightState::SlashAlt);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsDown('c') ||
+		UEngineInput::IsDown('C'))
+	{
+		StateChange(EKnightState::Dash);
+		return;
+	}
+
+	if (UEngineInput::IsPress('a') ||
+		UEngineInput::IsPress('A'))
+	{
+		PressTime += _DeltaTime;
+		if (PressTime > FocusTime)
+		{
+			PressTime = 0.f;
+			StateChange(EKnightState::Focus);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsUp('a') ||
+		UEngineInput::IsUp('A'))
+	{
+		PressTime = 0.f;
+		StateChange(EKnightState::FireballAntic);
+		return;
+	}
 }
 
 void AKnight::RunToIdle(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::Turn(float _DeltaTime)
 {
-}
-
-void AKnight::TurnToIdle(float _DeltaTime)
-{
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::Airborne(float _DeltaTime)
 {
+	if (UEngineInput::IsUp('Z') ||
+		UEngineInput::IsUp('z'))
+	{
+		StateChange(EKnightState::Fall);
+		return;
+	}
+
+
+	if (UEngineInput::IsDown('x') ||
+		UEngineInput::IsDown('X'))
+	{
+		if (UEngineInput::IsPress(VK_UP))
+		{
+			StateChange(EKnightState::UpSlash);
+			return;
+		}
+		else if (UEngineInput::IsPress(VK_DOWN))
+		{
+			StateChange(EKnightState::DownSlash);
+			return;
+		}
+		else
+		{
+			int Random = UEngineRandom::MainRandom.RandomInt(0, 1);
+			if (Random == 0)
+			{
+				StateChange(EKnightState::Slash);
+				return;
+			}
+			else
+			{
+				StateChange(EKnightState::SlashAlt);
+				return;
+			}
+		}
+	}
+
+	if (UEngineInput::IsDown('c') ||
+		UEngineInput::IsDown('C'))
+	{
+		StateChange(EKnightState::Dash);
+		return;
+	}
+
+	if (UEngineInput::IsPress('a') ||
+		UEngineInput::IsPress('A'))
+	{
+		PressTime += _DeltaTime;
+		if (PressTime > FocusTime)
+		{
+			PressTime = 0.f;
+			StateChange(EKnightState::Focus);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsUp('a') ||
+		UEngineInput::IsUp('A'))
+	{
+		PressTime = 0.f;
+		StateChange(EKnightState::FireballAntic);
+		return;
+	}
 }
 
 void AKnight::Fall(float _DeltaTime)
 {
+	if (IsLanded)
+	{
+		StateChange(EKnightState::Land);
+		return;
+	}
+
+	if (UEngineInput::IsDown('x') ||
+		UEngineInput::IsDown('X'))
+	{
+		if (UEngineInput::IsPress(VK_UP))
+		{
+			StateChange(EKnightState::UpSlash);
+			return;
+		}
+		else if (UEngineInput::IsPress(VK_DOWN))
+		{
+			StateChange(EKnightState::DownSlash);
+			return;
+		}
+		else
+		{
+			int Random = UEngineRandom::MainRandom.RandomInt(0, 1);
+			if (Random == 0)
+			{
+				StateChange(EKnightState::Slash);
+				return;
+			}
+			else
+			{
+				StateChange(EKnightState::SlashAlt);
+				return;
+			}
+		}
+	}
+
+	if (UEngineInput::IsDown('c') ||
+		UEngineInput::IsDown('C'))
+	{
+		StateChange(EKnightState::Dash);
+		return;
+	}
+
+	if (UEngineInput::IsPress('a') ||
+		UEngineInput::IsPress('A'))
+	{
+		PressTime += _DeltaTime;
+		if (PressTime > FocusTime)
+		{
+			PressTime = 0.f;
+			StateChange(EKnightState::Focus);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsUp('a') ||
+		UEngineInput::IsUp('A'))
+	{
+		PressTime = 0.f;
+		StateChange(EKnightState::FireballAntic);
+		return;
+	}
 }
 
 void AKnight::Land(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::HardLand(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::Slash(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::SlashAlt(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::UpSlash(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::DownSlash(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::Dash(float _DeltaTime)
 {
+	AccDash += _DeltaTime;
+	if (AccDash > DashTime)
+	{
+		AccDash = 0.f;
+		StateChange(EKnightState::DashToIdle);
+		return;
+	}
+	AddActorLocation(Dir * DashSpeed * _DeltaTime);
 }
 
 void AKnight::DashToIdle(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::WallSlide(float _DeltaTime)
@@ -771,38 +1121,65 @@ void AKnight::MapUpdate(float _DeltaTime)
 
 void AKnight::Focus(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::FocusGet);
+	return;
 }
 
 void AKnight::FocusGet(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::FocusEnd);
+	return;
 }
 
 void AKnight::FocusEnd(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::CollectMagical1(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::CollectMagical2);
+	return;
 }
 
 void AKnight::CollectMagical2(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::CollectMagical3);
+	return;
 }
 
 void AKnight::CollectMagical3(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::CollectNormal1(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::CollectNormal2);
+	return;
 }
 
 void AKnight::CollectNormal2(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::CollectNormal3);
+	return;
 }
 
 void AKnight::CollectNormal3(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::Enter(float _DeltaTime)
@@ -839,188 +1216,284 @@ void AKnight::NoneStart()
 
 void AKnight::IdleStart()
 {
+	Renderer->ChangeAnimation("Idle");
+	return;
 }
 
 void AKnight::LookUpStart()
 {
+	Renderer->ChangeAnimation("LookUp");
+	return;
 }
 
 void AKnight::LookUpToIdleStart()
 {
+	Renderer->ChangeAnimation("LookUpToIdle");
+	return;
 }
 
 void AKnight::LookDownStart()
 {
+	Renderer->ChangeAnimation("LookDown");
+	return;
 }
 
 void AKnight::LookDownToIdleStart()
 {
+	Renderer->ChangeAnimation("LookDownToIdle");
+	return;
 }
 
 void AKnight::RunStart()
 {
+	Renderer->ChangeAnimation("Run");
+	return;
+}
+
+void AKnight::WalkStart()
+{
+	Renderer->ChangeAnimation("Walk");
+	return;
 }
 
 void AKnight::RunToIdleStart()
 {
+	Renderer->ChangeAnimation("RunToIdle");
+	return;
 }
 
 void AKnight::TurnStart()
 {
-}
-
-void AKnight::TurnToIdleStart()
-{
+	Renderer->ChangeAnimation("Turn");
+	return;
 }
 
 void AKnight::AirborneStart()
 {
+	Renderer->ChangeAnimation("Airborne");
+	return;
 }
 
 void AKnight::FallStart()
 {
+	Renderer->ChangeAnimation("Fall");
+	return;
 }
 
 void AKnight::LandStart()
 {
+	Renderer->ChangeAnimation("Land");
+	return;
 }
 
 void AKnight::HardLandStart()
 {
+	Renderer->ChangeAnimation("HardLand");
+	return;
 }
 
 void AKnight::SlashStart()
 {
+	Renderer->ChangeAnimation("Slash");
+	return;
 }
 
 void AKnight::SlashAltStart()
 {
+	Renderer->ChangeAnimation("SlashAlt");
+	return;
 }
 
 void AKnight::UpSlashStart()
 {
+	Renderer->ChangeAnimation("UpSlash");
+	return;
 }
 
 void AKnight::DownSlashStart()
 {
+	Renderer->ChangeAnimation("DownSlash");
+	return;
 }
 
 void AKnight::DashStart()
 {
+	ManupulateOff();
+	Renderer->ChangeAnimation("Dash");
+	return;
 }
 
 void AKnight::DashToIdleStart()
 {
+	ManupulateOn();
+	Renderer->ChangeAnimation("DashToIdle");
+	return;
 }
 
 void AKnight::WallSlideStart()
 {
+	Renderer->ChangeAnimation("WallSlide");
+	return;
 }
 
 void AKnight::WallJumpStart()
 {
+	Renderer->ChangeAnimation("WallJump");
+	return;
 }
 
 void AKnight::SitStart()
 {
+	Renderer->ChangeAnimation("Sit");
+	return;
 }
 
 void AKnight::SitOffStart()
 {
+	Renderer->ChangeAnimation("SitOff");
+	return;
 }
 
 void AKnight::MapOpenStart()
 {
+	Renderer->ChangeAnimation("MapOpen");
+	return;
 }
 
 void AKnight::MapIdleStart()
 {
+	Renderer->ChangeAnimation("MapIdle");
+	return;
 }
 
 void AKnight::MapWalkStart()
 {
+	Renderer->ChangeAnimation("MapWalk");
+	return;
 }
 
 void AKnight::MapAwayStart()
 {
+	Renderer->ChangeAnimation("MapAway");
+	return;
 }
 
 void AKnight::MapTurnStart()
 {
+	Renderer->ChangeAnimation("MapTurn");
+	return;
 }
 
 void AKnight::SitMapOpenStart()
 {
+	Renderer->ChangeAnimation("SitMapOpen");
+	return;
 }
 
 void AKnight::SitMapCloseStart()
 {
+	Renderer->ChangeAnimation("SitMapClose");
+	return;
 }
 
 void AKnight::MapUpdateStart()
 {
+	Renderer->ChangeAnimation("MapUpdate");
+	return;
 }
 
 void AKnight::FocusStart()
 {
+	Renderer->ChangeAnimation("Focus");
+	return;
 }
 
 void AKnight::FocusGetStart()
 {
+	Renderer->ChangeAnimation("FocusGet");
+	return;
 }
 
 void AKnight::FocusEndStart()
 {
+	Renderer->ChangeAnimation("FocusEnd");
+	return;
 }
 
 void AKnight::CollectMagical1Start()
 {
+	Renderer->ChangeAnimation("CollectMagical1");
+	return;
 }
 
 void AKnight::CollectMagical2Start()
 {
+	Renderer->ChangeAnimation("CollectMagical2");
+	return;
 }
 
 void AKnight::CollectMagical3Start()
 {
+	Renderer->ChangeAnimation("CollectMagical3");
+	return;
 }
 
 void AKnight::CollectNormal1Start()
 {
+	Renderer->ChangeAnimation("CollectNormal1");
+	return;
 }
 
 void AKnight::CollectNormal2Start()
 {
+	Renderer->ChangeAnimation("CollectNormal2");
+	return;
 }
 
 void AKnight::CollectNormal3Start()
 {
+	Renderer->ChangeAnimation("CollectNormal3");
+	return;
 }
 
 void AKnight::EnterStart()
 {
+	Renderer->ChangeAnimation("Enter");
+	return;
 }
 
 void AKnight::ProstrateStart()
 {
+	Renderer->ChangeAnimation("Prostrate");
+	return;
 }
 
 void AKnight::ProstrateRiseStart()
 {
+	Renderer->ChangeAnimation("ProstrateRise");
+	return;
 }
 
 void AKnight::FireballAnticStart()
 {
+	Renderer->ChangeAnimation("FireballAntic");
+	return;
 }
 
 void AKnight::FireballCastStart()
 {
+	Renderer->ChangeAnimation("FireballCast");
+	return;
 }
 
 void AKnight::RecoilStart()
 {
+	Renderer->ChangeAnimation("Recoil");
+	return;
 }
 
 void AKnight::DeathStart()
 {
+	Renderer->ChangeAnimation("Death");
+	return;
 }

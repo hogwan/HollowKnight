@@ -179,6 +179,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="KnightAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Knight.cpp">

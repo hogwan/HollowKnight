@@ -14,10 +14,10 @@ enum class EKnightState
 	LookDownToIdle,
 
 	Run,
+	Walk,
 	RunToIdle,
 
 	Turn,
-	TurnToIdle,
 
 	Airborne,
 	Fall,
@@ -91,7 +91,7 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void ChangeState(EKnightState _State);
+	void StateChange(EKnightState _State);
 	void StateUpdate(float _DeltaTime);
 
 	void None(float _DeltaTime);
@@ -101,9 +101,9 @@ protected:
 	void LookDown(float _DeltaTime);
 	void LookDownToIdle(float _DeltaTime);
 	void Run(float _DeltaTime);
+	void Walk(float _DeltaTime);
 	void RunToIdle(float _DeltaTime);
 	void Turn(float _DeltaTime);
-	void TurnToIdle(float _DeltaTime);
 	void Airborne(float _DeltaTime);
 	void Fall(float _DeltaTime);
 	void Land(float _DeltaTime);
@@ -150,9 +150,9 @@ protected:
 	void LookDownStart();
 	void LookDownToIdleStart();
 	void RunStart();
+	void WalkStart();
 	void RunToIdleStart();
 	void TurnStart();
-	void TurnToIdleStart();
 	void AirborneStart();
 	void FallStart();
 	void LandStart();
@@ -205,7 +205,11 @@ private:
 
 	float MoveSpeed = 300.f;
 	float AirborneSpeed = 300.f;
-	float DashSpeed = 300.f;
+	float DashSpeed = 600.f;
+
+	float DashCoolTime = 1.f;
+	float DashTime = 0.2f;
+	float AccDash = 0.f;
 
 	bool IsLanded = false;
 	bool IsAirborneStart = false;
@@ -213,4 +217,15 @@ private:
 	bool Manupulate = true;
 	void ManupulateUpdate(float _DeltaTime);
 	void LandCheck();
+
+
+	inline void ManupulateOff()
+	{
+		Manupulate = false;
+	}
+
+	inline void ManupulateOn()
+	{
+		Manupulate = true;
+	}
 };
