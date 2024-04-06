@@ -87,6 +87,9 @@ public:
 	Knight& operator=(const Knight& _Other) = delete;
 	Knight& operator=(Knight&& _Other) noexcept = delete;
 protected:
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
+
 	void ChangeState(EKnightState _State);
 	void StateUpdate(float _DeltaTime);
 
@@ -188,9 +191,22 @@ protected:
 	void RecoilStart();
 	void DeathStart();
 private:
+	UEngineSprite* Renderer = nullptr;
+
 	FVector Dir = FVector::Left;
 	EKnightState CurState = EKnightState::None;
 
+	float PressTime = 0.f;
+	float FocusTime = 0.3f;
 
-	UEngineSprite* Renderer = nullptr;
+	float AirborneTime = 0.f;
+	float AirborneLimit = 1.f;
+
+	float MoveSpeed = 100.f;
+	float AirborneSpeed = 100.f;
+
+	bool IsLanded = false;
+
+	bool Manupulate = true;
+	void ManupulateUpdate(float _DeltaTime);
 };

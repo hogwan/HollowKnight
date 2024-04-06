@@ -1,4 +1,6 @@
 #include "Knight.h"
+#include <EnginePlatform/EngineInput.h>
+#include <EngineBase/EngineRandom.h>
 
 Knight::Knight()
 {
@@ -6,6 +8,46 @@ Knight::Knight()
 
 Knight::~Knight()
 {
+}
+
+
+
+void Knight::BeginPlay()
+{
+}
+
+void Knight::Tick(float _DeltaTime)
+{
+	if (Manupulate)
+	{
+		ManupulateUpdate(_DeltaTime);
+	}
+
+	StateUpdate(_DeltaTime);
+}
+
+void Knight::ManupulateUpdate(float _DeltaTime)
+{
+	if (UEngineInput::IsPress(VK_RIGHT) && UEngineInput::IsFree(VK_LEFT))
+	{
+		Dir = FVector::Right;
+		AddActorLocation(Dir * MoveSpeed * _DeltaTime);
+	}
+
+	if (UEngineInput::IsPress(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
+	{
+		Dir = FVector::Left;
+		AddActorLocation(Dir * MoveSpeed * _DeltaTime);
+	}
+
+	if (IsLanded)
+	{
+		if (UEngineInput::IsDown('z')
+			|| UEngineInput::IsDown('Z'))
+		{
+
+		}
+	}
 }
 
 void Knight::ChangeState(EKnightState _State)
@@ -166,34 +208,386 @@ void Knight::ChangeState(EKnightState _State)
 
 void Knight::StateUpdate(float _DeltaTime)
 {
+	switch (CurState)
+	{
+	case EKnightState::None:
+		None(_DeltaTime);
+		break;
+	case EKnightState::Idle:
+		Idle(_DeltaTime);
+		break;
+	case EKnightState::LookUp:
+		LookUp(_DeltaTime);
+		break;
+	case EKnightState::LookUpToIdle:
+		LookUpToIdle(_DeltaTime);
+		break;
+	case EKnightState::LookDown:
+		LookDown(_DeltaTime);
+		break;
+	case EKnightState::LookDownToIdle:
+		LookDownToIdle(_DeltaTime);
+		break;
+	case EKnightState::Run:
+		Run(_DeltaTime);
+		break;
+	case EKnightState::RunToIdle:
+		RunToIdle(_DeltaTime);
+		break;
+	case EKnightState::Turn:
+		Turn(_DeltaTime);
+		break;
+	case EKnightState::TurnToIdle:
+		TurnToIdle(_DeltaTime);
+		break;
+	case EKnightState::Airborne:
+		Airborne(_DeltaTime);
+		break;
+	case EKnightState::Fall:
+		Fall(_DeltaTime);
+		break;
+	case EKnightState::Land:
+		Land(_DeltaTime);
+		break;
+	case EKnightState::HardLand:
+		HardLand(_DeltaTime);
+		break;
+	case EKnightState::Slash:
+		Slash(_DeltaTime);
+		break;
+	case EKnightState::SlashAlt:
+		SlashAlt(_DeltaTime);
+		break;
+	case EKnightState::UpSlash:
+		UpSlash(_DeltaTime);
+		break;
+	case EKnightState::DownSlash:
+		DownSlash(_DeltaTime);
+		break;
+	case EKnightState::Dash:
+		Dash(_DeltaTime);
+		break;
+	case EKnightState::DashToIdle:
+		DashToIdle(_DeltaTime);
+		break;
+	case EKnightState::WallSlide:
+		WallSlide(_DeltaTime);
+		break;
+	case EKnightState::WallJump:
+		WallJump(_DeltaTime);
+		break;
+	case EKnightState::Sit:
+		Sit(_DeltaTime);
+		break;
+	case EKnightState::SitOff:
+		SitOff(_DeltaTime);
+		break;
+	case EKnightState::MapOpen:
+		MapOpen(_DeltaTime);
+		break;
+	case EKnightState::MapIdle:
+		MapIdle(_DeltaTime);
+		break;
+	case EKnightState::MapWalk:
+		MapWalk(_DeltaTime);
+		break;
+	case EKnightState::MapAway:
+		MapAway(_DeltaTime);
+		break;
+	case EKnightState::MapTurn:
+		MapTurn(_DeltaTime);
+		break;
+	case EKnightState::SitMapOpen:
+		SitMapOpen(_DeltaTime);
+		break;
+	case EKnightState::SitMapClose:
+		SitMapClose(_DeltaTime);
+		break;
+	case EKnightState::MapUpdate:
+		MapUpdate(_DeltaTime);
+		break;
+	case EKnightState::Focus:
+		Focus(_DeltaTime);
+		break;
+	case EKnightState::FocusGet:
+		FocusGet(_DeltaTime);
+		break;
+	case EKnightState::FocusEnd:
+		FocusEnd(_DeltaTime);
+		break;
+	case EKnightState::CollectMagical1:
+		CollectMagical1(_DeltaTime);
+		break;
+	case EKnightState::CollectMagical2:
+		CollectMagical2(_DeltaTime);
+		break;
+	case EKnightState::CollectMagical3:
+		CollectMagical3(_DeltaTime);
+		break;
+	case EKnightState::CollectNormal1:
+		CollectNormal1(_DeltaTime);
+		break;
+	case EKnightState::CollectNormal2:
+		CollectNormal2(_DeltaTime);
+		break;
+	case EKnightState::CollectNormal3:
+		CollectNormal3(_DeltaTime);
+		break;
+	case EKnightState::Enter:
+		Enter(_DeltaTime);
+		break;
+	case EKnightState::Prostrate:
+		Prostrate(_DeltaTime);
+		break;
+	case EKnightState::ProstrateRise:
+		ProstrateRise(_DeltaTime);
+		break;
+	case EKnightState::FireballAntic:
+		FireballAntic(_DeltaTime);
+		break;
+	case EKnightState::FireballCast:
+		FireballCast(_DeltaTime);
+		break;
+	case EKnightState::Recoil:
+		Recoil(_DeltaTime);
+		break;
+	case EKnightState::Death:
+		Death(_DeltaTime);
+		break;
+	}
 }
 
 void Knight::None(float _DeltaTime)
 {
+	ChangeState(EKnightState::Idle);
+	return;
 }
 
 void Knight::Idle(float _DeltaTime)
 {
+	if (UEngineInput::IsPress(VK_RIGHT)
+		|| UEngineInput::IsPress(VK_LEFT))
+	{
+		ChangeState(EKnightState::Run);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_UP))
+	{
+		ChangeState(EKnightState::LookUp);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_DOWN))
+	{
+		ChangeState(EKnightState::LookDown);
+		return;
+	}
+
+	if (UEngineInput::IsDown('z') ||
+		UEngineInput::IsDown('Z'))
+	{
+		ChangeState(EKnightState::Airborne);
+		return;
+	}
+
+	if (UEngineInput::IsDown('x') ||
+		UEngineInput::IsDown('X'))
+	{
+		int Random = UEngineRandom::MainRandom.RandomInt(0,1);
+		if (Random == 0)
+		{
+			ChangeState(EKnightState::Slash);
+			return;
+		}
+		else
+		{
+			ChangeState(EKnightState::SlashAlt);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsDown('c') ||
+		UEngineInput::IsDown('C'))
+	{
+		ChangeState(EKnightState::Dash);
+		return;
+	}
+
+	if (UEngineInput::IsPress('a') ||
+		UEngineInput::IsPress('A'))
+	{
+		PressTime += _DeltaTime;
+		if (PressTime > FocusTime)
+		{
+			PressTime = 0.f;
+			ChangeState(EKnightState::Focus);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsUp('a') ||
+		UEngineInput::IsUp('A'))
+	{
+		PressTime = 0.f;
+		ChangeState(EKnightState::FireballAntic);
+		return;
+	}
 }
 
 void Knight::LookUp(float _DeltaTime)
 {
+	if (UEngineInput::IsFree(VK_UP))
+	{
+		ChangeState(EKnightState::LookUpToIdle);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_RIGHT)
+		|| UEngineInput::IsPress(VK_LEFT))
+	{
+		ChangeState(EKnightState::Run);
+		return;
+	}
+
+	if (UEngineInput::IsDown('z') ||
+		UEngineInput::IsDown('Z'))
+	{
+		ChangeState(EKnightState::Airborne);
+		return;
+	}
+
+	if (UEngineInput::IsDown('x') ||
+		UEngineInput::IsDown('X'))
+	{
+		int Random = UEngineRandom::MainRandom.RandomInt(0, 1);
+		if (Random == 0)
+		{
+			ChangeState(EKnightState::Slash);
+			return;
+		}
+		else
+		{
+			ChangeState(EKnightState::SlashAlt);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsDown('c') ||
+		UEngineInput::IsDown('C'))
+	{
+		ChangeState(EKnightState::Dash);
+		return;
+	}
+
+	if (UEngineInput::IsPress('a') ||
+		UEngineInput::IsPress('A'))
+	{
+		PressTime += _DeltaTime;
+		if (PressTime > FocusTime)
+		{
+			PressTime = 0.f;
+			ChangeState(EKnightState::Focus);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsUp('a') ||
+		UEngineInput::IsUp('A'))
+	{
+		PressTime = 0.f;
+		ChangeState(EKnightState::FireballAntic);
+		return;
+	}
 }
 
 void Knight::LookUpToIdle(float _DeltaTime)
 {
+	ChangeState(EKnightState::Idle);
+	return;
 }
 
 void Knight::LookDown(float _DeltaTime)
 {
+	if (UEngineInput::IsFree(VK_DOWN))
+	{
+		ChangeState(EKnightState::LookDownToIdle);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_UP))
+	{
+		ChangeState(EKnightState::LookUp);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_RIGHT)
+		|| UEngineInput::IsPress(VK_LEFT))
+	{
+		ChangeState(EKnightState::Run);
+		return;
+	}
+
+	if (UEngineInput::IsDown('z') ||
+		UEngineInput::IsDown('Z'))
+	{
+		ChangeState(EKnightState::Airborne);
+		return;
+	}
+
+	if (UEngineInput::IsDown('x') ||
+		UEngineInput::IsDown('X'))
+	{
+		int Random = UEngineRandom::MainRandom.RandomInt(0, 1);
+		if (Random == 0)
+		{
+			ChangeState(EKnightState::Slash);
+			return;
+		}
+		else
+		{
+			ChangeState(EKnightState::SlashAlt);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsDown('c') ||
+		UEngineInput::IsDown('C'))
+	{
+		ChangeState(EKnightState::Dash);
+		return;
+	}
+
+	if (UEngineInput::IsPress('a') ||
+		UEngineInput::IsPress('A'))
+	{
+		PressTime += _DeltaTime;
+		if (PressTime > FocusTime)
+		{
+			PressTime = 0.f;
+			ChangeState(EKnightState::Focus);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsUp('a') ||
+		UEngineInput::IsUp('A'))
+	{
+		PressTime = 0.f;
+		ChangeState(EKnightState::FireballAntic);
+		return;
+	}
 }
 
 void Knight::LookDownToIdle(float _DeltaTime)
 {
+	ChangeState(EKnightState::Idle);
+	return;
 }
 
 void Knight::Run(float _DeltaTime)
 {
+	
 }
 
 void Knight::RunToIdle(float _DeltaTime)
