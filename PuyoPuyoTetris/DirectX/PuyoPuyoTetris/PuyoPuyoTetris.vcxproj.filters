@@ -16,12 +16,6 @@
     <Filter Include="Level\PlayLevel\Object">
       <UniqueIdentifier>{e62409ba-b4ab-43d3-ac31-f07fe9b36305}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Level\PlayLevel\Object\Tetris">
-      <UniqueIdentifier>{f9b74c74-fdac-4789-8869-196b2e43d632}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Level\PlayLevel\Object\Puyo">
-      <UniqueIdentifier>{bc8428d9-38ae-4068-865d-964df046b7cf}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayGameMode.h">
@@ -33,26 +27,8 @@
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
     </ClInclude>
-    <ClInclude Include="Board.h">
+    <ClInclude Include="Knight.h">
       <Filter>Level\PlayLevel\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Element.h">
-      <Filter>Level\PlayLevel\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="TetrisElement.h">
-      <Filter>Level\PlayLevel\Object\Tetris</Filter>
-    </ClInclude>
-    <ClInclude Include="PuyoElement.h">
-      <Filter>Level\PlayLevel\Object\Puyo</Filter>
-    </ClInclude>
-    <ClInclude Include="PuyoBoard.h">
-      <Filter>Level\PlayLevel\Object\Puyo</Filter>
-    </ClInclude>
-    <ClInclude Include="TetrisBoard.h">
-      <Filter>Level\PlayLevel\Object\Tetris</Filter>
-    </ClInclude>
-    <ClInclude Include="TetrisElementBundle.h">
-      <Filter>Level\PlayLevel\Object\Tetris</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,26 +41,8 @@
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
     </ClCompile>
-    <ClCompile Include="Board.cpp">
+    <ClCompile Include="Knight.cpp">
       <Filter>Level\PlayLevel\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Element.cpp">
-      <Filter>Level\PlayLevel\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="TetrisElement.cpp">
-      <Filter>Level\PlayLevel\Object\Tetris</Filter>
-    </ClCompile>
-    <ClCompile Include="PuyoElement.cpp">
-      <Filter>Level\PlayLevel\Object\Puyo</Filter>
-    </ClCompile>
-    <ClCompile Include="PuyoBoard.cpp">
-      <Filter>Level\PlayLevel\Object\Puyo</Filter>
-    </ClCompile>
-    <ClCompile Include="TetrisBoard.cpp">
-      <Filter>Level\PlayLevel\Object\Tetris</Filter>
-    </ClCompile>
-    <ClCompile Include="TetrisElementBundle.cpp">
-      <Filter>Level\PlayLevel\Object\Tetris</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
