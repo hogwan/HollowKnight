@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{d6ec0b09-b1db-4801-9b6c-7aa1818b8ce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{2b32c789-8515-4387-af57-8073a2909e2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel">
+      <UniqueIdentifier>{5513d836-495c-4841-a108-bf461603a95a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel\Actor">
+      <UniqueIdentifier>{83c0ad52-8061-45fe-86d8-154fbe7f452a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PreCompile">
+      <UniqueIdentifier>{0dd1b04c-ba32-4c24-9e8a-09dbcbaf40bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel\Actor\Knight">
+      <UniqueIdentifier>{a96c8bda-ebaf-45b8-8e03-52f51474727f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HollowKnightCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayGameMode.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="PreCompile.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight.h">
+      <Filter>Level\PlayLevel\Actor\Knight</Filter>
+    </ClInclude>
+    <ClInclude Include="KnightAnimation.h">
+      <Filter>Level\PlayLevel\Actor\Knight</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="HollowKnightCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayGameMode.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Level\PlayLevel\Actor\Knight</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
