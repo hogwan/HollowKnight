@@ -1,6 +1,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
-#include <EngineCore/EngineSprite.h>
+#include <EngineCore/SpriteRenderer.h>
 
 enum class EKnightState
 {
@@ -74,18 +74,19 @@ enum class EKnightState
 	Death,
 };
 
-class Knight : public AActor
+class AKnight : public AActor
 {
+	GENERATED_BODY(AActor)
 public:
 	//constructer destructer
-	Knight();
-	~Knight();
+	AKnight();
+	~AKnight();
 
 	//delete Function
-	Knight(const Knight& _Other) = delete;
-	Knight(Knight&& _Other) noexcept = delete;
-	Knight& operator=(const Knight& _Other) = delete;
-	Knight& operator=(Knight&& _Other) noexcept = delete;
+	AKnight(const AKnight& _Other) = delete;
+	AKnight(AKnight&& _Other) noexcept = delete;
+	AKnight& operator=(const AKnight& _Other) = delete;
+	AKnight& operator=(AKnight&& _Other) noexcept = delete;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -191,7 +192,7 @@ protected:
 	void RecoilStart();
 	void DeathStart();
 private:
-	UEngineSprite* Renderer = nullptr;
+	USpriteRenderer* Renderer = nullptr;
 
 	FVector Dir = FVector::Left;
 	EKnightState CurState = EKnightState::None;
@@ -200,13 +201,16 @@ private:
 	float FocusTime = 0.3f;
 
 	float AirborneTime = 0.f;
-	float AirborneLimit = 1.f;
+	float AirborneLimit = 0.5f;
 
-	float MoveSpeed = 100.f;
-	float AirborneSpeed = 100.f;
+	float MoveSpeed = 300.f;
+	float AirborneSpeed = 300.f;
+	float DashSpeed = 300.f;
 
 	bool IsLanded = false;
+	bool IsAirborneStart = false;
 
 	bool Manupulate = true;
 	void ManupulateUpdate(float _DeltaTime);
+	void LandCheck();
 };

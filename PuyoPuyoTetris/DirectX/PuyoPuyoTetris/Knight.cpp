@@ -1,32 +1,44 @@
+#include "PreCompile.h"
 #include "Knight.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineBase/EngineRandom.h>
 
-Knight::Knight()
+AKnight::AKnight()
+{
+	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
+}
+
+AKnight::~AKnight()
 {
 }
 
-Knight::~Knight()
+
+
+void AKnight::BeginPlay()
 {
+	Super::BeginPlay();
+
+	SetActorScale3D(FVector(60.0f, 130.0f, 100.0f));
+
+	Renderer->CreateAnimation("Idle", "Idle", 0.08f);
+	Renderer->ChangeAnimation("Idle");
+
 }
 
-
-
-void Knight::BeginPlay()
+void AKnight::Tick(float _DeltaTime)
 {
-}
+	Super::Tick(_DeltaTime);
 
-void Knight::Tick(float _DeltaTime)
-{
+	LandCheck();
 	if (Manupulate)
 	{
 		ManupulateUpdate(_DeltaTime);
 	}
 
-	StateUpdate(_DeltaTime);
+	//StateUpdate(_DeltaTime);
 }
 
-void Knight::ManupulateUpdate(float _DeltaTime)
+void AKnight::ManupulateUpdate(float _DeltaTime)
 {
 	if (UEngineInput::IsPress(VK_RIGHT) && UEngineInput::IsFree(VK_LEFT))
 	{
@@ -45,12 +57,61 @@ void Knight::ManupulateUpdate(float _DeltaTime)
 		if (UEngineInput::IsDown('z')
 			|| UEngineInput::IsDown('Z'))
 		{
-
+			IsAirborneStart = true;
+			AddActorLocation(FVector::Up * 5.f);
 		}
+		else
+		{
+			AirborneTime = 0.f;
+			IsAirborneStart = false;
+		}
+	}
+	else
+	{
+		if (IsAirborneStart)
+		{
+			if (UEngineInput::IsUp('z') ||
+				UEngineInput::IsUp('Z'))
+			{
+				AirborneTime = 0.f;
+				IsAirborneStart = false;
+			}
+			else if (UEngineInput::IsPress('Z')
+				|| UEngineInput::IsPress('z'))
+			{
+				AirborneTime += _DeltaTime;
+				AddActorLocation(FVector::Up * AirborneSpeed * _DeltaTime);
+			}
+
+			if (AirborneTime > AirborneLimit)
+			{
+				AirborneTime = 0.f;
+				IsAirborneStart = false;
+			}
+		}
+	}
+
+	if (!IsAirborneStart && !IsLanded)
+	{
+		AddActorLocation(FVector::Down * AirborneSpeed * _DeltaTime);
 	}
 }
 
-void Knight::ChangeState(EKnightState _State)
+void AKnight::LandCheck()
+{
+	FVector Pos = GetActorLocation();
+
+	if ((Pos.Y - 60.f) <= -200.0f)
+	{
+		IsLanded = true;
+	}
+	else
+	{
+		IsLanded = false;
+	}
+}
+
+void AKnight::ChangeState(EKnightState _State)
 {
 	if (CurState != _State)
 	{
@@ -206,7 +267,7 @@ void Knight::ChangeState(EKnightState _State)
 	CurState = _State;
 }
 
-void Knight::StateUpdate(float _DeltaTime)
+void AKnight::StateUpdate(float _DeltaTime)
 {
 	switch (CurState)
 	{
@@ -357,13 +418,13 @@ void Knight::StateUpdate(float _DeltaTime)
 	}
 }
 
-void Knight::None(float _DeltaTime)
+void AKnight::None(float _DeltaTime)
 {
 	ChangeState(EKnightState::Idle);
 	return;
 }
 
-void Knight::Idle(float _DeltaTime)
+void AKnight::Idle(float _DeltaTime)
 {
 	if (UEngineInput::IsPress(VK_RIGHT)
 		|| UEngineInput::IsPress(VK_LEFT))
@@ -388,6 +449,12 @@ void Knight::Idle(float _DeltaTime)
 		UEngineInput::IsDown('Z'))
 	{
 		ChangeState(EKnightState::Airborne);
+		return;
+	}
+
+	if (IsLanded)
+	{
+		ChangeState(EKnightState::Fall);
 		return;
 	}
 
@@ -435,7 +502,7 @@ void Knight::Idle(float _DeltaTime)
 	}
 }
 
-void Knight::LookUp(float _DeltaTime)
+void AKnight::LookUp(float _DeltaTime)
 {
 	if (UEngineInput::IsFree(VK_UP))
 	{
@@ -454,6 +521,12 @@ void Knight::LookUp(float _DeltaTime)
 		UEngineInput::IsDown('Z'))
 	{
 		ChangeState(EKnightState::Airborne);
+		return;
+	}
+
+	if (IsLanded)
+	{
+		ChangeState(EKnightState::Fall);
 		return;
 	}
 
@@ -501,13 +574,13 @@ void Knight::LookUp(float _DeltaTime)
 	}
 }
 
-void Knight::LookUpToIdle(float _DeltaTime)
+void AKnight::LookUpToIdle(float _DeltaTime)
 {
 	ChangeState(EKnightState::Idle);
 	return;
 }
 
-void Knight::LookDown(float _DeltaTime)
+void AKnight::LookDown(float _DeltaTime)
 {
 	if (UEngineInput::IsFree(VK_DOWN))
 	{
@@ -535,6 +608,12 @@ void Knight::LookDown(float _DeltaTime)
 		return;
 	}
 
+	if (IsLanded)
+	{
+		ChangeState(EKnightState::Fall);
+		return;
+	}
+
 	if (UEngineInput::IsDown('x') ||
 		UEngineInput::IsDown('X'))
 	{
@@ -579,369 +658,369 @@ void Knight::LookDown(float _DeltaTime)
 	}
 }
 
-void Knight::LookDownToIdle(float _DeltaTime)
+void AKnight::LookDownToIdle(float _DeltaTime)
 {
 	ChangeState(EKnightState::Idle);
 	return;
 }
 
-void Knight::Run(float _DeltaTime)
+void AKnight::Run(float _DeltaTime)
 {
 	
 }
 
-void Knight::RunToIdle(float _DeltaTime)
+void AKnight::RunToIdle(float _DeltaTime)
 {
 }
 
-void Knight::Turn(float _DeltaTime)
+void AKnight::Turn(float _DeltaTime)
 {
 }
 
-void Knight::TurnToIdle(float _DeltaTime)
+void AKnight::TurnToIdle(float _DeltaTime)
 {
 }
 
-void Knight::Airborne(float _DeltaTime)
+void AKnight::Airborne(float _DeltaTime)
 {
 }
 
-void Knight::Fall(float _DeltaTime)
+void AKnight::Fall(float _DeltaTime)
 {
 }
 
-void Knight::Land(float _DeltaTime)
+void AKnight::Land(float _DeltaTime)
 {
 }
 
-void Knight::HardLand(float _DeltaTime)
+void AKnight::HardLand(float _DeltaTime)
 {
 }
 
-void Knight::Slash(float _DeltaTime)
+void AKnight::Slash(float _DeltaTime)
 {
 }
 
-void Knight::SlashAlt(float _DeltaTime)
+void AKnight::SlashAlt(float _DeltaTime)
 {
 }
 
-void Knight::UpSlash(float _DeltaTime)
+void AKnight::UpSlash(float _DeltaTime)
 {
 }
 
-void Knight::DownSlash(float _DeltaTime)
+void AKnight::DownSlash(float _DeltaTime)
 {
 }
 
-void Knight::Dash(float _DeltaTime)
+void AKnight::Dash(float _DeltaTime)
 {
 }
 
-void Knight::DashToIdle(float _DeltaTime)
+void AKnight::DashToIdle(float _DeltaTime)
 {
 }
 
-void Knight::WallSlide(float _DeltaTime)
+void AKnight::WallSlide(float _DeltaTime)
 {
 }
 
-void Knight::WallJump(float _DeltaTime)
+void AKnight::WallJump(float _DeltaTime)
 {
 }
 
-void Knight::Sit(float _DeltaTime)
+void AKnight::Sit(float _DeltaTime)
 {
 }
 
-void Knight::SitOff(float _DeltaTime)
+void AKnight::SitOff(float _DeltaTime)
 {
 }
 
-void Knight::MapOpen(float _DeltaTime)
+void AKnight::MapOpen(float _DeltaTime)
 {
 }
 
-void Knight::MapIdle(float _DeltaTime)
+void AKnight::MapIdle(float _DeltaTime)
 {
 }
 
-void Knight::MapWalk(float _DeltaTime)
+void AKnight::MapWalk(float _DeltaTime)
 {
 }
 
-void Knight::MapAway(float _DeltaTime)
+void AKnight::MapAway(float _DeltaTime)
 {
 }
 
-void Knight::MapTurn(float _DeltaTime)
+void AKnight::MapTurn(float _DeltaTime)
 {
 }
 
-void Knight::SitMapOpen(float _DeltaTime)
+void AKnight::SitMapOpen(float _DeltaTime)
 {
 }
 
-void Knight::SitMapClose(float _DeltaTime)
+void AKnight::SitMapClose(float _DeltaTime)
 {
 }
 
-void Knight::MapUpdate(float _DeltaTime)
+void AKnight::MapUpdate(float _DeltaTime)
 {
 }
 
-void Knight::Focus(float _DeltaTime)
+void AKnight::Focus(float _DeltaTime)
 {
 }
 
-void Knight::FocusGet(float _DeltaTime)
+void AKnight::FocusGet(float _DeltaTime)
 {
 }
 
-void Knight::FocusEnd(float _DeltaTime)
+void AKnight::FocusEnd(float _DeltaTime)
 {
 }
 
-void Knight::CollectMagical1(float _DeltaTime)
+void AKnight::CollectMagical1(float _DeltaTime)
 {
 }
 
-void Knight::CollectMagical2(float _DeltaTime)
+void AKnight::CollectMagical2(float _DeltaTime)
 {
 }
 
-void Knight::CollectMagical3(float _DeltaTime)
+void AKnight::CollectMagical3(float _DeltaTime)
 {
 }
 
-void Knight::CollectNormal1(float _DeltaTime)
+void AKnight::CollectNormal1(float _DeltaTime)
 {
 }
 
-void Knight::CollectNormal2(float _DeltaTime)
+void AKnight::CollectNormal2(float _DeltaTime)
 {
 }
 
-void Knight::CollectNormal3(float _DeltaTime)
+void AKnight::CollectNormal3(float _DeltaTime)
 {
 }
 
-void Knight::Enter(float _DeltaTime)
+void AKnight::Enter(float _DeltaTime)
 {
 }
 
-void Knight::Prostrate(float _DeltaTime)
+void AKnight::Prostrate(float _DeltaTime)
 {
 }
 
-void Knight::ProstrateRise(float _DeltaTime)
+void AKnight::ProstrateRise(float _DeltaTime)
 {
 }
 
-void Knight::FireballAntic(float _DeltaTime)
+void AKnight::FireballAntic(float _DeltaTime)
 {
 }
 
-void Knight::FireballCast(float _DeltaTime)
+void AKnight::FireballCast(float _DeltaTime)
 {
 }
 
-void Knight::Recoil(float _DeltaTime)
+void AKnight::Recoil(float _DeltaTime)
 {
 }
 
-void Knight::Death(float _DeltaTime)
+void AKnight::Death(float _DeltaTime)
 {
 }
 
-void Knight::NoneStart()
+void AKnight::NoneStart()
 {
 }
 
-void Knight::IdleStart()
+void AKnight::IdleStart()
 {
 }
 
-void Knight::LookUpStart()
+void AKnight::LookUpStart()
 {
 }
 
-void Knight::LookUpToIdleStart()
+void AKnight::LookUpToIdleStart()
 {
 }
 
-void Knight::LookDownStart()
+void AKnight::LookDownStart()
 {
 }
 
-void Knight::LookDownToIdleStart()
+void AKnight::LookDownToIdleStart()
 {
 }
 
-void Knight::RunStart()
+void AKnight::RunStart()
 {
 }
 
-void Knight::RunToIdleStart()
+void AKnight::RunToIdleStart()
 {
 }
 
-void Knight::TurnStart()
+void AKnight::TurnStart()
 {
 }
 
-void Knight::TurnToIdleStart()
+void AKnight::TurnToIdleStart()
 {
 }
 
-void Knight::AirborneStart()
+void AKnight::AirborneStart()
 {
 }
 
-void Knight::FallStart()
+void AKnight::FallStart()
 {
 }
 
-void Knight::LandStart()
+void AKnight::LandStart()
 {
 }
 
-void Knight::HardLandStart()
+void AKnight::HardLandStart()
 {
 }
 
-void Knight::SlashStart()
+void AKnight::SlashStart()
 {
 }
 
-void Knight::SlashAltStart()
+void AKnight::SlashAltStart()
 {
 }
 
-void Knight::UpSlashStart()
+void AKnight::UpSlashStart()
 {
 }
 
-void Knight::DownSlashStart()
+void AKnight::DownSlashStart()
 {
 }
 
-void Knight::DashStart()
+void AKnight::DashStart()
 {
 }
 
-void Knight::DashToIdleStart()
+void AKnight::DashToIdleStart()
 {
 }
 
-void Knight::WallSlideStart()
+void AKnight::WallSlideStart()
 {
 }
 
-void Knight::WallJumpStart()
+void AKnight::WallJumpStart()
 {
 }
 
-void Knight::SitStart()
+void AKnight::SitStart()
 {
 }
 
-void Knight::SitOffStart()
+void AKnight::SitOffStart()
 {
 }
 
-void Knight::MapOpenStart()
+void AKnight::MapOpenStart()
 {
 }
 
-void Knight::MapIdleStart()
+void AKnight::MapIdleStart()
 {
 }
 
-void Knight::MapWalkStart()
+void AKnight::MapWalkStart()
 {
 }
 
-void Knight::MapAwayStart()
+void AKnight::MapAwayStart()
 {
 }
 
-void Knight::MapTurnStart()
+void AKnight::MapTurnStart()
 {
 }
 
-void Knight::SitMapOpenStart()
+void AKnight::SitMapOpenStart()
 {
 }
 
-void Knight::SitMapCloseStart()
+void AKnight::SitMapCloseStart()
 {
 }
 
-void Knight::MapUpdateStart()
+void AKnight::MapUpdateStart()
 {
 }
 
-void Knight::FocusStart()
+void AKnight::FocusStart()
 {
 }
 
-void Knight::FocusGetStart()
+void AKnight::FocusGetStart()
 {
 }
 
-void Knight::FocusEndStart()
+void AKnight::FocusEndStart()
 {
 }
 
-void Knight::CollectMagical1Start()
+void AKnight::CollectMagical1Start()
 {
 }
 
-void Knight::CollectMagical2Start()
+void AKnight::CollectMagical2Start()
 {
 }
 
-void Knight::CollectMagical3Start()
+void AKnight::CollectMagical3Start()
 {
 }
 
-void Knight::CollectNormal1Start()
+void AKnight::CollectNormal1Start()
 {
 }
 
-void Knight::CollectNormal2Start()
+void AKnight::CollectNormal2Start()
 {
 }
 
-void Knight::CollectNormal3Start()
+void AKnight::CollectNormal3Start()
 {
 }
 
-void Knight::EnterStart()
+void AKnight::EnterStart()
 {
 }
 
-void Knight::ProstrateStart()
+void AKnight::ProstrateStart()
 {
 }
 
-void Knight::ProstrateRiseStart()
+void AKnight::ProstrateRiseStart()
 {
 }
 
-void Knight::FireballAnticStart()
+void AKnight::FireballAnticStart()
 {
 }
 
-void Knight::FireballCastStart()
+void AKnight::FireballCastStart()
 {
 }
 
-void Knight::RecoilStart()
+void AKnight::RecoilStart()
 {
 }
 
-void Knight::DeathStart()
+void AKnight::DeathStart()
 {
 }
