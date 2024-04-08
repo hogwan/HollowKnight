@@ -21,52 +21,7 @@ void AKnight::BeginPlay()
 
 	SetActorScale3D(FVector(60.0f, 130.0f, 100.0f));
 
-	Renderer->CreateAnimation("Idle", "Idle", 0.08f, true);
-	Renderer->CreateAnimation("LookUp", "LookUp", 0.08f, true);
-	Renderer->CreateAnimation("LookUpToIdle", "LookUpToIdle", 0.08f, false);
-	Renderer->CreateAnimation("LookDown", "LookDown", 0.08f, false);
-	Renderer->CreateAnimation("LookDownToIdle", "LookDownToIdle", 0.08f, false);
-	Renderer->CreateAnimation("Run", "Run", 0.08f, false);
-	Renderer->CreateAnimation("Walk", "Walk", 0.08f, true);
-	Renderer->CreateAnimation("RunToIdle", "RunToIdle", 0.08f, false);
-	Renderer->CreateAnimation("Turn", "Turn", 0.08f, false);
-	Renderer->CreateAnimation("Airborne", "Airborne", 0.08f, false);
-	Renderer->CreateAnimation("Fall", "Fall", 0.08f, true);
-	Renderer->CreateAnimation("Land", "Land", 0.08f, false);
-	Renderer->CreateAnimation("HardLand", "HardLand", 0.08f, false);
-	Renderer->CreateAnimation("Slash", "Slash", 0.08f, false);
-	Renderer->CreateAnimation("SlashAlt", "SlashAlt", 0.08f, false);
-	Renderer->CreateAnimation("UpSlash", "UpSlash", 0.08f, false);
-	Renderer->CreateAnimation("DownSlash", "DownSlash", 0.08f, false);
-	Renderer->CreateAnimation("Dash", "Dash", 0.08f, false);
-	Renderer->CreateAnimation("WallSlide", "WallSlide", 0.08f, true);
-	Renderer->CreateAnimation("WallJump", "WallJump", 0.08f, false);
-	Renderer->CreateAnimation("Sit", "Sit", 0.08f, false);
-	Renderer->CreateAnimation("SitOff", "SitOff", 0.08f, false);
-	Renderer->CreateAnimation("MapOpen", "MapOpen", 0.08f, false);
-	Renderer->CreateAnimation("MapIdle", "MapIdle", 0.08f, true);
-	Renderer->CreateAnimation("MapWalk", "MapWalk", 0.08f, true);
-	Renderer->CreateAnimation("MapAway", "MapAway", 0.08f, false);
-	Renderer->CreateAnimation("MapTurn", "MapTurn", 0.08f, false);
-	Renderer->CreateAnimation("SitMapOpen", "SitMapOpen", 0.08f, false);
-	Renderer->CreateAnimation("SitMapClose", "SitMapClose", 0.08f, false);
-	Renderer->CreateAnimation("MapUpdate", "MapUpdate", 0.08f, false);
-	Renderer->CreateAnimation("Focus", "Focus", 0.08f, false);
-	Renderer->CreateAnimation("FocusGet", "FocusGet", 0.08f, false);
-	Renderer->CreateAnimation("FocusEnd", "FocusEnd", 0.08f, false);
-	Renderer->CreateAnimation("CollectMagical1", "CollectMagical1", 0.08f, false);
-	Renderer->CreateAnimation("CollectMagical2", "CollectMagical2", 0.08f, false);
-	Renderer->CreateAnimation("CollectMagical3", "CollectMagical3", 0.08f, false);
-	Renderer->CreateAnimation("CollectNormal1", "CollectNormal1", 0.08f, false);
-	Renderer->CreateAnimation("CollectNormal2", "CollectNormal2", 0.08f, false);
-	Renderer->CreateAnimation("CollectNormal3", "CollectNormal3", 0.08f, false);
-	Renderer->CreateAnimation("Enter", "Enter", 0.08f, false);
-	Renderer->CreateAnimation("Prostrate", "Prostrate", 0.08f, false);
-	Renderer->CreateAnimation("ProstrateRise", "ProstrateRise", 0.08f, false);
-	Renderer->CreateAnimation("FireballAntic", "FireballAntic", 0.08f, false);
-	Renderer->CreateAnimation("FireballCast", "FireballCast", 0.08f, false);
-	Renderer->CreateAnimation("Recoil", "Recoil", 0.08f, false);
-	Renderer->CreateAnimation("Death", "Death", 0.08f, false);
+	CreateKnightAnimation;
 
 }
 
@@ -75,6 +30,7 @@ void AKnight::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	LandCheck();
+	DirCheck();
 	if (Manupulate)
 	{
 		ManupulateUpdate(_DeltaTime);
@@ -102,24 +58,24 @@ void AKnight::ManupulateUpdate(float _DeltaTime)
 		if (UEngineInput::IsDown('z')
 			|| UEngineInput::IsDown('Z'))
 		{
-			IsAirborneStart = true;
+			IsAirborne = true;
 			AddActorLocation(FVector::Up * 5.f);
 		}
 		else
 		{
 			AirborneTime = 0.f;
-			IsAirborneStart = false;
+			IsAirborne = false;
 		}
 	}
 	else
 	{
-		if (IsAirborneStart)
+		if (IsAirborne)
 		{
 			if (UEngineInput::IsUp('z') ||
 				UEngineInput::IsUp('Z'))
 			{
 				AirborneTime = 0.f;
-				IsAirborneStart = false;
+				IsAirborne = false;
 			}
 			else if (UEngineInput::IsPress('Z')
 				|| UEngineInput::IsPress('z'))
@@ -131,17 +87,23 @@ void AKnight::ManupulateUpdate(float _DeltaTime)
 			if (AirborneTime > AirborneLimit)
 			{
 				AirborneTime = 0.f;
-				IsAirborneStart = false;
+				IsAirborne = false;
 			}
 		}
 	}
 
-	if (!IsAirborneStart && !IsLanded)
+	if (CurState == EKnightState::Dash)
+	{
+		IsAirborne = false;
+	}
+
+	if (!IsAirborne && !IsLanded)
 	{
 		AddActorLocation(FVector::Down * AirborneSpeed * _DeltaTime);
 		StateChange(EKnightState::Fall);
 		return;
 	}
+	int a = 0;
 }
 
 void AKnight::LandCheck()
@@ -156,6 +118,19 @@ void AKnight::LandCheck()
 	{
 		IsLanded = false;
 	}
+}
+
+void AKnight::DirCheck()
+{
+	if (Dir.X < 0.f)
+	{
+		GetActorTransform().SetRotation({ 0,180,0 });
+	}
+	else
+	{
+		GetActorTransform().SetRotation({ 0,180,0 });
+	}
+
 }
 
 void AKnight::StateChange(EKnightState _State)
@@ -1196,10 +1171,16 @@ void AKnight::ProstrateRise(float _DeltaTime)
 
 void AKnight::FireballAntic(float _DeltaTime)
 {
+	//if(Renderer->IsCurAnimationEnd())
+	StateChange(EKnightState::FireballCast);
+	return;
 }
 
 void AKnight::FireballCast(float _DeltaTime)
 {
+	//if(Renderer->IsCurAniamtionEnd())
+	StateChange(EKnightState::Idle);
+	return;
 }
 
 void AKnight::Recoil(float _DeltaTime)

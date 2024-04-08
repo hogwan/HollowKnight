@@ -6,70 +6,50 @@ enum class EKnightState
 {
 	None,
 	Idle,
-
 	LookUp,
 	LookUpToIdle,
-
 	LookDown,
 	LookDownToIdle,
-
 	Run,
 	Walk,
 	RunToIdle,
-
 	Turn,
-
 	Airborne,
 	Fall,
-
 	Land,
 	HardLand,
-
 	Slash,
 	SlashAlt,
-
 	UpSlash,
 	DownSlash,
-
 	Dash,
 	DashToIdle,
-
 	WallSlide,
 	WallJump,
-
 	Sit,
 	SitOff,
-
 	MapOpen,
 	MapIdle,
 	MapWalk,
 	MapAway,
 	MapTurn,
-
 	SitMapOpen,
 	SitMapClose,
 	MapUpdate,
-
 	Focus,
 	FocusGet,
 	FocusEnd,
-
 	CollectMagical1,
 	CollectMagical2,
 	CollectMagical3,
-
 	CollectNormal1,
 	CollectNormal2,
 	CollectNormal3,
-
 	Enter,
-
 	Prostrate,
 	ProstrateRise,
-
 	FireballAntic,
 	FireballCast,
-
 	Recoil,
 	Death,
 };
@@ -212,11 +192,12 @@ private:
 	float AccDash = 0.f;
 
 	bool IsLanded = false;
-	bool IsAirborneStart = false;
+	bool IsAirborne = false;
 
 	bool Manupulate = true;
 	void ManupulateUpdate(float _DeltaTime);
 	void LandCheck();
+	void DirCheck();
 
 
 	inline void ManupulateOff()
