@@ -200,6 +200,8 @@ private:
 	void DirCheck();
 	void AirborneReset();
 
+	FVector Scale = FVector(60.0f, 130.0f, 100.0f);
+
 
 	inline void ManupulateOff()
 	{

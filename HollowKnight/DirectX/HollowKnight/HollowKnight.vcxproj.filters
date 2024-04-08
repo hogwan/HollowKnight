@@ -36,6 +36,9 @@
     <ClInclude Include="KnightAnimation.h">
       <Filter>Level\PlayLevel\Actor\Knight</Filter>
     </ClInclude>
+    <ClInclude Include="MapObject.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnightCore.cpp">
@@ -49,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="Knight.cpp">
       <Filter>Level\PlayLevel\Actor\Knight</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObject.cpp">
+      <Filter>Level\PlayLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

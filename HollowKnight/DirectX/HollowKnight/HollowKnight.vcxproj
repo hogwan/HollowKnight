@@ -176,6 +176,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="KnightAnimation.h" />
+    <ClInclude Include="MapObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PlayGameMode.h">
       <SubType>
       </SubType>
@@ -191,6 +195,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Knight.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MapObject.cpp">
       <SubType>
       </SubType>
     </ClCompile>

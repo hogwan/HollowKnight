@@ -17,6 +17,27 @@ void UHollowKnightCore::Initialize()
 		// 파일의 헤더
 		UEngineDirectory Dir;
 		Dir.MoveToSearchChild("HN_Resources");
+		Dir.Move("Knight");
+		std::vector<UEngineFile> Files = Dir.GetAllFile({ ".png" }, true);
+		for (UEngineFile& File : Files)
+		{
+			UEngineSprite::Load(File.GetFullPath());
+		}
+
+		// 로드폴더는 이렇게 한다고 칩시다.
+		std::vector<UEngineDirectory> Directorys = Dir.GetAllDirectory();
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			std::string Name = Directorys[i].GetFolderName();
+			UEngineSprite::LoadFolder(Directorys[i].GetFullPath());
+		}
+	}
+
+	{
+		// 파일의 헤더
+		UEngineDirectory Dir;
+		Dir.MoveToSearchChild("HN_Resources");
+		Dir.Move("tut");
 		std::vector<UEngineFile> Files = Dir.GetAllFile({ ".png" }, true);
 		for (UEngineFile& File : Files)
 		{
