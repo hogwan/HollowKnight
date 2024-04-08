@@ -63,8 +63,7 @@ void AKnight::ManupulateUpdate(float _DeltaTime)
 		}
 		else
 		{
-			AirborneTime = 0.f;
-			IsAirborne = false;
+			AirborneReset();
 		}
 	}
 	else
@@ -74,8 +73,7 @@ void AKnight::ManupulateUpdate(float _DeltaTime)
 			if (UEngineInput::IsUp('z') ||
 				UEngineInput::IsUp('Z'))
 			{
-				AirborneTime = 0.f;
-				IsAirborne = false;
+				AirborneReset();
 			}
 			else if (UEngineInput::IsPress('Z')
 				|| UEngineInput::IsPress('z'))
@@ -86,8 +84,7 @@ void AKnight::ManupulateUpdate(float _DeltaTime)
 
 			if (AirborneTime > AirborneLimit)
 			{
-				AirborneTime = 0.f;
-				IsAirborne = false;
+				AirborneReset();
 			}
 		}
 	}
@@ -126,6 +123,12 @@ void AKnight::DirCheck()
 		GetActorTransform().SetRotation({ 0,180,0 });
 	}
 
+}
+
+void AKnight::AirborneReset()
+{
+	IsAirborne = false;
+	AirborneTime = 0.f;
 }
 
 void AKnight::StateChange(EKnightState _State)
@@ -1295,8 +1298,7 @@ void AKnight::DownSlashStart()
 void AKnight::DashStart()
 {
 	ManupulateOff();
-	IsAirborne = false;
-	AirborneTime = 0.f;
+	AirborneReset();
 	Renderer->ChangeAnimation("Dash");
 	return;
 }

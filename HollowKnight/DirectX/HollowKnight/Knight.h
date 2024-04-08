@@ -198,6 +198,7 @@ private:
 	void ManupulateUpdate(float _DeltaTime);
 	void LandCheck();
 	void DirCheck();
+	void AirborneReset();
 
 
 	inline void ManupulateOff()
