@@ -92,11 +92,6 @@ void AKnight::ManupulateUpdate(float _DeltaTime)
 		}
 	}
 
-	if (CurState == EKnightState::Dash)
-	{
-		IsAirborne = false;
-	}
-
 	if (!IsAirborne && !IsLanded)
 	{
 		AddActorLocation(FVector::Down * AirborneSpeed * _DeltaTime);
@@ -1300,6 +1295,8 @@ void AKnight::DownSlashStart()
 void AKnight::DashStart()
 {
 	ManupulateOff();
+	IsAirborne = false;
+	AirborneTime = 0.f;
 	Renderer->ChangeAnimation("Dash");
 	return;
 }
