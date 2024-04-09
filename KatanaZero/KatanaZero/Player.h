@@ -33,7 +33,6 @@ private:
 
 	void StateInit();
 	void DirCheck();
-	void AccReset();
 
 	void None(float _DeltaTime);
 	void Idle(float _DeltaTime);
