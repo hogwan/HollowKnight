@@ -27,14 +27,14 @@ void Player::BeginPlay()
 	Renderer->CreateAnimation("Jump", "Jump", 0.08f, false);
 	Renderer->CreateAnimation("Crouch", "Crouch", 0.08f, false);
 	Renderer->CreateAnimation("CrouchEnd", "CrouchEnd", 0.08f, true);
-	Renderer->CreateAnimation("Jump", "Jump", 0.08f, false);
 	Renderer->CreateAnimation("Fall", "Fall", 0.08f, true);
 	Renderer->CreateAnimation("Attack", "Attack", 0.08f, false);
 
 	StateInit();
 
-	Renderer->SetAutoSize(10.0f, true);
+	Renderer->SetAutoSize(1.0f, true);
 	Renderer->SetOrder(ERenderOrder::Player);
+	Renderer->ChangeAnimation("Idle");
 	
 }
 
@@ -49,14 +49,10 @@ void Player::Tick(float _DeltaTime)
 
 	Color8Bit Color = Tex->GetColor(Pos, Color8Bit::Black);
 
-	if (Color != Color8Bit::Black)
-	{
-		AddActorLocation(float4::Down * _DeltaTime * 100.0f);
-	}
-
 	if (Color == Color8Bit::Black)
 	{
-		int a = 0;
+		IsLanded = true;
+		JumpForce = 0.0f;
 	}
 }
 
@@ -87,6 +83,11 @@ void Player::Idle(float _DeltaTime)
 	if (true == IsPress('A') || true == IsPress('a') ||
 		true == IsPress('D') || true == IsPress('d'))
 	{
+		if ((IsPress('D') || IsPress('d')) &&
+			(IsPress('A') || IsPress('a')))
+		{
+			return;
+		}
 		State.ChangeState("Run");
 		return;
 	}
@@ -128,31 +129,169 @@ void Player::Idle(float _DeltaTime)
 		State.ChangeState("Attack");
 		return;
 	}
+
+	if (false == IsLanded)
+	{
+		State.ChangeState("Fall");
+		return;
+	}
 }
 
 void Player::Run(float _DeltaTime)
 {
-	if(IsUp())
+	AccRunStart += _DeltaTime;
+
+	if ((IsPress('D') || IsPress('d')) &&
+		(IsPress('A') || IsPress('a')))
+	{
+		State.ChangeState("RunToIdle");
+		return;
+	}
+
+	if ((IsFree('D') && IsFree('d')) &&
+		(IsFree('A') && IsFree('a')))
+	{
+		State.ChangeState("RunToIdle");
+		return;
+	}
+
+	if (true == IsPress('W') || true == IsPress('w'))
+	{
+		AccPush += _DeltaTime;
+		if (AccPush > LongJumpTime)
+		{
+			AccPush = 0.f;
+			JumpForce = LongJumpForce;
+			State.ChangeState("Jump");
+			return;
+		}
+
+		if (true == IsUp('W') || true == IsUp('w'))
+		{
+			AccPush = 0.f;
+			JumpForce = ShortJumpForce;
+			State.ChangeState("Jump");
+			return;
+		}
+	}
+
+	if (true == IsPress('S') || true == IsPress('s'))
+	{
+		if (IsColDown)
+		{
+			//내려가는로직
+			return;
+		}
+
+		State.ChangeState("Roll");
+		return;
+	}
+
+	if (true == IsDown(VK_LBUTTON))
+	{
+		State.ChangeState("Attack");
+		return;
+	}
+
+	if (false == IsLanded)
+	{
+		State.ChangeState("Fall");
+		return;
+	}
+
+
+	if (AccRunStart > RunStartTime)
+	{
+		FVector MoveDir = FVector::Zero;
+		if (CurDir == EActorDir::Left)
+		{
+			MoveDir = FVector::Left;
+		}
+		else
+		{
+			MoveDir = FVector::Right;
+		}
+		AddActorLocation(MoveDir * RunSpeed * _DeltaTime);
+	}
 }
 
 void Player::RunToIdle(float _DeltaTime)
 {
+	
 }
 
 void Player::Roll(float _DeltaTime)
 {
+	FVector MoveDir = FVector::Zero;
+	if (CurDir == EActorDir::Left)
+	{
+		MoveDir = FVector::Left;
+	}
+	else
+	{
+		MoveDir = FVector::Right;
+	}
+	AddActorLocation(MoveDir * RollSpeed * _DeltaTime);
+
+	if (true == IsDown(VK_LBUTTON))
+	{
+		State.ChangeState("Attack");
+		return;
+	}
+
+	if (false == IsLanded)
+	{
+		State.ChangeState("Fall");
+		return;
+	}
 }
 
 void Player::Jump(float _DeltaTime)
 {
+	GravityCheck(_DeltaTime);
+	AddActorLocation(FVector::Up * JumpForce * _DeltaTime);
+
+	if (JumpForce < 0.f)
+	{
+		State.ChangeState("Fall");
+		return;
+	}
+
+	if (true == IsDown(VK_LBUTTON))
+	{
+		State.ChangeState("Attack");
+		return;
+	}
+
+	if (IsLanded)
+	{
+		State.ChangeState("Idle");
+		return;
+	}
 }
 
 void Player::Fall(float _DeltaTime)
 {
+	GravityCheck(_DeltaTime);
+	AddActorLocation(FVector::Up * JumpForce * _DeltaTime);
+
+	if (true == IsDown(VK_LBUTTON))
+	{
+		State.ChangeState("Attack");
+		return;
+	}
+
+
+	if (IsLanded)
+	{
+		State.ChangeState("Idle");
+		return;
+	}
 }
 
 void Player::Attack(float _DeltaTime)
 {
+	AddActorLocation(AttackDir * AttackSpeed * _DeltaTime);
 }
 
 void Player::NoneStart()
@@ -161,30 +300,49 @@ void Player::NoneStart()
 
 void Player::IdleStart()
 {
+	Renderer->ChangeAnimation("Idle");
+	return;
 }
 
 void Player::RunStart()
 {
+	Renderer->ChangeAnimation("Run");
+	return;
 }
 
 void Player::RunToIdleStart()
 {
+	Renderer->ChangeAnimation("RunToIdle");
+	return;
 }
 
 void Player::RollStart()
 {
+	Renderer->ChangeAnimation("Roll");
 }
 
 void Player::JumpStart()
 {
+	AddActorLocation(FVector::Up * 10.f);
+	Renderer->ChangeAnimation("Jump");
+	return;
 }
 
 void Player::FallStart()
 {
+	Renderer->ChangeAnimation("Fall");
+	return;
 }
 
 void Player::AttackStart()
 {
+	Renderer->ChangeAnimation("Attack");
+	return;
+}
+
+void Player::GravityCheck(float _DeltaTime)
+{
+	JumpForce -= Gravity * _DeltaTime;
 }
 
 void Player::CrouchStart()
