@@ -34,7 +34,6 @@ void Player::BeginPlay()
 
 	Renderer->SetAutoSize(1.0f, true);
 	Renderer->SetOrder(ERenderOrder::Player);
-	Renderer->ChangeAnimation("Idle");
 	
 }
 
@@ -46,7 +45,6 @@ void Player::Tick(float _DeltaTime)
 
 	float4 Pos = GetActorLocation();
 	Pos.Y = -Pos.Y;
-
 	Color8Bit Color = Tex->GetColor(Pos, Color8Bit::Black);
 
 	if (Color == Color8Bit::Black)
@@ -54,6 +52,8 @@ void Player::Tick(float _DeltaTime)
 		IsLanded = true;
 		JumpForce = 0.0f;
 	}
+
+	State.Update(_DeltaTime);
 }
 
 void Player::StateInit()
@@ -65,12 +65,35 @@ void Player::StateInit()
 	State.CreateState("Jump");
 	State.CreateState("Crouch");
 	State.CreateState("CrouchEnd");
-	State.CreateState("Jump");
 	State.CreateState("Fall");
-	State.CreateState("Run");
 	State.CreateState("Attack");
 
 	State.SetUpdateFunction("Idle", std::bind(&Player::Idle, this, std::placeholders::_1));
+	State.SetStartFunction("Idle", std::bind(&Player::IdleStart, this));
+
+	State.SetUpdateFunction("Run", std::bind(&Player::Run, this, std::placeholders::_1));
+	State.SetStartFunction("Run", std::bind(&Player::RunStart, this));
+
+	State.SetUpdateFunction("RunToIdle", std::bind(&Player::RunToIdle, this, std::placeholders::_1));
+	State.SetStartFunction("RunToIdle", std::bind(&Player::RunToIdleStart, this));
+
+	State.SetUpdateFunction("Roll", std::bind(&Player::Roll, this, std::placeholders::_1));
+	State.SetStartFunction("Roll", std::bind(&Player::RollStart, this));
+
+	State.SetUpdateFunction("Jump", std::bind(&Player::Jump, this, std::placeholders::_1));
+	State.SetStartFunction("Jump", std::bind(&Player::JumpStart, this));
+
+	State.SetUpdateFunction("Crouch", std::bind(&Player::Crouch, this, std::placeholders::_1));
+	State.SetStartFunction("Crouch", std::bind(&Player::CrouchStart, this));
+
+	State.SetUpdateFunction("CrouchEnd", std::bind(&Player::CrouchEnd, this, std::placeholders::_1));
+	State.SetStartFunction("CrouchEnd", std::bind(&Player::CrouchEndStart, this));
+
+	State.SetUpdateFunction("Fall", std::bind(&Player::Fall, this, std::placeholders::_1));
+	State.SetStartFunction("Fall", std::bind(&Player::FallStart, this));
+
+	State.SetUpdateFunction("Attack", std::bind(&Player::Attack, this, std::placeholders::_1));
+	State.SetStartFunction("Attack", std::bind(&Player::AttackStart, this));
 }
 
 void Player::None(float _DeltaTime)
@@ -217,7 +240,11 @@ void Player::Run(float _DeltaTime)
 
 void Player::RunToIdle(float _DeltaTime)
 {
-	
+	Renderer->SetFrameCallback("RunToIdle", 5, [=]
+		{
+			State.ChangeState("Idle");
+			return;
+		});
 }
 
 void Player::Roll(float _DeltaTime)
@@ -292,6 +319,48 @@ void Player::Fall(float _DeltaTime)
 void Player::Attack(float _DeltaTime)
 {
 	AddActorLocation(AttackDir * AttackSpeed * _DeltaTime);
+	Renderer->SetFrameCallback("Attack", 7, [=]
+		{
+			State.ChangeState("Idle");
+			return;
+		});
+}
+
+void Player::Crouch(float _DeltaTime)
+{
+	if (true == IsFree('W') || true == IsFree('w'))
+	{
+		State.ChangeState("CrouchEnd");
+		return;
+	}
+
+
+	if (true == IsPress('A') || true == IsPress('a') ||
+		true == IsPress('D') || true == IsPress('d'))
+	{
+		if ((IsPress('D') || IsPress('d')) &&
+			(IsPress('A') || IsPress('a')))
+		{
+			return;
+		}
+		State.ChangeState("Roll");
+		return;
+	}
+
+	if (true == IsDown(VK_LBUTTON))
+	{
+		State.ChangeState("Attack");
+		return;
+	}
+}
+
+void Player::CrouchEnd(float _DeltaTime)
+{
+	Renderer->SetFrameCallback("CrouchEnd", 2, [=]
+		{
+			State.ChangeState("Idle");
+			return;
+		});
 }
 
 void Player::NoneStart()
@@ -340,11 +409,6 @@ void Player::AttackStart()
 	return;
 }
 
-void Player::GravityCheck(float _DeltaTime)
-{
-	JumpForce -= Gravity * _DeltaTime;
-}
-
 void Player::CrouchStart()
 {
 }
@@ -352,12 +416,11 @@ void Player::CrouchStart()
 void Player::CrouchEndStart()
 {
 }
-
-void Player::Crouch(float _DeltaTime)
+void Player::GravityCheck(float _DeltaTime)
 {
+	JumpForce -= Gravity * _DeltaTime;
 }
 
-void Player::CrouchEnd(float _DeltaTime)
-{
-}
+
+
 
