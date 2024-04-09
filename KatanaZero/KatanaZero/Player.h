@@ -29,8 +29,11 @@ private:
 	USpriteRenderer* Renderer = nullptr;
 	float4 Color;
 	EActorDir CurDir = EActorDir::None;
+	FVector MoveVector = FVector::Zero;
 
 	void StateInit();
+	void DirCheck();
+	void AccReset();
 
 	void None(float _DeltaTime);
 	void Idle(float _DeltaTime);
@@ -56,26 +59,27 @@ private:
 
 	void GravityCheck(float _DeltaTime);
 
-	FVector AttackDir = FVector::Zero;
-
 	bool LongJump = false;
 	bool IsLanded = false;
 
-	float LongJumpTime = 0.1f;
-	float AccPush = 0.f;
+	float LongJumpTime = 0.15f;
+	float AccLongJump = 0.f;
 
-	float RunStartTime = 0.02f;
-	float AccRunStart = 0.f;
+	float RunAccel = 600.0f;
+	float AirAccel = 300.f;
+	float BreakAccel = 600.f;
+	float MaxRunSpeed = 200.0f;
+	float MaxAirSpeed = 250.0f;
 
 	float JumpForce = 0.f;
-	float LongJumpForce = 300.0f;
-	float ShortJumpForce = 200.0f;
+	FVector LongJumpForce = FVector(0.f, 300.f, 0.f);
+	FVector ShortJumpForce = FVector(0.f, 200.f, 0.f);
 
-	float RunSpeed = 200.0f;
-	float RollSpeed = 500.0f;
-	float AttackSpeed = 700.f;
+	float RollSpeed = 300.0f;
+	FVector AttackDir = FVector::Zero;
+	float AttackSpeed = 500.f;
 
-	float Gravity = 500.f;
+	FVector Gravity = FVector(0.f, -500.f, 0.f);
 
 	bool IsColDown = false;
 };

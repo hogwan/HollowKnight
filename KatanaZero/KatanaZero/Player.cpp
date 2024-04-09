@@ -50,14 +50,21 @@ void Player::Tick(float _DeltaTime)
 	if (Color == Color8Bit::Black)
 	{
 		IsLanded = true;
-		JumpForce = 0.0f;
+		MoveVector.Y = 0.f;
+	}
+	else
+	{
+		IsLanded = false;
+		GravityCheck(_DeltaTime);
 	}
 
 	State.Update(_DeltaTime);
+	AddActorLocation(MoveVector * _DeltaTime);
 }
 
 void Player::StateInit()
 {
+	State.CreateState("None");
 	State.CreateState("Idle");
 	State.CreateState("Run");
 	State.CreateState("RunToIdle");
@@ -67,6 +74,9 @@ void Player::StateInit()
 	State.CreateState("CrouchEnd");
 	State.CreateState("Fall");
 	State.CreateState("Attack");
+
+	State.SetUpdateFunction("None", std::bind(&Player::None, this, std::placeholders::_1));
+	State.SetStartFunction("None", std::bind(&Player::NoneStart, this));
 
 	State.SetUpdateFunction("Idle", std::bind(&Player::Idle, this, std::placeholders::_1));
 	State.SetStartFunction("Idle", std::bind(&Player::IdleStart, this));
@@ -94,6 +104,40 @@ void Player::StateInit()
 
 	State.SetUpdateFunction("Attack", std::bind(&Player::Attack, this, std::placeholders::_1));
 	State.SetStartFunction("Attack", std::bind(&Player::AttackStart, this));
+
+	State.ChangeState("None");
+}
+
+void Player::DirCheck()
+{
+	if ((true == IsPress('A') || true == IsPress('a')) &&
+		(false == IsPress('D') && false == IsPress('d')))
+	{
+		CurDir = EActorDir::Left;
+		FVector Scale = GetActorScale3D();
+		if (Scale.X > 0.f)
+		{
+			Scale.X = -Scale.X;
+			SetActorScale3D(Scale);
+		}
+	}
+
+	if ((true == IsPress('D') || true == IsPress('d')) &&
+		(false == IsPress('A') && false == IsPress('a')))
+	{
+		CurDir = EActorDir::Right;
+		FVector Scale = GetActorScale3D();
+		if (Scale.X < 0.f)
+		{
+			Scale.X = -Scale.X;
+			SetActorScale3D(Scale);
+		}
+	}
+}
+
+void Player::AccReset()
+{
+	AccLongJump = 0.f;
 }
 
 void Player::None(float _DeltaTime)
@@ -117,22 +161,23 @@ void Player::Idle(float _DeltaTime)
 
 	if (true == IsPress('W') || true == IsPress('w'))
 	{
-		AccPush += _DeltaTime;
-		if (AccPush > LongJumpTime)
+		AccLongJump += _DeltaTime;
+		if (AccLongJump > LongJumpTime)
 		{
-			AccPush = 0.f;
-			JumpForce = LongJumpForce;
+			AccLongJump = 0.f;
+			MoveVector += LongJumpForce;
 			State.ChangeState("Jump");
 			return;
 		}
 
-		if (true == IsUp('W') || true == IsUp('w'))
-		{
-			AccPush = 0.f;
-			JumpForce = ShortJumpForce;
-			State.ChangeState("Jump");
-			return;
-		}
+	}
+
+	if (true == IsUp('W') || true == IsUp('w'))
+	{
+		AccLongJump = 0.f;
+		MoveVector += LongJumpForce;
+		State.ChangeState("Jump");
+		return;
 	}
 
 	if (true == IsPress('S') || true == IsPress('s'))
@@ -162,7 +207,7 @@ void Player::Idle(float _DeltaTime)
 
 void Player::Run(float _DeltaTime)
 {
-	AccRunStart += _DeltaTime;
+	DirCheck();
 
 	if ((IsPress('D') || IsPress('d')) &&
 		(IsPress('A') || IsPress('a')))
@@ -178,24 +223,48 @@ void Player::Run(float _DeltaTime)
 		return;
 	}
 
+	if (IsPress('D') || IsPress('d'))
+	{
+		if (abs(MoveVector.X) < MaxRunSpeed)
+		{
+			MoveVector.X += RunAccel * _DeltaTime;
+		}
+		else
+		{
+			MoveVector.X = MaxRunSpeed;
+		}
+	}
+
+	if (IsPress('A') || IsPress('a'))
+	{
+		if (abs(MoveVector.X) < MaxRunSpeed)
+		{
+			MoveVector.X -= RunAccel * _DeltaTime;
+		}
+		else
+		{
+			MoveVector.X = -MaxRunSpeed;
+		}
+	}
+
 	if (true == IsPress('W') || true == IsPress('w'))
 	{
-		AccPush += _DeltaTime;
-		if (AccPush > LongJumpTime)
+		AccLongJump += _DeltaTime;
+		if (AccLongJump > LongJumpTime)
 		{
-			AccPush = 0.f;
-			JumpForce = LongJumpForce;
+			AccLongJump = 0.f;
+			MoveVector += LongJumpForce;
 			State.ChangeState("Jump");
 			return;
 		}
 
-		if (true == IsUp('W') || true == IsUp('w'))
-		{
-			AccPush = 0.f;
-			JumpForce = ShortJumpForce;
-			State.ChangeState("Jump");
-			return;
-		}
+	}
+	if (true == IsUp('W') || true == IsUp('w'))
+	{
+		AccLongJump = 0.f;
+		MoveVector += ShortJumpForce;
+		State.ChangeState("Jump");
+		return;
 	}
 
 	if (true == IsPress('S') || true == IsPress('s'))
@@ -221,30 +290,30 @@ void Player::Run(float _DeltaTime)
 		State.ChangeState("Fall");
 		return;
 	}
-
-
-	if (AccRunStart > RunStartTime)
-	{
-		FVector MoveDir = FVector::Zero;
-		if (CurDir == EActorDir::Left)
-		{
-			MoveDir = FVector::Left;
-		}
-		else
-		{
-			MoveDir = FVector::Right;
-		}
-		AddActorLocation(MoveDir * RunSpeed * _DeltaTime);
-	}
 }
 
 void Player::RunToIdle(float _DeltaTime)
 {
 	Renderer->SetFrameCallback("RunToIdle", 5, [=]
 		{
+			CurDir;
+			FVector CurScale = GetActorScale3D();
+
 			State.ChangeState("Idle");
 			return;
 		});
+
+	FVector BreakDir = FVector::Zero;
+	if (MoveVector.X > 0.f)
+	{
+		BreakDir = FVector::Left;
+	}
+	else
+	{
+		BreakDir = FVector::Right;
+	}
+
+	MoveVector += BreakDir * BreakAccel * _DeltaTime;
 }
 
 void Player::Roll(float _DeltaTime)
@@ -258,7 +327,7 @@ void Player::Roll(float _DeltaTime)
 	{
 		MoveDir = FVector::Right;
 	}
-	AddActorLocation(MoveDir * RollSpeed * _DeltaTime);
+	MoveVector = MoveDir * RollSpeed;
 
 	if (true == IsDown(VK_LBUTTON))
 	{
@@ -271,14 +340,20 @@ void Player::Roll(float _DeltaTime)
 		State.ChangeState("Fall");
 		return;
 	}
+
+	Renderer->SetFrameCallback("Roll", 7, [=]
+		{
+			State.ChangeState("RunToIdle");
+			return;
+		});
 }
 
 void Player::Jump(float _DeltaTime)
 {
-	GravityCheck(_DeltaTime);
-	AddActorLocation(FVector::Up * JumpForce * _DeltaTime);
+	DirCheck();
 
-	if (JumpForce < 0.f)
+
+	if (MoveVector.Y < 0.f)
 	{
 		State.ChangeState("Fall");
 		return;
@@ -292,15 +367,38 @@ void Player::Jump(float _DeltaTime)
 
 	if (IsLanded)
 	{
-		State.ChangeState("Idle");
+		State.ChangeState("RunToIdle");
 		return;
+	}
+
+	if (IsPress('D') || IsPress('d'))
+	{
+		if (MoveVector.X >= MaxAirSpeed)
+		{
+			MoveVector.X = MaxAirSpeed;
+		}
+		else
+		{
+			MoveVector.X += AirAccel * _DeltaTime;
+		}
+	}
+
+	if (IsPress('A') || IsPress('a'))
+	{
+		if (MoveVector.X <= -MaxAirSpeed)
+		{
+			MoveVector.X = -MaxAirSpeed;
+		}
+		else
+		{
+			MoveVector.X -= AirAccel * _DeltaTime;
+		}
 	}
 }
 
 void Player::Fall(float _DeltaTime)
 {
-	GravityCheck(_DeltaTime);
-	AddActorLocation(FVector::Up * JumpForce * _DeltaTime);
+	DirCheck();
 
 	if (true == IsDown(VK_LBUTTON))
 	{
@@ -311,14 +409,37 @@ void Player::Fall(float _DeltaTime)
 
 	if (IsLanded)
 	{
-		State.ChangeState("Idle");
+		State.ChangeState("RunToIdle");
 		return;
+	}
+
+	if (IsPress('D') || IsPress('d'))
+	{
+		if (MoveVector.X >= MaxAirSpeed)
+		{
+			MoveVector.X = MaxAirSpeed;
+		}
+		else
+		{
+			MoveVector.X += AirAccel * _DeltaTime;
+		}
+	}
+
+	if (IsPress('A') || IsPress('a'))
+	{
+		if (MoveVector.X <= -MaxAirSpeed)
+		{
+			MoveVector.X = -MaxAirSpeed;
+		}
+		else
+		{
+			MoveVector.X -= AirAccel * _DeltaTime;
+		}
 	}
 }
 
 void Player::Attack(float _DeltaTime)
 {
-	AddActorLocation(AttackDir * AttackSpeed * _DeltaTime);
 	Renderer->SetFrameCallback("Attack", 7, [=]
 		{
 			State.ChangeState("Idle");
@@ -328,7 +449,8 @@ void Player::Attack(float _DeltaTime)
 
 void Player::Crouch(float _DeltaTime)
 {
-	if (true == IsFree('W') || true == IsFree('w'))
+	DirCheck();
+	if (true == IsFree('S') && true == IsFree('s'))
 	{
 		State.ChangeState("CrouchEnd");
 		return;
@@ -369,6 +491,7 @@ void Player::NoneStart()
 
 void Player::IdleStart()
 {
+	MoveVector = FVector::Zero;
 	Renderer->ChangeAnimation("Idle");
 	return;
 }
@@ -388,6 +511,7 @@ void Player::RunToIdleStart()
 void Player::RollStart()
 {
 	Renderer->ChangeAnimation("Roll");
+	return;
 }
 
 void Player::JumpStart()
@@ -405,20 +529,27 @@ void Player::FallStart()
 
 void Player::AttackStart()
 {
+	AttackDir.Normalize2D();
+
+	MoveVector = AttackDir * AttackSpeed;
 	Renderer->ChangeAnimation("Attack");
 	return;
 }
 
 void Player::CrouchStart()
 {
+	Renderer->ChangeAnimation("Crouch");
+	return;
 }
 
 void Player::CrouchEndStart()
 {
+	Renderer->ChangeAnimation("CrouchEnd");
+	return;
 }
 void Player::GravityCheck(float _DeltaTime)
 {
-	JumpForce -= Gravity * _DeltaTime;
+	MoveVector += Gravity * _DeltaTime;
 }
 
 
