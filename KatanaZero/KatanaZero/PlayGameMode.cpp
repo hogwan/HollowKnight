@@ -21,8 +21,8 @@ void APlayGameMode::BeginPlay()
 	UConstValue::MainCameraManager = GetWorld()->SpawnActor<CameraManager>("CameraManager");
 	UConstValue::MainCameraManager->SetCameraMode(ECameraMode::ChasePlayer);
 
-	UConstValue::MapTex = UEngineTexture::FindRes("room_factory_4_colmap.png");
-	UConstValue::MapTexScale = UConstValue::MapTex->GetScale()*2.f;
+	UConstValue::MapTex = UEngineTexture::FindRes("TestColMap.png");
+	UConstValue::MapTexScale = UConstValue::MapTex->GetScale() * UConstValue::Ratio;
 
 	float4 ImageScale = UConstValue::MapTexScale;
 

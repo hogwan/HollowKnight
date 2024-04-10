@@ -46,6 +46,8 @@ private:
 	void CrouchEnd(float _DeltaTime);
 	void Fall(float _DeltaTime);
 	void Attack(float _DeltaTime);
+	void WallSlide(float _DeltaTime);
+	void Flip(float _DeltaTime);
 
 	void NoneStart();
 	void IdleStart();
@@ -57,8 +59,14 @@ private:
 	void CrouchEndStart();
 	void FallStart();
 	void AttackStart();
+	void WallSlideStart();
+	void FlipStart();
 
 	void GravityCheck(float _DeltaTime);
+	void GroundUp();
+	bool LandCheck();
+	bool RightWallCheck();
+	bool LeftWallCheck();
 
 	bool LongJump = false;
 	bool IsLanded = false;
@@ -66,11 +74,19 @@ private:
 	float LongJumpTime = 0.15f;
 	float AccLongJump = 0.f;
 
+	float AccDrop = 0.f;
+	float DropTime = 0.15f;
+
 	float RunAccel = 600.0f;
 	float AirAccel = 300.f;
 	float BreakAccel = 600.f;
 	float MaxRunSpeed = 200.0f;
 	float MaxAirSpeed = 250.0f;
+
+	float FlipSpeed = 500.f;
+	float FlipBreakAccel = 800.f;
+	float FlipBreakStartTime = 0.1f;
+	float AccFlip = 0.f;
 
 	float JumpForce = 0.f;
 	FVector LongJumpForce = FVector(0.f, 300.f, 0.f);
@@ -83,5 +99,10 @@ private:
 	FVector Gravity = FVector(0.f, -500.f, 0.f);
 
 	bool IsColDown = false;
+
+	float4 BottomCheckPos = FVector::Zero;
+	float4 RightCheckPos = FVector::Zero;
+	float4 LeftCheckPos = FVector::Zero;
+	float4 TopCheckPos = FVector::Zero;
 };
 

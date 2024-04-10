@@ -29,7 +29,7 @@ private:
 
 	std::shared_ptr<UCamera> Camera = nullptr;
 
-	void IsXEnd();
-	void IsYEnd();
+	void XEndCheck();
+	void YEndCheck();
 
 };

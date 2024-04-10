@@ -8,6 +8,7 @@ public:
 	static std::shared_ptr<class CameraManager> MainCameraManager;
 	static std::shared_ptr<class BackGroundMap> BackMap;
 	static float4 MapTexScale;
+	static float Ratio;
 };
 
 

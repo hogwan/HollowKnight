@@ -14,6 +14,8 @@ void Player::StateInit()
 	State.CreateState("CrouchEnd");
 	State.CreateState("Fall");
 	State.CreateState("Attack");
+	State.CreateState("WallSlide");
+	State.CreateState("Flip");
 
 	State.SetUpdateFunction("None", std::bind(&Player::None, this, std::placeholders::_1));
 	State.SetStartFunction("None", std::bind(&Player::NoneStart, this));
@@ -44,6 +46,12 @@ void Player::StateInit()
 
 	State.SetUpdateFunction("Attack", std::bind(&Player::Attack, this, std::placeholders::_1));
 	State.SetStartFunction("Attack", std::bind(&Player::AttackStart, this));
+
+	State.SetUpdateFunction("WallSlide", std::bind(&Player::WallSlide, this, std::placeholders::_1));
+	State.SetStartFunction("WallSlide", std::bind(&Player::WallSlideStart, this));
+
+	State.SetUpdateFunction("Flip", std::bind(&Player::Flip, this, std::placeholders::_1));
+	State.SetStartFunction("Flip", std::bind(&Player::FlipStart, this));
 
 	State.ChangeState("None");
 }
@@ -92,18 +100,33 @@ void Player::None(float _DeltaTime)
 
 void Player::Idle(float _DeltaTime)
 {
-	if (true == IsPress('A') || true == IsPress('a') ||
-		true == IsPress('D') || true == IsPress('d'))
+	if ((IsPress('D') || IsPress('d')) &&
+		(IsPress('A') || IsPress('a')))
 	{
-		if ((IsPress('D') || IsPress('d')) &&
-			(IsPress('A') || IsPress('a')))
+		return;
+	}
+
+	if (IsPress('D') || IsPress('d'))
+	{
+		if (true == RightWallCheck())
+		{
+			return;
+		}
+
+		State.ChangeState("Run");
+		return;
+	}
+
+	if (IsPress('A') || IsPress('a'))
+	{
+		if (true == LeftWallCheck())
 		{
 			return;
 		}
 		State.ChangeState("Run");
 		return;
-	}
 
+	}
 	if (true == IsPress('W') || true == IsPress('w'))
 	{
 		AccLongJump += _DeltaTime;
@@ -169,6 +192,13 @@ void Player::Run(float _DeltaTime)
 
 	if (IsPress('D') || IsPress('d'))
 	{
+		if (true == RightWallCheck())
+		{
+			MoveVector.X = 0.f;
+			State.ChangeState("RunToIdle");
+			return;
+		}
+
 		if (abs(MoveVector.X) < MaxRunSpeed)
 		{
 			MoveVector.X += RunAccel * _DeltaTime;
@@ -181,6 +211,13 @@ void Player::Run(float _DeltaTime)
 
 	if (IsPress('A') || IsPress('a'))
 	{
+		if (true == LeftWallCheck())
+		{
+			MoveVector.X = 0.f;
+			State.ChangeState("RunToIdle");
+			return;
+		}
+
 		if (abs(MoveVector.X) < MaxRunSpeed)
 		{
 			MoveVector.X -= RunAccel * _DeltaTime;
@@ -238,6 +275,12 @@ void Player::Run(float _DeltaTime)
 
 void Player::RunToIdle(float _DeltaTime)
 {
+	if (LeftWallCheck() || RightWallCheck())
+	{
+		MoveVector = FVector::Zero;
+		return;
+	}
+
 	Renderer->SetFrameCallback("RunToIdle", 5, [=]
 		{
 			CurDir;
@@ -290,6 +333,13 @@ void Player::Roll(float _DeltaTime)
 			State.ChangeState("RunToIdle");
 			return;
 		});
+
+	if (LeftWallCheck() || RightWallCheck())
+	{
+		MoveVector.X = 0.f;
+		State.ChangeState("RunToIdle");
+		return;
+	}
 }
 
 void Player::Jump(float _DeltaTime)
@@ -315,8 +365,41 @@ void Player::Jump(float _DeltaTime)
 		return;
 	}
 
+	if (CurDir == EActorDir::Right)
+	{
+		if (RightWallCheck())
+		{
+			MoveVector.X = 0.f;
+			State.ChangeState("WallSlide");
+			return;
+		}
+
+		if (LeftWallCheck())
+		{
+			MoveVector.X = 0.f;
+			return;
+		}
+
+	}
+	if (CurDir == EActorDir::Left)
+	{
+		if (LeftWallCheck())
+		{
+			MoveVector.X = 0.f;
+			State.ChangeState("WallSlide");
+			return;
+		}
+
+		if (RightWallCheck())
+		{
+			MoveVector.X = 0.f;
+			return;
+		}
+
+	}
 	if (IsPress('D') || IsPress('d'))
 	{
+
 		if (MoveVector.X >= MaxAirSpeed)
 		{
 			MoveVector.X = MaxAirSpeed;
@@ -357,8 +440,43 @@ void Player::Fall(float _DeltaTime)
 		return;
 	}
 
+	if (CurDir == EActorDir::Right)
+	{
+		if (RightWallCheck())
+		{
+			MoveVector.X = 0.f;
+			MoveVector.Y = 0.f;
+			State.ChangeState("WallSlide");
+			return;
+		}
+
+		if (LeftWallCheck())
+		{
+			MoveVector.X = 0.f;
+			return;
+		}
+
+	}
+	if (CurDir == EActorDir::Left)
+	{
+		if (LeftWallCheck())
+		{
+			MoveVector.X = 0.f;
+			MoveVector.Y = 0.f;
+			State.ChangeState("WallSlide");
+			return;
+		}
+
+		if (RightWallCheck())
+		{
+			MoveVector.X = 0.f;
+			return;
+		}
+
+	}
 	if (IsPress('D') || IsPress('d'))
 	{
+
 		if (MoveVector.X >= MaxAirSpeed)
 		{
 			MoveVector.X = MaxAirSpeed;
@@ -389,6 +507,128 @@ void Player::Attack(float _DeltaTime)
 			State.ChangeState("Idle");
 			return;
 		});
+}
+
+void Player::WallSlide(float _DeltaTime)
+{
+	if (CurDir == EActorDir::Right)
+	{
+		if (IsPress('a') || IsPress('A'))
+		{
+			AccDrop += _DeltaTime;
+			if (AccDrop > DropTime)
+			{
+				AccDrop = 0.f;
+				AddActorLocation(FVector::Left * 5.f);
+				State.ChangeState("Fall");
+				return;
+			}
+		}
+		if (IsUp('a') || IsUp('A'))
+		{
+			AccDrop = 0.f;
+		}
+	}
+
+	if (CurDir == EActorDir::Left)
+	{
+		if (IsPress('d') || IsPress('D'))
+		{
+			AccDrop += _DeltaTime;
+			if (AccDrop > DropTime)
+			{
+				AccDrop = 0.f;
+				AddActorLocation(FVector::Right * 5.f);
+				State.ChangeState("Fall");
+				return;
+			}
+		}
+		if (IsUp('d') || IsUp('D'))
+		{
+			AccDrop = 0.f;
+		}
+	}
+
+
+	Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos, Color8Bit::Black);
+	if (Color == Color8Bit::Black)
+	{
+		if (CurDir == EActorDir::Right)
+		{
+			CurDir = EActorDir::Left;
+		}
+		else
+		{
+			CurDir = EActorDir::Right;
+		}
+
+		State.ChangeState("RunToIdle");
+		return;
+	}
+
+	if (IsDown('w') || IsDown('W'))
+	{
+		if (CurDir == EActorDir::Right)
+		{
+			CurDir = EActorDir::Left;
+			AddActorLocation(FVector::Left * 10.f);
+		}
+		else
+		{
+			CurDir = EActorDir::Right;
+			AddActorLocation(FVector::Right * 10.f);
+		}
+
+		State.ChangeState("Flip");
+		return;
+	}
+}
+
+void Player::Flip(float _DeltaTime)
+{
+	FVector FlipDirVector = FVector::Zero;
+	if (CurDir == EActorDir::Left)
+	{
+		FlipDirVector = { -1.f,1.f,0.f };
+	}
+	else
+	{
+		FlipDirVector = { 1.f,1.f,0.f };
+	}
+
+	FlipDirVector.Normalize3D();
+
+	AccFlip += _DeltaTime;
+	if (AccFlip > FlipBreakStartTime)
+	{
+		MoveVector -= FlipDirVector * FlipBreakAccel * _DeltaTime;
+	}
+	else
+	{
+		MoveVector = FlipDirVector * FlipSpeed;
+	}
+	
+	if (LandCheck())
+	{
+		AccFlip = 0.f;
+		State.ChangeState("RunToIdle");
+		return;
+	}
+
+	if (RightWallCheck() || LeftWallCheck())
+	{
+		AccFlip = 0.f;
+		MoveVector = FVector::Zero;
+		State.ChangeState("WallSlide");
+		return;
+	}
+
+	Renderer->SetFrameCallback("Flip", 11, [=] {
+		AccFlip = 0.f;
+		State.ChangeState("Fall");
+		return;
+		});
+	
 }
 
 void Player::Crouch(float _DeltaTime)
@@ -480,6 +720,18 @@ void Player::AttackStart()
 	return;
 }
 
+void Player::WallSlideStart()
+{
+	Renderer->ChangeAnimation("WallSlide");
+	return;
+}
+
+void Player::FlipStart()
+{
+	Renderer->ChangeAnimation("Flip");
+	return;
+}
+
 void Player::CrouchStart()
 {
 	Renderer->ChangeAnimation("Crouch");
@@ -494,4 +746,67 @@ void Player::CrouchEndStart()
 void Player::GravityCheck(float _DeltaTime)
 {
 	MoveVector += Gravity * _DeltaTime;
+}
+
+void Player::GroundUp()
+{
+	Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos + FVector::Down, Color8Bit::Black);
+
+	while (true)
+	{
+		if (Color == Color8Bit::Black)
+		{
+			AddActorLocation(FVector::Up);
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
+bool Player::LandCheck()
+{
+	Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos, Color8Bit::Black);
+
+	if (Color == Color8Bit::Black)
+	{
+		MoveVector.Y = 0.f;
+		IsLanded = true;
+		return true;
+	}
+	else
+	{
+		IsLanded = false;
+		return false;
+	}
+
+}
+
+bool Player::RightWallCheck()
+{
+	Color8Bit Color = UConstValue::MapTex->GetColor(RightCheckPos, Color8Bit::Black);
+	
+	if (Color == Color8Bit::Black)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::LeftWallCheck()
+{
+	Color8Bit Color = UConstValue::MapTex->GetColor(LeftCheckPos, Color8Bit::Black);
+	
+	if (Color == Color8Bit::Black)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

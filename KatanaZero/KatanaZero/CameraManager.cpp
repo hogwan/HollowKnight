@@ -26,8 +26,8 @@ void CameraManager::Tick(float _DeltaTime)
 
 	FVector CameraPos = Camera->GetActorLocation();
 
-	IsXEnd();
-	IsYEnd();
+	XEndCheck();
+	YEndCheck();
 
 	switch (CurMode)
 	{
@@ -44,7 +44,7 @@ void CameraManager::Tick(float _DeltaTime)
 	}
 }
 
-void CameraManager::IsXEnd()
+void CameraManager::XEndCheck()
 {
 	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
 	float CameraLeft = Camera->GetActorLocation().X - WindowScale.X / 2.f;
@@ -70,7 +70,7 @@ void CameraManager::IsXEnd()
 
 }
 
-void CameraManager::IsYEnd()
+void CameraManager::YEndCheck()
 {
 	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
 	float CameraBottom = Camera->GetActorLocation().Y - WindowScale.Y / 2.f;

@@ -190,6 +190,17 @@ Color8Bit UEngineTexture::GetColor(unsigned int _X, unsigned int _Y, Color8Bit _
 		return Result;
 	}
 	break;
+	case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:
+	{
+		Color8Bit Result;
+		Ptr += ((_Y * GetScale().iX()) + _X) * 4;
+		Result.B = Ptr[0];
+		Result.G = Ptr[1];
+		Result.R = Ptr[2];
+		Result.A = Ptr[3];
+		return Result;
+	}
+	break;
 	default:
 		MsgBoxAssert("아직 처리할수 없는 GetPixel 포맷입니다");
 		break;
