@@ -1,7 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <EngineCore/StateManager.h>
-#include "EnumHelper.h"
+#include "ContentsHelper.h"
 
 // Ό³Έν :
 class USpriteRenderer;
@@ -31,8 +31,10 @@ private:
 	EActorDir CurDir = EActorDir::None;
 	FVector MoveVector = FVector::Zero;
 
+
 	void StateInit();
 	void DirCheck();
+	void DirUpdate();
 
 	void None(float _DeltaTime);
 	void Idle(float _DeltaTime);

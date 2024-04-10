@@ -54,19 +54,29 @@ void Player::DirCheck()
 		(false == IsPress('D') && false == IsPress('d')))
 	{
 		CurDir = EActorDir::Left;
-		FVector Scale = GetActorScale3D();
-		if (Scale.X > 0.f)
-		{
-			Scale.X = -Scale.X;
-			SetActorScale3D(Scale);
-		}
 	}
 
 	if ((true == IsPress('D') || true == IsPress('d')) &&
 		(false == IsPress('A') && false == IsPress('a')))
 	{
 		CurDir = EActorDir::Right;
-		FVector Scale = GetActorScale3D();
+	}
+}
+
+void Player::DirUpdate()
+{
+	FVector Scale = GetActorScale3D();
+
+	if (CurDir == EActorDir::Left)
+	{
+		if (Scale.X > 0.f)
+		{
+			Scale.X = -Scale.X;
+			SetActorScale3D(Scale);
+		}
+	}
+	else if(CurDir == EActorDir::Right)
+	{
 		if (Scale.X < 0.f)
 		{
 			Scale.X = -Scale.X;

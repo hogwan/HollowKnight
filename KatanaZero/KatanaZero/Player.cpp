@@ -2,8 +2,7 @@
 #include "Player.h"
 #include <EngineCore/Renderer.h>
 #include <EngineCore/SpriteRenderer.h>
-#include "EnumHelper.h"
-#include "ConstValueHelper.h"
+#include "ContentsHelper.h"
 
 Player::Player() 
 {
@@ -18,7 +17,6 @@ Player::~Player()
 void Player::BeginPlay()
 {
 	Super::BeginPlay();
-	SetActorScale3D(FVector(36.f, 35.f, 10.f));
 
 	Renderer->CreateAnimation("Idle", "Idle", 0.08f, true);
 	Renderer->CreateAnimation("Run", "Run", 0.08f, true);
@@ -32,7 +30,7 @@ void Player::BeginPlay()
 
 	StateInit();
 
-	Renderer->SetAutoSize(1.0f, true);
+	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::Player);
 	
 }
@@ -44,6 +42,7 @@ void Player::Tick(float _DeltaTime)
 	std::shared_ptr<UEngineTexture> Tex = UConstValue::MapTex;
 
 	float4 Pos = GetActorLocation();
+	Pos /= 2.f;
 	Pos.Y = -Pos.Y;
 	Color8Bit Color = Tex->GetColor(Pos, Color8Bit::Black);
 
@@ -59,6 +58,7 @@ void Player::Tick(float _DeltaTime)
 	}
 
 	State.Update(_DeltaTime);
+	DirUpdate();
 	AddActorLocation(MoveVector * _DeltaTime);
 }
 

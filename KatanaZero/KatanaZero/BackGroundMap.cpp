@@ -2,7 +2,7 @@
 #include "BackGroundMap.h"
 #include <EngineCore/Renderer.h>
 #include <EngineCore/SpriteRenderer.h>
-#include "EnumHelper.h"
+#include "ContentsHelper.h"
 
 BackGroundMap::BackGroundMap() 
 {
@@ -18,10 +18,11 @@ void BackGroundMap::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Renderer->SetSprite("room_factory_4_colmap.png");
+	Renderer->SetSprite("room_factory_4.png");
 
-	Renderer->SetAutoSize(1.f, true);
+	Renderer->SetAutoSize(2.f, true);
 	Renderer->SetOrder(ERenderOrder::Back);
+
 }
 
 void BackGroundMap::Tick(float _DeltaTime)

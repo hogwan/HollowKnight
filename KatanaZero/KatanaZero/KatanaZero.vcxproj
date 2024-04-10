@@ -23,8 +23,14 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ConstValueHelper.h" />
-    <ClInclude Include="EnumHelper.h" />
+    <ClInclude Include="CameraManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ContentsHelper.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="KatanaZeroCore.h">
       <SubType>
       </SubType>
@@ -47,7 +53,14 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ConstValueHelper.cpp" />
+    <ClCompile Include="CameraManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ContentsHelper.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="KatanaZeroCore.cpp">
       <SubType>
       </SubType>

@@ -189,6 +189,7 @@ Color8Bit UEngineTexture::GetColor(unsigned int _X, unsigned int _Y, Color8Bit _
 		Result.A = Ptr[3];
 		return Result;
 	}
+	break;
 	default:
 		MsgBoxAssert("아직 처리할수 없는 GetPixel 포맷입니다");
 		break;

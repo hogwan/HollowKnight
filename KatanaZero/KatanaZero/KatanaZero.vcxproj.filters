@@ -33,14 +33,17 @@
     <ClCompile Include="BackGroundMap.cpp">
       <Filter>Level\PlayLevel\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="ConstValueHelper.cpp">
-      <Filter>Helper</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Level\PlayLevel\Actor</Filter>
     </ClCompile>
     <ClCompile Include="Player_State.cpp">
       <Filter>Level\PlayLevel\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentsHelper.cpp">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,14 +59,14 @@
     <ClInclude Include="BackGroundMap.h">
       <Filter>Level\PlayLevel\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="EnumHelper.h">
-      <Filter>Helper</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstValueHelper.h">
-      <Filter>Helper</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Level\PlayLevel\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentsHelper.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
