@@ -77,14 +77,14 @@ private:
 	float AccDrop = 0.f;
 	float DropTime = 0.15f;
 
-	float RunAccel = 600.0f;
+	float RunAccel = 1000.0f;
 	float AirAccel = 300.f;
 	float BreakAccel = 600.f;
-	float MaxRunSpeed = 200.0f;
-	float MaxAirSpeed = 250.0f;
+	float MaxRunSpeed = 300.0f;
+	float MaxAirSpeed = 350.0f;
 
 	float FlipSpeed = 500.f;
-	float FlipBreakAccel = 800.f;
+	float FlipBreakAccel = 600.f;
 	float FlipBreakStartTime = 0.1f;
 	float AccFlip = 0.f;
 
@@ -94,7 +94,10 @@ private:
 
 	float RollSpeed = 300.0f;
 	FVector AttackDir = FVector::Zero;
-	float AttackSpeed = 500.f;
+	float AttackSpeed = 800.f;
+	float AttackBreakAccel = 2200.f;
+	float AttackBreakStartTime = 0.1f;
+	float AccAttack = 0.f;
 
 	FVector Gravity = FVector(0.f, -500.f, 0.f);
 

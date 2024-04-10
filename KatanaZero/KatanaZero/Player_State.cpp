@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Player.h"
+#include <EngineCore/Camera.h>
 #include <EngineCore/SpriteRenderer.h>
 
 void Player::StateInit()
@@ -502,9 +503,25 @@ void Player::Fall(float _DeltaTime)
 
 void Player::Attack(float _DeltaTime)
 {
+	AccAttack += _DeltaTime;
+	if (AccAttack > AttackBreakStartTime)
+	{
+		MoveVector -= AttackDir * AttackBreakAccel * _DeltaTime;
+	}
+	else
+	{
+		MoveVector = AttackDir * AttackSpeed;
+	}
+
+	if (LeftWallCheck() || RightWallCheck())
+	{
+		MoveVector.X = 0.f;
+	}
+	
 	Renderer->SetFrameCallback("Attack", 7, [=]
 		{
-			State.ChangeState("Idle");
+			AccAttack = 0.f;
+			State.ChangeState("Fall");
 			return;
 		});
 }
@@ -566,20 +583,33 @@ void Player::WallSlide(float _DeltaTime)
 		return;
 	}
 
+	if (!LeftWallCheck() && !RightWallCheck())
+	{
+		State.ChangeState("Fall");
+		return;
+	}
+
 	if (IsDown('w') || IsDown('W'))
 	{
 		if (CurDir == EActorDir::Right)
 		{
-			CurDir = EActorDir::Left;
 			AddActorLocation(FVector::Left * 10.f);
+			CurDir = EActorDir::Left;
+			State.ChangeState("Flip");
+			return;
 		}
 		else
 		{
-			CurDir = EActorDir::Right;
 			AddActorLocation(FVector::Right * 10.f);
+			CurDir = EActorDir::Right;
+			State.ChangeState("Flip");
+			return;
 		}
+	}
 
-		State.ChangeState("Flip");
+	if (IsDown(VK_LBUTTON))
+	{
+		State.ChangeState("Attack");
 		return;
 	}
 }
@@ -606,6 +636,13 @@ void Player::Flip(float _DeltaTime)
 	else
 	{
 		MoveVector = FlipDirVector * FlipSpeed;
+	}
+
+	if (IsDown(VK_LBUTTON))
+	{
+		AccFlip = 0.f;
+		State.ChangeState("Attack");
+		return;
 	}
 	
 	if (LandCheck())
@@ -715,7 +752,28 @@ void Player::AttackStart()
 {
 	AttackDir.Normalize2D();
 
+	FVector MousePos = GEngine->EngineWindow.GetScreenMousePos();
+	FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
+	FVector PlayerPos = GetActorLocation();
+
+	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
+	FVector TargetPos = FVector(CameraPos.X, CameraPos.Y, 0.f) + FVector(MousePos.X - WindowScale.hX(), -(MousePos.Y - WindowScale.hY()), 0.f);
+
+	AttackDir = TargetPos - PlayerPos;
+	AttackDir.Z = 0.f;
+	AttackDir.Normalize3D();
+
 	MoveVector = AttackDir * AttackSpeed;
+
+	if (MoveVector.X > 0.f)
+	{
+		CurDir = EActorDir::Right;
+	}
+	else
+	{
+		CurDir = EActorDir::Left;
+	}
+
 	Renderer->ChangeAnimation("Attack");
 	return;
 }

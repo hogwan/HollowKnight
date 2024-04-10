@@ -21,6 +21,11 @@ public:
 	{
 		CurMode = _CameraMode;
 	}
+
+	std::shared_ptr<UCamera> GetCamera()
+	{
+		return Camera;
+	}
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

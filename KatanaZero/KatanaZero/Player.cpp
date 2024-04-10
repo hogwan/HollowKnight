@@ -22,7 +22,7 @@ void Player::BeginPlay()
 	Renderer->CreateAnimation("Run", "Run", 0.05f, true);
 	Renderer->CreateAnimation("RunToIdle", "RunToIdle", 0.05f, true);
 	Renderer->CreateAnimation("Roll", "Roll", 0.05f, false);
-	Renderer->CreateAnimation("Jump", "Jump", 0.05f, false);
+	Renderer->CreateAnimation("Jump", "Jump", 0.08f, false);
 	Renderer->CreateAnimation("Crouch", "Crouch", 0.05f, false);
 	Renderer->CreateAnimation("CrouchEnd", "CrouchEnd", 0.05f, true);
 	Renderer->CreateAnimation("Fall", "Fall", 0.05f, true);
