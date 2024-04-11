@@ -1,8 +1,10 @@
 #pragma once
+#include "FXBase.h"
 
 // Ό³Έν :
-class PlayerJumpFX
+class PlayerJumpFX : public FXBase
 {
+	GENERATED_BODY(FXBase)
 public:
 	// constructor destructor
 	PlayerJumpFX();
@@ -15,7 +17,9 @@ public:
 	PlayerJumpFX& operator=(PlayerJumpFX&& _Other) noexcept = delete;
 
 protected:
-
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
+	
 private:
 
 };

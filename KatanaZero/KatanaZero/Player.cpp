@@ -3,7 +3,6 @@
 #include <EngineCore/Renderer.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineDebugMsgWindow.h>
-#include "ContentsHelper.h"
 
 Player::Player() 
 {

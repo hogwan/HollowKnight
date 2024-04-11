@@ -36,15 +36,24 @@ void CameraManager::Tick(float _DeltaTime)
 	case ECameraMode::ChasePlayer:
 		FVector PlayerPos = UConstValue::MainCharacter->GetActorLocation();
 
-		float XGap = PlayerPos.X - CameraPos.X;
-		float YGap = PlayerPos.Y - CameraPos.Y;
+		float XGap = 0.f;
+		float YGap = 0.f;
+
+		if (XEndCheck())
+		{
+			XGap = PlayerPos.X - CameraPos.X;
+		}
+		if (YEndCheck())
+		{
+			YGap = PlayerPos.Y - CameraPos.Y;
+		}
 
 		Camera->AddActorLocation(FVector(XGap, YGap, 0.f) * 1.5f * _DeltaTime);
 		break;
 	}
 }
 
-void CameraManager::XEndCheck()
+bool CameraManager::XEndCheck()
 {
 	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
 	float CameraLeft = Camera->GetActorLocation().X - WindowScale.X / 2.f;
@@ -59,18 +68,22 @@ void CameraManager::XEndCheck()
 	
 	if (CameraLeft < BackMapLeft)
 	{
-		Camera->AddActorLocation(FVector::Right);
+		Camera->SetActorLocation({ BackMapLeft + WindowScale.hX(),Camera->GetActorLocation().Y, Camera->GetActorLocation().Z });
+		return false;
 	}
 
 	if (CameraRight > BackMapRight)
 	{
-		Camera->AddActorLocation(FVector::Left);
+		Camera->SetActorLocation({ BackMapRight - WindowScale.hX(),Camera->GetActorLocation().Y, Camera->GetActorLocation().Z });
+		return false;
 	}
+
+	return true;
 
 
 }
 
-void CameraManager::YEndCheck()
+bool CameraManager::YEndCheck()
 {
 	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
 	float CameraBottom = Camera->GetActorLocation().Y - WindowScale.Y / 2.f;
@@ -84,11 +97,15 @@ void CameraManager::YEndCheck()
 
 	if (CameraBottom < BackMapBottom)
 	{
-		Camera->AddActorLocation(FVector::Up);
+		Camera->SetActorLocation({ Camera->GetActorLocation().X,BackMapBottom + WindowScale.hY(), Camera->GetActorLocation().Z});
+		return false;
 	}
 
 	if (CameraTop > BackMapTop)
 	{
-		Camera->AddActorLocation(FVector::Down);
+		Camera->SetActorLocation({ Camera->GetActorLocation().X,BackMapTop - WindowScale.hY(), Camera->GetActorLocation().Z });
+		return false;
 	}
+
+	return true;
 }

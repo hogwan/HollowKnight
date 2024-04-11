@@ -3,6 +3,9 @@
 #include <EngineCore/Camera.h>
 #include <EngineCore/SpriteRenderer.h>
 #include "PlayerSlashFX.h"
+#include "PlayerRunFX.h"
+#include "PlayerJumpFX.h"
+#include "PlayerLandFX.h"
 
 void Player::StateInit()
 {
@@ -179,6 +182,14 @@ void Player::Idle(float _DeltaTime)
 void Player::Run(float _DeltaTime)
 {
 	DirCheck();
+
+	AccRunFXRespawn += _DeltaTime;
+	if (AccRunFXRespawn > RunFXRespawnTime)
+	{
+		std::shared_ptr<PlayerRunFX> RunFX = GetWorld()->SpawnActor<PlayerRunFX>("RunFX");
+		RunFX->SetActorLocation(GetActorLocation() + RunFXOffset);
+		AccRunFXRespawn = 0.f;
+	}
 
 	if ((IsPress('D') || IsPress('d')) &&
 		(IsPress('A') || IsPress('a')))
@@ -479,6 +490,8 @@ void Player::Fall(float _DeltaTime)
 
 	if (IsLanded)
 	{
+		std::shared_ptr<PlayerLandFX> LandFX = GetWorld()->SpawnActor<PlayerLandFX>("LandFX");
+		LandFX->SetActorLocation(GetActorLocation() + LandFXOffset);
 		State.ChangeState("RunToIdle");
 		return;
 	}
@@ -813,6 +826,8 @@ void Player::RollStart()
 
 void Player::JumpStart()
 {
+	std::shared_ptr<PlayerJumpFX> JumpFX = GetWorld()->SpawnActor<PlayerJumpFX>("JumpFX");
+	JumpFX->SetActorLocation(GetActorLocation() + JumpFXOffset);
 	AddActorLocation(FVector::Up * 10.f);
 	Renderer->ChangeAnimation("Jump");
 	return;

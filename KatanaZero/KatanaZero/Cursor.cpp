@@ -21,7 +21,7 @@ void Cursor::BeginPlay()
 
 	Renderer->SetSprite("spr_cursor_0.png");
 	Renderer->SetOrder(ERenderOrder::Cursor);
-	Renderer->SetAutoSize(1.f, true);
+	Renderer->SetAutoSize(2.f, true);
 }
 
 void Cursor::Tick(float _DeltaTime)

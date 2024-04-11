@@ -5,6 +5,7 @@
 
 // Ό³Έν :
 class USpriteRenderer;
+
 class Player : public AActor
 {
 	GENERATED_BODY(AActor)
@@ -24,6 +25,11 @@ public:
 	FVector GetAttackDir()
 	{
 		return AttackDir;
+	}
+
+	EActorDir GetCurDir()
+	{
+		return CurDir;
 	}
 protected:
 	void BeginPlay() override;
@@ -120,5 +126,12 @@ private:
 	float4 RightCheckPos = FVector::Zero;
 	float4 LeftCheckPos = FVector::Zero;
 	float4 TopCheckPos = FVector::Zero;
+
+
+	float RunFXRespawnTime = 0.2f;
+	float AccRunFXRespawn = 0.f;
+	FVector JumpFXOffset = FVector(0.f, 15.f, 0.f); 
+	FVector RunFXOffset = FVector(0.f, -20.f, 0.f);
+	FVector LandFXOffset = FVector(0.f, -20.f, 0.f);
 };
 

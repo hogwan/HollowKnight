@@ -1,11 +1,10 @@
 #include "PreCompile.h"
 #include "PlayerSlashFX.h"
-#include "ContentsHelper.h"
 #include "Player.h"
 
 PlayerSlashFX::PlayerSlashFX() 
 {
-	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
+
 }
 
 PlayerSlashFX::~PlayerSlashFX() 
@@ -46,11 +45,6 @@ void PlayerSlashFX::Tick(float _DeltaTime)
 	{
 		FVector Scale = GetActorScale3D();
 		SetActorScale3D(FVector(-Scale.X, Scale.Y, Scale.Z));
-	}
-
-	if (Renderer->IsCurAnimationEnd())
-	{
-		Renderer->SetActive(false);
 	}
 }
 

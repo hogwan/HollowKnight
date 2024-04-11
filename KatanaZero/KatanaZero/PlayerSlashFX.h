@@ -1,11 +1,10 @@
 #pragma once
-#include <EngineCore/Actor.h>
-#include <EngineCore/SpriteRenderer.h>
+#include "FXBase.h"
 
 // Ό³Έν :
-class PlayerSlashFX : public AActor
+class PlayerSlashFX : public FXBase
 {
-	GENERATED_BODY(AActor)
+	GENERATED_BODY(FXBase)
 public:
 	// constructor destructor
 	PlayerSlashFX();
@@ -22,7 +21,6 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-	USpriteRenderer* Renderer = nullptr;
 	float4 Color;
 	FVector Dir = FVector::Zero;
 };

@@ -1,8 +1,10 @@
 #pragma once
+#include "FXBase.h"
 
 // Ό³Έν :
-class PlayerLandFX
+class PlayerLandFX : public FXBase
 {
+	GENERATED_BODY(FXBase)
 public:
 	// constructor destructor
 	PlayerLandFX();
@@ -15,8 +17,11 @@ public:
 	PlayerLandFX& operator=(PlayerLandFX&& _Other) noexcept = delete;
 
 protected:
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
+
 
 private:
-
+	
 };
 
