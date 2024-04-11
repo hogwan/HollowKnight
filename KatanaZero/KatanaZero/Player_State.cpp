@@ -44,6 +44,7 @@ void Player::StateInit()
 
 	State.SetUpdateFunction("Fall", std::bind(&Player::Fall, this, std::placeholders::_1));
 	State.SetStartFunction("Fall", std::bind(&Player::FallStart, this));
+	State.SetEndFunction("Fall", std::bind(&Player::FallEnd, this));
 
 	State.SetUpdateFunction("Attack", std::bind(&Player::Attack, this, std::placeholders::_1));
 	State.SetStartFunction("Attack", std::bind(&Player::AttackStart, this));
@@ -150,9 +151,9 @@ void Player::Idle(float _DeltaTime)
 
 	if (true == IsPress('S') || true == IsPress('s'))
 	{
-		if (IsColDown)
+		if (OnProjectionWall)
 		{
-			//내려가는로직
+			AddActorLocation(FVector::Down * 10.f);
 			return;
 		}
 
@@ -200,13 +201,27 @@ void Player::Run(float _DeltaTime)
 			return;
 		}
 
-		if (abs(MoveVector.X) < MaxRunSpeed)
+		FVector Dir = FVector::Zero;
+		if (OnLeftUpStep)
 		{
-			MoveVector.X += RunAccel * _DeltaTime;
+			Dir = { 1.f,-1.f,0.f };
+		}
+		else if (OnRightUpStep)
+		{
+			Dir = { 1.f,1.f,0.f };
 		}
 		else
 		{
-			MoveVector.X = MaxRunSpeed;
+			Dir = { 1.f,0.f,0.f };
+		}
+
+		if (MoveVector.Size3D() < MaxRunSpeed)
+		{
+			MoveVector += Dir * RunAccel * _DeltaTime;
+		}
+		else
+		{
+			MoveVector = Dir * MaxRunSpeed;
 		}
 	}
 
@@ -219,13 +234,27 @@ void Player::Run(float _DeltaTime)
 			return;
 		}
 
-		if (abs(MoveVector.X) < MaxRunSpeed)
+		FVector Dir = FVector::Zero;
+		if (OnLeftUpStep)
 		{
-			MoveVector.X -= RunAccel * _DeltaTime;
+			Dir = { -1.f,1.f,0.f };
+		}
+		else if (OnRightUpStep)
+		{
+			Dir = { -1.f,-1.f,0.f };
 		}
 		else
 		{
-			MoveVector.X = -MaxRunSpeed;
+			Dir = { -1.f,0.f,0.f };
+		}
+
+		if (MoveVector.Size3D() < MaxRunSpeed)
+		{
+			MoveVector += Dir * RunAccel * _DeltaTime;
+		}
+		else
+		{
+			MoveVector = Dir * MaxRunSpeed;
 		}
 	}
 
@@ -251,12 +280,6 @@ void Player::Run(float _DeltaTime)
 
 	if (true == IsPress('S') || true == IsPress('s'))
 	{
-		if (IsColDown)
-		{
-			//내려가는로직
-			return;
-		}
-
 		State.ChangeState("Roll");
 		return;
 	}
@@ -748,16 +771,21 @@ void Player::FallStart()
 	return;
 }
 
+void Player::FallEnd()
+{
+	MoveVector.Y = 0.f;
+}
+
 void Player::AttackStart()
 {
-	AttackDir.Normalize2D();
-
 	FVector MousePos = GEngine->EngineWindow.GetScreenMousePos();
 	FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
 	FVector PlayerPos = GetActorLocation();
 
 	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
-	FVector TargetPos = FVector(CameraPos.X, CameraPos.Y, 0.f) + FVector(MousePos.X - WindowScale.hX(), -(MousePos.Y - WindowScale.hY()), 0.f);
+	FVector TargetPos = 
+		FVector(CameraPos.X,CameraPos.Y, 0.f) +
+		FVector(MousePos.X - WindowScale.hX(), -(MousePos.Y - WindowScale.hY()),0.f);
 
 	AttackDir = TargetPos - PlayerPos;
 	AttackDir.Z = 0.f;
@@ -769,6 +797,7 @@ void Player::AttackStart()
 	{
 		CurDir = EActorDir::Right;
 	}
+
 	else
 	{
 		CurDir = EActorDir::Left;
@@ -829,13 +858,42 @@ bool Player::LandCheck()
 
 	if (Color == Color8Bit::Black)
 	{
-		MoveVector.Y = 0.f;
 		IsLanded = true;
 		return true;
+	}
+	else if (Color == Color8Bit::Red)
+	{
+		IsLanded = true;
+		OnLeftUpStep = true;
+		return true;
+	}
+	else if (Color == Color8Bit::Yellow)
+	{
+		IsLanded = true;
+		OnRightUpStep = true;
+		return true;
+	}
+	else if (Color == Color8Bit::Blue)
+	{
+		if (MoveVector.Y > 0.f)
+		{
+			IsLanded = false;
+			return false;
+		}
+		else
+		{
+			MoveVector.Y = 0.f;
+			IsLanded = true;
+			OnProjectionWall = true;
+			return true;
+		}
 	}
 	else
 	{
 		IsLanded = false;
+		OnLeftUpStep = false;
+		OnRightUpStep = false;
+		OnProjectionWall = false;
 		return false;
 	}
 

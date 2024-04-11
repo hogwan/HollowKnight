@@ -62,6 +62,8 @@ private:
 	void WallSlideStart();
 	void FlipStart();
 
+	void FallEnd();
+
 	void GravityCheck(float _DeltaTime);
 	void GroundUp();
 	bool LandCheck();
@@ -95,13 +97,15 @@ private:
 	float RollSpeed = 300.0f;
 	FVector AttackDir = FVector::Zero;
 	float AttackSpeed = 800.f;
-	float AttackBreakAccel = 2200.f;
-	float AttackBreakStartTime = 0.1f;
+	float AttackBreakAccel = 2000.f;
+	float AttackBreakStartTime = 0.05f;
 	float AccAttack = 0.f;
 
 	FVector Gravity = FVector(0.f, -500.f, 0.f);
 
-	bool IsColDown = false;
+	bool OnLeftUpStep = false;
+	bool OnRightUpStep = false;
+	bool OnProjectionWall = false;
 
 	float4 BottomCheckPos = FVector::Zero;
 	float4 RightCheckPos = FVector::Zero;
