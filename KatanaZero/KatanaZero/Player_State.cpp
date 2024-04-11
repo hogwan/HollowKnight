@@ -307,25 +307,14 @@ void Player::RunToIdle(float _DeltaTime)
 
 	Renderer->SetFrameCallback("RunToIdle", 5, [=]
 		{
-			CurDir;
-			FVector CurScale = GetActorScale3D();
-
 			State.ChangeState("Idle");
 			return;
 		});
 
-	FVector BreakDir = FVector::Zero;
-	if (MoveVector.X > 0.f)
-	{
-		BreakDir = FVector::Left;
-	}
-	else
-	{
-		BreakDir = FVector::Right;
-	}
+	FVector BreakDir = -MoveVector;
+	BreakDir.Normalize3D();
 
 	MoveVector += BreakDir * BreakAccel * _DeltaTime;
-
 
 }
 
@@ -750,6 +739,35 @@ void Player::RunStart()
 
 void Player::RunToIdleStart()
 {
+	if (OnLeftUpStep)
+	{
+		if (MoveVector.X > 0.f)
+		{
+			FVector Dir = FVector(1.0f, -1.0f, 0.f);
+			Dir.Normalize3D();
+			MoveVector = Dir * MoveVector.Size3D();
+		}
+		else
+		{
+			FVector Dir = FVector(-1.0f, 1.0f, 0.f);
+			Dir.Normalize3D();
+			MoveVector = Dir * MoveVector.Size3D();
+		}
+	}
+	else if (OnRightUpStep)
+	{
+		if (MoveVector.X > 0.f)
+		{
+			FVector Dir = FVector(1.0f, 1.0f, 0.f);
+			MoveVector = Dir * MoveVector.Size3D();
+		}
+		else
+		{
+			FVector Dir = FVector(-1.0f, -1.0f, 0.f);
+			MoveVector = Dir * MoveVector.Size3D();
+		}
+	}
+
 	Renderer->ChangeAnimation("RunToIdle");
 	return;
 }
