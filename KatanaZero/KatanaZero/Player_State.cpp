@@ -325,6 +325,8 @@ void Player::RunToIdle(float _DeltaTime)
 	}
 
 	MoveVector += BreakDir * BreakAccel * _DeltaTime;
+
+
 }
 
 void Player::Roll(float _DeltaTime)
@@ -859,18 +861,25 @@ bool Player::LandCheck()
 	if (Color == Color8Bit::Black)
 	{
 		IsLanded = true;
+		OnProjectionWall = false;
+		OnLeftUpStep = false;
+		OnRightUpStep = false;
 		return true;
 	}
 	else if (Color == Color8Bit::Red)
 	{
 		IsLanded = true;
 		OnLeftUpStep = true;
+		OnRightUpStep = false;
+		OnProjectionWall = false;
 		return true;
 	}
 	else if (Color == Color8Bit::Yellow)
 	{
 		IsLanded = true;
 		OnRightUpStep = true;
+		OnLeftUpStep = false;
+		OnProjectionWall = false;
 		return true;
 	}
 	else if (Color == Color8Bit::Blue)
@@ -887,6 +896,9 @@ bool Player::LandCheck()
 			OnProjectionWall = true;
 			return true;
 		}
+
+		OnLeftUpStep = false;
+		OnRightUpStep = false;
 	}
 	else
 	{
