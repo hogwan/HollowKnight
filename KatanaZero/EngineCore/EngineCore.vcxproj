@@ -171,6 +171,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imconfig.h" />
+    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imgui.h" />
+    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_impl_dx11.h" />
+    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_impl_win32.h" />
+    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_internal.h" />
+    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imstb_rectpack.h" />
+    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imstb_textedit.h" />
+    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imstb_truetype.h" />
     <ClInclude Include="Actor.h">
       <SubType>
       </SubType>
@@ -196,6 +204,18 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="EngineCore.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineDebugMsgWindow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineEditorGUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineEditorWindow.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -309,6 +329,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui.cpp" />
+    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_impl_dx11.cpp" />
+    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_tables.cpp" />
+    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_widgets.cpp" />
     <ClCompile Include="Actor.cpp">
       <SubType>
       </SubType>
@@ -334,6 +361,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineDebugMsgWindow.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineEditorGUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineEditorWindow.cpp">
       <SubType>
       </SubType>
     </ClCompile>

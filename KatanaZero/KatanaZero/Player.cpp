@@ -2,6 +2,7 @@
 #include "Player.h"
 #include <EngineCore/Renderer.h>
 #include <EngineCore/SpriteRenderer.h>
+#include <EngineCore/EngineDebugMsgWindow.h>
 #include "ContentsHelper.h"
 
 Player::Player() 
@@ -20,7 +21,6 @@ void Player::BeginPlay()
 
 	RendererInit();
 	StateInit();
-	
 }
 
 void Player::Tick(float _DeltaTime)
@@ -28,6 +28,7 @@ void Player::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	CheckPosInit();
+	//GroundUp();
 	if (LandCheck() == false)
 	{
 		GravityCheck(_DeltaTime);
@@ -36,7 +37,13 @@ void Player::Tick(float _DeltaTime)
 	State.Update(_DeltaTime);
 	DirUpdate();
 
+	if (TopWallCheck())
+	{
+		MoveVector.Y = -MoveVector.Y;
+	}
 	AddActorLocation(MoveVector * _DeltaTime);
+
+	DebugMessageFunction();
 }
 
 void Player::RendererInit()
@@ -53,16 +60,15 @@ void Player::RendererInit()
 	Renderer->CreateAnimation("WallSlide", "WallSlide", 0.08f, false);
 	Renderer->CreateAnimation("Flip", "Flip", 0.05f, false);
 
-
-	Renderer->SetAutoSize(1.5f, true);
+	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::Player);
 }
 void Player::CheckPosInit()
 {
 	FVector Pos = GetActorLocation();
 	BottomCheckPos = Pos + FVector(0.f, -20.f, 0.f);
-	RightCheckPos = Pos + FVector(20.f, 0.f, 0.f);
-	LeftCheckPos = Pos + FVector(-20.f, 0.f, 0.f);
+	RightCheckPos = Pos + FVector(20.f, 10.f, 0.f);
+	LeftCheckPos = Pos + FVector(-20.f, 10.f, 0.f);
 	TopCheckPos = Pos + FVector(0.f, 20.f, 0.f);
 
 	BottomCheckPos /= UConstValue::Ratio;
@@ -73,6 +79,39 @@ void Player::CheckPosInit()
 	LeftCheckPos.Y = -LeftCheckPos.Y;
 	TopCheckPos /= UConstValue::Ratio;
 	TopCheckPos.Y = -TopCheckPos.Y;
+}
+
+void Player::DebugMessageFunction()
+{
+
+	{
+		std::string Msg = std::format("PlayerPos : {}\n", GetActorLocation().ToString());
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+
+	{
+		std::string temp;
+		if (CurDir == EActorDir::Left)
+		{
+			temp = "Left";
+		}
+		else if (CurDir == EActorDir::Right)
+		{
+			temp = "Right";
+		}
+		else
+		{
+			temp = "None";
+		}
+
+		std::string Msg = std::format("CurDir : {}\n", temp);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+
+	{
+		std::string Msg = std::format("MoveVector : {}\n", MoveVector.ToString());
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
 }
 
 

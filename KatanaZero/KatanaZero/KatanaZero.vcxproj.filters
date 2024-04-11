@@ -45,6 +45,9 @@
     <ClCompile Include="CameraManager.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerSlashFX.cpp">
+      <Filter>Level\PlayLevel\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -67,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSlashFX.h">
+      <Filter>Level\PlayLevel\Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

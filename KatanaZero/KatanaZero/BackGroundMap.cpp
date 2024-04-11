@@ -18,7 +18,7 @@ void BackGroundMap::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Renderer->SetSprite("TestColMap.png");
+	Renderer->SetSprite("room_factory_2.png");
 
 	Renderer->SetAutoSize(UConstValue::Ratio, true);
 	Renderer->SetOrder(ERenderOrder::Back);

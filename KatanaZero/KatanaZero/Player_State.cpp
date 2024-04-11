@@ -2,6 +2,7 @@
 #include "Player.h"
 #include <EngineCore/Camera.h>
 #include <EngineCore/SpriteRenderer.h>
+#include "PlayerSlashFX.h"
 
 void Player::StateInit()
 {
@@ -553,7 +554,7 @@ void Player::Attack(float _DeltaTime)
 	{
 		MoveVector = AttackDir * AttackSpeed;
 	}
-
+	
 	if (LeftWallCheck() || RightWallCheck())
 	{
 		MoveVector.X = 0.f;
@@ -565,6 +566,12 @@ void Player::Attack(float _DeltaTime)
 			State.ChangeState("Fall");
 			return;
 		});
+
+	if (TopWallCheck() || LeftWallCheck() || RightWallCheck() || LandCheck())
+	{
+		State.ChangeState("Fall");
+		return;
+	}
 }
 
 void Player::WallSlide(float _DeltaTime)
@@ -848,6 +855,7 @@ void Player::AttackStart()
 	{
 		CurDir = EActorDir::Left;
 	}
+	GetWorld()->SpawnActor<PlayerSlashFX>("Slash");
 
 	Renderer->ChangeAnimation("Attack");
 	return;
@@ -964,5 +972,36 @@ bool Player::LeftWallCheck()
 	else
 	{
 		return false;
+	}
+}
+
+bool Player::TopWallCheck()
+{
+	Color8Bit Color = UConstValue::MapTex->GetColor(TopCheckPos, Color8Bit::Black);
+
+	if (Color == Color8Bit::Black)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Player::GroundUp()
+{
+	while (true)
+	{
+		BottomCheckPos = GetActorLocation() + FVector(0.f, -20.f, 0.f);
+		Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos + FVector::Up*2, Color8Bit::Magenta);
+		if (Color == Color8Bit::Black)
+		{
+			AddActorLocation(FVector::Up);
+		}
+		else
+		{
+			break;
+		}
 	}
 }

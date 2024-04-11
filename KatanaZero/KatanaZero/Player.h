@@ -20,6 +20,11 @@ public:
 	Player& operator=(Player&& _Other) noexcept = delete;
 
 	UStateManager State;
+
+	FVector GetAttackDir()
+	{
+		return AttackDir;
+	}
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -35,8 +40,10 @@ private:
 	void StateInit();
 	void RendererInit();
 	void CheckPosInit();
+	void DebugMessageFunction();
 	void DirCheck();
 	void DirUpdate();
+	void GroundUp();
 
 	void None(float _DeltaTime);
 	void Idle(float _DeltaTime);
@@ -70,6 +77,7 @@ private:
 	bool LandCheck();
 	bool RightWallCheck();
 	bool LeftWallCheck();
+	bool TopWallCheck();
 
 	bool LongJump = false;
 	bool IsLanded = false;
@@ -82,7 +90,7 @@ private:
 
 	float RunAccel = 1000.0f;
 	float AirAccel = 300.f;
-	float BreakAccel = 600.f;
+	float BreakAccel = 1500.f;
 	float MaxRunSpeed = 300.0f;
 	float MaxAirSpeed = 350.0f;
 

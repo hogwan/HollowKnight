@@ -16,6 +16,7 @@ enum class ERenderOrder
 {
 	Back,
 	Player,
+	FX,
 };
 
 enum class EActorDir
