@@ -58,6 +58,7 @@ void Player::StateInit()
 	State.ChangeState("None");
 }
 
+
 void Player::DirCheck()
 {
 	if ((true == IsPress('A') || true == IsPress('a')) &&
@@ -135,7 +136,7 @@ void Player::Idle(float _DeltaTime)
 		if (AccLongJump > LongJumpTime)
 		{
 			AccLongJump = 0.f;
-			MoveVector += LongJumpForce;
+			MoveVector.Y = LongJumpForce.Y;
 			State.ChangeState("Jump");
 			return;
 		}
@@ -144,7 +145,7 @@ void Player::Idle(float _DeltaTime)
 	if (true == IsUp('W') || true == IsUp('w'))
 	{
 		AccLongJump = 0.f;
-		MoveVector += ShortJumpForce;
+		MoveVector.Y = ShortJumpForce.Y;
 		State.ChangeState("Jump");
 		return;
 	}
@@ -264,16 +265,15 @@ void Player::Run(float _DeltaTime)
 		if (AccLongJump > LongJumpTime)
 		{
 			AccLongJump = 0.f;
-			MoveVector += LongJumpForce;
+			MoveVector.Y = LongJumpForce.Y;
 			State.ChangeState("Jump");
 			return;
 		}
-
 	}
 	if (true == IsUp('W') || true == IsUp('w'))
 	{
 		AccLongJump = 0.f;
-		MoveVector += ShortJumpForce;
+		MoveVector.Y = ShortJumpForce.Y;
 		State.ChangeState("Jump");
 		return;
 	}
@@ -324,11 +324,38 @@ void Player::Roll(float _DeltaTime)
 	if (CurDir == EActorDir::Left)
 	{
 		MoveDir = FVector::Left;
+		if (OnLeftUpStep)
+		{
+			{
+				MoveDir = FVector(-1.0f, 1.0f, 0.f);
+				MoveDir.Normalize3D();
+			}
+		}
+		else if (OnRightUpStep)
+		{
+			{
+				MoveDir = FVector(-1.0f, -1.0f, 0.f);
+				MoveDir.Normalize3D();
+			}
+		}
+
 	}
 	else
 	{
 		MoveDir = FVector::Right;
+
+		if (OnLeftUpStep)
+		{
+			MoveDir = FVector(1.0f, -1.0f, 0.f);
+			MoveDir.Normalize3D();
+		}
+		else if (OnRightUpStep)
+		{
+			MoveDir = FVector(1.0f, 1.0f, 0.f);
+			MoveDir.Normalize3D();
+		}
 	}
+
 	MoveVector = MoveDir * RollSpeed;
 
 	if (true == IsDown(VK_LBUTTON))
@@ -767,7 +794,6 @@ void Player::RunToIdleStart()
 			MoveVector = Dir * MoveVector.Size3D();
 		}
 	}
-
 	Renderer->ChangeAnimation("RunToIdle");
 	return;
 }
@@ -855,29 +881,13 @@ void Player::GravityCheck(float _DeltaTime)
 	MoveVector += Gravity * _DeltaTime;
 }
 
-void Player::GroundUp()
-{
-	Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos + FVector::Down, Color8Bit::Black);
-
-	while (true)
-	{
-		if (Color == Color8Bit::Black)
-		{
-			AddActorLocation(FVector::Up);
-		}
-		else
-		{
-			break;
-		}
-	}
-}
-
 bool Player::LandCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos, Color8Bit::Black);
 
 	if (Color == Color8Bit::Black)
 	{
+		MoveVector.Y = 0.f;
 		IsLanded = true;
 		OnProjectionWall = false;
 		OnLeftUpStep = false;

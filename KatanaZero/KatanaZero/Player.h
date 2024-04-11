@@ -33,6 +33,8 @@ private:
 
 
 	void StateInit();
+	void RendererInit();
+	void CheckPosInit();
 	void DirCheck();
 	void DirUpdate();
 
@@ -65,7 +67,6 @@ private:
 	void FallEnd();
 
 	void GravityCheck(float _DeltaTime);
-	void GroundUp();
 	bool LandCheck();
 	bool RightWallCheck();
 	bool LeftWallCheck();

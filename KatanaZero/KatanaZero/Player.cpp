@@ -18,6 +18,29 @@ void Player::BeginPlay()
 {
 	Super::BeginPlay();
 
+	RendererInit();
+	StateInit();
+	
+}
+
+void Player::Tick(float _DeltaTime)
+{
+	Super::Tick(_DeltaTime);
+
+	CheckPosInit();
+	if (LandCheck() == false)
+	{
+		GravityCheck(_DeltaTime);
+	}
+	
+	State.Update(_DeltaTime);
+	DirUpdate();
+
+	AddActorLocation(MoveVector * _DeltaTime);
+}
+
+void Player::RendererInit()
+{
 	Renderer->CreateAnimation("Idle", "Idle", 0.05f, true);
 	Renderer->CreateAnimation("Run", "Run", 0.05f, true);
 	Renderer->CreateAnimation("RunToIdle", "RunToIdle", 0.05f, true);
@@ -30,18 +53,13 @@ void Player::BeginPlay()
 	Renderer->CreateAnimation("WallSlide", "WallSlide", 0.08f, false);
 	Renderer->CreateAnimation("Flip", "Flip", 0.05f, false);
 
-	StateInit();
 
 	Renderer->SetAutoSize(1.5f, true);
 	Renderer->SetOrder(ERenderOrder::Player);
-	
 }
-
-void Player::Tick(float _DeltaTime)
+void Player::CheckPosInit()
 {
-	Super::Tick(_DeltaTime);
-
-	float4 Pos = GetActorLocation();
+	FVector Pos = GetActorLocation();
 	BottomCheckPos = Pos + FVector(0.f, -20.f, 0.f);
 	RightCheckPos = Pos + FVector(20.f, 0.f, 0.f);
 	LeftCheckPos = Pos + FVector(-20.f, 0.f, 0.f);
@@ -55,18 +73,6 @@ void Player::Tick(float _DeltaTime)
 	LeftCheckPos.Y = -LeftCheckPos.Y;
 	TopCheckPos /= UConstValue::Ratio;
 	TopCheckPos.Y = -TopCheckPos.Y;
-
-	if (LandCheck() == false)
-	{
-		GravityCheck(_DeltaTime);
-	}
-	//GroundUp();
-	
-
-	State.Update(_DeltaTime);
-	DirUpdate();
-
-	AddActorLocation(MoveVector * _DeltaTime);
 }
 
 
