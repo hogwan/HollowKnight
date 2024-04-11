@@ -42,9 +42,6 @@
     <ClCompile Include="ContentsHelper.cpp">
       <Filter>Helper</Filter>
     </ClCompile>
-    <ClCompile Include="CameraManager.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Actor\Player</Filter>
     </ClCompile>
@@ -60,7 +57,7 @@
     <ClCompile Include="PlayerLandFX.cpp">
       <Filter>Actor\Player\FX</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerRunFX.cpp">
+    <ClCompile Include="PlayerDustFX.cpp">
       <Filter>Actor\Player\FX</Filter>
     </ClCompile>
     <ClCompile Include="PlayerSlashFX.cpp">
@@ -71,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="FXBase.cpp">
       <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>Helper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +86,6 @@
     <ClInclude Include="ContentsHelper.h">
       <Filter>Helper</Filter>
     </ClInclude>
-    <ClInclude Include="CameraManager.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Actor\Player</Filter>
     </ClInclude>
@@ -101,7 +98,7 @@
     <ClInclude Include="PlayerLandFX.h">
       <Filter>Actor\Player\FX</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerRunFX.h">
+    <ClInclude Include="PlayerDustFX.h">
       <Filter>Actor\Player\FX</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSlashFX.h">
@@ -112,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="FXBase.h">
       <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>Helper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

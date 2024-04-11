@@ -55,7 +55,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayerRunFX.h">
+    <ClInclude Include="PlayerDustFX.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -109,7 +109,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PlayerRunFX.cpp">
+    <ClCompile Include="PlayerDustFX.cpp">
       <SubType>
       </SubType>
     </ClCompile>

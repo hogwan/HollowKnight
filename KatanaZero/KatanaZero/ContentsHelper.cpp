@@ -11,4 +11,4 @@ std::shared_ptr<Player> UConstValue::MainCharacter;
 std::shared_ptr<CameraManager> UConstValue::MainCameraManager;
 std::shared_ptr<BackGroundMap> UConstValue::BackMap;
 std::shared_ptr<Cursor> UConstValue::MainCursor;
-float UConstValue::Ratio = 1.0f;
+float UConstValue::Ratio = 0.8f;

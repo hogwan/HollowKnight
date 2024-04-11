@@ -1,17 +1,18 @@
 #include "PreCompile.h"
-#include "PlayerRunFX.h"
+#include "PlayerDustFX.h"
 #include <EngineCore/SpriteRenderer.h>
+#include <EngineBase/EngineRandom.h>
 #include "Player.h"
 
-PlayerRunFX::PlayerRunFX() 
+PlayerDustFX::PlayerDustFX() 
 {
 }
 
-PlayerRunFX::~PlayerRunFX() 
+PlayerDustFX::~PlayerDustFX() 
 {
 }
 
-void PlayerRunFX::BeginPlay()
+void PlayerDustFX::BeginPlay()
 {
 	Super::BeginPlay();
 	Renderer->CreateAnimation("RunFX", "RunFX", 0.05f);
@@ -23,10 +24,18 @@ void PlayerRunFX::BeginPlay()
 	if (UConstValue::MainCharacter->GetCurDir() == EActorDir::Right)
 	{
 		Reverse = true;
+		MoveVector.X = -5.f;
 	}
+	else
+	{
+		MoveVector.X = 5.f;
+	}
+
+	MoveVector.Y = UEngineRandom::MainRandom.RandomFloat(-3.f, 3.f);
+	MoveVector.Z = 0.f;
 }
 
-void PlayerRunFX::Tick(float _DeltaTime)
+void PlayerDustFX::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
@@ -37,5 +46,8 @@ void PlayerRunFX::Tick(float _DeltaTime)
 		Scale.X = -Scale.X;
 		SetActorScale3D(Scale);
 	}
+
+	MoveVector.Normalize3D();
+	AddActorLocation(MoveVector * Speed * _DeltaTime);
 }
 

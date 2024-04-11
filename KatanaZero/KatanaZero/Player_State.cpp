@@ -3,7 +3,7 @@
 #include <EngineCore/Camera.h>
 #include <EngineCore/SpriteRenderer.h>
 #include "PlayerSlashFX.h"
-#include "PlayerRunFX.h"
+#include "PlayerDustFX.h"
 #include "PlayerJumpFX.h"
 #include "PlayerLandFX.h"
 
@@ -182,14 +182,6 @@ void Player::Idle(float _DeltaTime)
 void Player::Run(float _DeltaTime)
 {
 	DirCheck();
-
-	AccRunFXRespawn += _DeltaTime;
-	if (AccRunFXRespawn > RunFXRespawnTime)
-	{
-		std::shared_ptr<PlayerRunFX> RunFX = GetWorld()->SpawnActor<PlayerRunFX>("RunFX");
-		RunFX->SetActorLocation(GetActorLocation() + RunFXOffset);
-		AccRunFXRespawn = 0.f;
-	}
 
 	if ((IsPress('D') || IsPress('d')) &&
 		(IsPress('A') || IsPress('a')))
@@ -589,6 +581,23 @@ void Player::Attack(float _DeltaTime)
 
 void Player::WallSlide(float _DeltaTime)
 {
+	AccDustFXRespawn += _DeltaTime;
+	if (AccDustFXRespawn > DustFXRespawnTime)
+	{
+		AccDustFXRespawn = 0.f;
+		std::shared_ptr<PlayerDustFX> DustFX = GetWorld()->SpawnActor<PlayerDustFX>("DustFX");
+		if (CurDir == EActorDir::Left)
+		{
+			DustFX->SetActorLocation(GetActorLocation() + LeftWallSlideFXOffset);
+		}
+		else
+		{
+			DustFX->SetActorLocation(GetActorLocation() + RightWallSlideFXOffset);
+		}
+
+	}
+
+
 	if (CurDir == EActorDir::Right)
 	{
 		if (IsPress('a') || IsPress('A'))
@@ -780,6 +789,14 @@ void Player::IdleStart()
 
 void Player::RunStart()
 {
+	DirCheck();
+	for (int i = 0; i < 5; i++)
+	{
+		std::shared_ptr<PlayerDustFX> DustFX = GetWorld()->SpawnActor<PlayerDustFX>("DustFX");
+		DustFX->SetActorLocation(GetActorLocation() + DustFXOffset);
+	}
+
+
 	Renderer->ChangeAnimation("Run");
 	return;
 }
@@ -884,6 +901,18 @@ void Player::WallSlideStart()
 
 void Player::FlipStart()
 {
+	std::shared_ptr<PlayerJumpFX> FlipFX = GetWorld()->SpawnActor<PlayerJumpFX>("FlipFX");
+	if (CurDir == EActorDir::Left)
+	{
+		FlipFX->SetActorRotation({ 0.f,0.f,90.f });
+		FlipFX->SetActorLocation(GetActorLocation() + LeftFlipFXOffset);
+	}
+	else
+	{
+		FlipFX->SetActorRotation({ 0.f,0.f,-90.f });
+		FlipFX->SetActorLocation(GetActorLocation() + RightFlipFXOffset);
+	}
+
 	Renderer->ChangeAnimation("Flip");
 	return;
 }

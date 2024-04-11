@@ -128,10 +128,15 @@ private:
 	float4 TopCheckPos = FVector::Zero;
 
 
-	float RunFXRespawnTime = 0.2f;
-	float AccRunFXRespawn = 0.f;
+	float DustFXRespawnTime = 0.05f;
+	float AccDustFXRespawn = 0.f;
 	FVector JumpFXOffset = FVector(0.f, 15.f, 0.f); 
-	FVector RunFXOffset = FVector(0.f, -20.f, 0.f);
+	FVector RightFlipFXOffset = FVector(20.f, 0.f, 0.f);
+	FVector LeftFlipFXOffset = FVector(-20.f, 0.f, 0.f);
 	FVector LandFXOffset = FVector(0.f, -20.f, 0.f);
+	FVector DustFXOffset = FVector(0.f, -20.f, 0.f);
+	FVector RightWallSlideFXOffset = FVector(20.f, -30.f, 0.f);
+	FVector LeftWallSlideFXOffset = FVector(-20.f, -30.f, 0.f);
+
 };
 
