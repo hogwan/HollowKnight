@@ -31,11 +31,27 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="KatanaZeroCore.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Player.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpFX.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerLandFX.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerRunFX.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -65,11 +81,27 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="KatanaZeroCore.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpFX.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerLandFX.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerRunFX.cpp">
       <SubType>
       </SubType>
     </ClCompile>

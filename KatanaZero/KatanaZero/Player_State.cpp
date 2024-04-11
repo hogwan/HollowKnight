@@ -831,9 +831,9 @@ void Player::FallEnd()
 
 void Player::AttackStart()
 {
-	FVector MousePos = GEngine->EngineWindow.GetScreenMousePos();
-	FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
 	FVector PlayerPos = GetActorLocation();
+	FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
+	FVector MousePos = GEngine->EngineWindow.GetScreenMousePos();
 
 	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
 	FVector TargetPos = 

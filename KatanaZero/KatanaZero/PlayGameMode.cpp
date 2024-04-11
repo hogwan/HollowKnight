@@ -5,6 +5,7 @@
 #include "ContentsHelper.h"
 #include "Player.h"
 #include "CameraManager.h"
+#include "Cursor.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -31,6 +32,8 @@ void APlayGameMode::BeginPlay()
 
 	UConstValue::MainCharacter = GetWorld()->SpawnActor<Player>("Player");
 	UConstValue::MainCharacter->SetActorLocation({ 200.0f, -500.0f, 200.0f });
+
+	UConstValue::MainCursor = GetWorld()->SpawnActor<Cursor>("Cursor");
 }
 
 void APlayGameMode::Tick(float _DeltaTime)

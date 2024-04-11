@@ -10,14 +10,23 @@
     <Filter Include="Level\PlayLevel">
       <UniqueIdentifier>{b7f67844-9ce7-43b7-8eb3-8bff339e8241}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Level\PlayLevel\Actor">
-      <UniqueIdentifier>{f1a90613-53cb-4dff-be85-685b7b2804c3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PreCompile">
       <UniqueIdentifier>{4d3248fd-d86e-4188-bfba-b92b1ae2f8f3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Helper">
       <UniqueIdentifier>{2b144aae-ae28-404e-a825-6419cd122eeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor">
+      <UniqueIdentifier>{f1a90613-53cb-4dff-be85-685b7b2804c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Player">
+      <UniqueIdentifier>{c3151de0-efe5-40bb-99ff-ce85ef725c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Map">
+      <UniqueIdentifier>{432a0810-31f4-4ad6-88ef-08c50574be6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Player\FX">
+      <UniqueIdentifier>{353d1c73-470d-4d0e-980a-0a34421c120c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,23 +39,35 @@
     <ClCompile Include="PlayGameMode.cpp">
       <Filter>Level\PlayLevel</Filter>
     </ClCompile>
-    <ClCompile Include="BackGroundMap.cpp">
-      <Filter>Level\PlayLevel\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Level\PlayLevel\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_State.cpp">
-      <Filter>Level\PlayLevel\Actor</Filter>
-    </ClCompile>
     <ClCompile Include="ContentsHelper.cpp">
       <Filter>Helper</Filter>
     </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundMap.cpp">
+      <Filter>Actor\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpFX.cpp">
+      <Filter>Actor\Player\FX</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLandFX.cpp">
+      <Filter>Actor\Player\FX</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRunFX.cpp">
+      <Filter>Actor\Player\FX</Filter>
+    </ClCompile>
     <ClCompile Include="PlayerSlashFX.cpp">
-      <Filter>Level\PlayLevel\Actor</Filter>
+      <Filter>Actor\Player\FX</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,20 +80,32 @@
     <ClInclude Include="PlayGameMode.h">
       <Filter>Level\PlayLevel</Filter>
     </ClInclude>
-    <ClInclude Include="BackGroundMap.h">
-      <Filter>Level\PlayLevel\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Level\PlayLevel\Actor</Filter>
-    </ClInclude>
     <ClInclude Include="ContentsHelper.h">
       <Filter>Helper</Filter>
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Actor\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundMap.h">
+      <Filter>Actor\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpFX.h">
+      <Filter>Actor\Player\FX</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLandFX.h">
+      <Filter>Actor\Player\FX</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRunFX.h">
+      <Filter>Actor\Player\FX</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerSlashFX.h">
-      <Filter>Level\PlayLevel\Actor</Filter>
+      <Filter>Actor\Player\FX</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
