@@ -22,7 +22,7 @@ void ABackGroundMap::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Renderer->SetSprite("TestColMap.png");
+	Renderer->SetSprite("room_factory_2_colmap.png");
 
 	Renderer->SetAutoSize(UConstValue::Ratio, true);
 	Renderer->SetOrder(ERenderOrder::Back);

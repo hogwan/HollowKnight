@@ -41,6 +41,7 @@ private:
 	void Attack(float _DeltaTime);
 	void Death(float _DeltaTime);
 	void DeathInAir(float _DeltaTime);
+	void ChangeLayerLevel(float _DeltaTime);
 
 	void NoneStart();
 	void IdleStart();
@@ -50,15 +51,23 @@ private:
 	void AttackStart();
 	void DeathStart();
 	void DeathInAirStart();
+	void ChangeLayerLevelStart();
 
 	void StateInit();
 	void RendererInit();
 
-	float AccTime = 0.f;
-	float IdleTime = 1.f;
-	float WalkTime = 3.f;
-
 	bool LandCheck();
 	void GravityCheck(float _DeltaTime);
+
+
+	float AccTime = 0.f;
+	float IdleTime = 1.f;
+	float WalkTime = 4.f;
+	float WalkSpeed = 100.f;
+	float MoveSpeed = 300.f;
+
+	bool OnLeftUpStep = false;
+	bool OnRightUpStep = false;
+
 };
 

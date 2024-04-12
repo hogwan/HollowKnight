@@ -26,7 +26,7 @@ void APlayGameMode::BeginPlay()
 	Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation(FVector(640.0f, -360.0f, -100.0f));
 
-	UConstValue::MapTex = UEngineTexture::FindRes("TestColMap.png");
+	UConstValue::MapTex = UEngineTexture::FindRes("room_factory_2_colmap.png");
 	UConstValue::MapTexScale = UConstValue::MapTex->GetScale() * UConstValue::Ratio;
 
 	float4 ImageScale = UConstValue::MapTexScale;

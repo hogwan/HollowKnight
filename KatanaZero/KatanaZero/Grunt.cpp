@@ -46,6 +46,7 @@ void AGrunt::StateInit()
 	State.CreateState("Attack");
 	State.CreateState("Death");
 	State.CreateState("DeathInAir");
+	State.CreateState("ChangeLayerLevel");
 
 	State.SetUpdateFunction("None", std::bind(&AGrunt::None, this, std::placeholders::_1));
 	State.SetStartFunction("None", std::bind(&AGrunt::NoneStart, this));
@@ -71,6 +72,9 @@ void AGrunt::StateInit()
 	State.SetUpdateFunction("DeathInAir", std::bind(&AGrunt::DeathInAir, this, std::placeholders::_1));
 	State.SetStartFunction("DeathInAir", std::bind(&AGrunt::DeathInAirStart, this));
 
+	State.SetUpdateFunction("ChangeLayerLevel", std::bind(&AGrunt::ChangeLayerLevel, this, std::placeholders::_1));
+	State.SetStartFunction("ChangeLayerLevel", std::bind(&AGrunt::ChangeLayerLevelStart, this));
+
 	State.ChangeState("None");
 }
 
@@ -83,6 +87,7 @@ void AGrunt::RendererInit()
 	Renderer->CreateAnimation("Attack", "Grunt_Attack", 0.05f, false); 
 	Renderer->CreateAnimation("Death", "grunt_hurtground", 0.05f, false);
 	Renderer->CreateAnimation("DeathInAir", "grunt_hurtfly", 0.05f, false);
+	Renderer->CreateAnimation("ChangeLayerLevel", "grunt_ChangeLayerLevel", 0.05f, false);
 
 	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::Enemy);
@@ -125,6 +130,47 @@ void AGrunt::Walk(float _DeltaTime)
 			State.ChangeState("Idle");
 			return;
 		}
+		if (CurDir == EActorDir::Left)
+		{
+
+			FVector Dir = FVector::Zero;
+			if (OnLeftUpStep)
+			{
+				Dir = { -1.f,1.f,0.f };
+			}
+			else if (OnRightUpStep)
+			{
+				Dir = { -1.f,-1.f,0.f };
+			}
+			else
+			{
+				Dir = { -1.f,0.f,0.f };
+			}
+			Dir.Normalize3D();
+
+			MoveVector = Dir * WalkSpeed;
+		}
+		else if (CurDir == EActorDir::Right)
+		{
+
+			FVector Dir = FVector::Zero;
+			if (OnLeftUpStep)
+			{
+				Dir = { 1.f,-1.f,0.f };
+			}
+			else if (OnRightUpStep)
+			{
+				Dir = { 1.f,1.f,0.f };
+			}
+			else
+			{
+				Dir = { 1.f,0.f,0.f };
+			}
+			Dir.Normalize3D();
+
+			MoveVector = Dir * WalkSpeed;
+		}
+
 	}
 	else if (CurPattern == EGruntPattern::ChasePlayer)
 	{
@@ -137,7 +183,21 @@ void AGrunt::Walk(float _DeltaTime)
 void AGrunt::Run(float _DeltaTime)
 {
 	FVector PlayerPos = UConstValue::Player->GetActorLocation();
+	FVector ChangeLayerPos = FVector(870.f, 0.f, 0.f);
 	FVector Gap = PlayerPos - GetActorLocation();
+
+	if (LayerLevel != UConstValue::Player->GetLayerLevel())
+	{
+		Gap = ChangeLayerPos - GetActorLocation();
+		if (Gap.X < 0.f)
+		{
+			MoveVector = FVector::Zero;
+			State.ChangeState("ChangeLayerLevel");
+			return;
+		}
+	}
+
+
 	if (CurDir == EActorDir::Left)
 	{
 		if (Gap.X > 0.f)
@@ -146,30 +206,56 @@ void AGrunt::Run(float _DeltaTime)
 			State.ChangeState("Turn");
 			return;
 		}
+
+		FVector Dir = FVector::Zero;
+		if (OnLeftUpStep)
+		{
+			Dir = { -1.f,1.f,0.f };
+		}
+		else if (OnRightUpStep)
+		{
+			Dir = { -1.f,-1.f,0.f };
+		}
 		else
 		{
-			MoveVector.X = -500.f;
+			Dir = { -1.f,0.f,0.f };
 		}
+		Dir.Normalize3D();
+
+		MoveVector = Dir * MoveSpeed;
 	}
 	else if (CurDir == EActorDir::Right)
 	{
-		if (Gap.X > 0.f)
-		{
-			MoveVector.X = 500.f;
-		}
-		else
+		if(Gap.X < 0.f)
 		{
 			MoveVector = FVector::Zero;
 			State.ChangeState("Turn");
+			return;
 		}
+
+		FVector Dir = FVector::Zero;
+		if (OnLeftUpStep)
+		{
+			Dir = { 1.f,-1.f,0.f };
+		}
+		else if (OnRightUpStep)
+		{
+			Dir = { 1.f,1.f,0.f };
+		}
+		else
+		{
+			Dir = { 1.f,0.f,0.f };
+		}
+		Dir.Normalize3D();
+
+		MoveVector = Dir * MoveSpeed;
 	}
 }
-
 void AGrunt::Turn(float _DeltaTime)
 {
 	Renderer->SetFrameCallback("Turn", 8, [=]
 		{
-			State.ChangeState("Idle");
+			State.ChangeState("Walk");
 			return;
 		});
 }
@@ -201,12 +287,49 @@ void AGrunt::DeathInAir(float _DeltaTime)
 		});
 }
 
+void AGrunt::ChangeLayerLevel(float _DeltaTime)
+{
+	Renderer->SetFrameCallback("ChangeLayerLevel", 8, [=] {
+		if (UConstValue::Player->GetLayerLevel() > LayerLevel)
+		{
+			LayerLevel++;
+			AddActorLocation(FVector::Up * 5.f);
+			State.ChangeState("Run");
+			if (CurDir == EActorDir::Left)
+			{
+				CurDir = EActorDir::Right;
+			}
+			else
+			{
+				CurDir = EActorDir::Left;
+			}
+			return;
+		}
+		else if (UConstValue::Player->GetLayerLevel() < LayerLevel)
+		{
+			LayerLevel--;
+			AddActorLocation(FVector::Down * 5.f);
+			State.ChangeState("Run");
+			if (CurDir == EActorDir::Left)
+			{
+				CurDir = EActorDir::Right;
+			}
+			else
+			{
+				CurDir = EActorDir::Left;
+			}
+			return;
+		}
+		});
+}
+
 void AGrunt::NoneStart()
 {
 }
 
 void AGrunt::IdleStart()
 {
+	MoveVector = FVector::Zero;
 	Renderer->ChangeAnimation("Idle");
 	return;
 }
@@ -256,6 +379,12 @@ void AGrunt::DeathInAirStart()
 	return;
 }
 
+void AGrunt::ChangeLayerLevelStart()
+{
+	Renderer->ChangeAnimation("ChangeLayerLevel");
+	return;
+}
+
 void AGrunt::DirUpdate()
 {
 	FVector Scale = GetActorScale3D();
@@ -285,9 +414,23 @@ bool AGrunt::LandCheck()
 	GruntPos.Y = -GruntPos.Y;
 	Color8Bit Color = UConstValue::MapTex->GetColor(GruntPos, Color8Bit::Black);
 
-	if (Color == Color8Bit::Black || Color == Color8Bit::Red || Color == Color8Bit::Yellow)
+
+	if (Color == Color8Bit::Black || Color == Color8Bit::Blue)
 	{
-		MoveVector.Y = 0.f;
+		OnLeftUpStep = false;
+		OnRightUpStep = false;
+		return true;
+	}
+	else if (Color == Color8Bit::Yellow)
+	{
+		OnRightUpStep = true;
+		OnLeftUpStep = false;
+		return true;
+	}
+	else if (Color == Color8Bit::Red)
+	{
+		OnLeftUpStep = true;
+		OnRightUpStep = false;
 		return true;
 	}
 
@@ -299,5 +442,9 @@ void AGrunt::GravityCheck(float _DeltaTime)
 	if (!LandCheck())
 	{
 		MoveVector += GravityVector * _DeltaTime;
+	}
+	else
+	{
+		MoveVector.Y = 0.f;
 	}
 }

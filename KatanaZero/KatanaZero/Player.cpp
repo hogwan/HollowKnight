@@ -4,6 +4,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineDebugMsgWindow.h>
 #include <EngineCore/DefaultSceneComponent.h>
+#include <EngineCore/Camera.h>
 
 APlayer::APlayer() 
 {
@@ -48,6 +49,21 @@ void APlayer::Tick(float _DeltaTime)
 	AddActorLocation(MoveVector * _DeltaTime);
 
 	DebugMessageFunction();
+
+	if (LayerLevel == 0)
+	{
+		if ((IsDown('r') || IsDown('R')))
+		{
+			LayerLevel = 1;
+		}
+	}
+	else if (LayerLevel == 1)
+	{
+		if ((IsDown('r') || IsDown('R')))
+		{
+			LayerLevel = 0;
+		}
+	}
 }
 
 void APlayer::RendererInit()
@@ -115,6 +131,25 @@ void APlayer::DebugMessageFunction()
 
 	{
 		std::string Msg = std::format("MoveVector : {}\n", MoveVector.ToString());
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+
+	{
+		FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
+		FVector MousePos = GEngine->EngineWindow.GetScreenMousePos();
+		FVector PlayerPos = UConstValue::Player->GetActorLocation();
+
+		FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
+		FVector TargetPos =
+			FVector(CameraPos.X, CameraPos.Y, 0.f) +
+			FVector(MousePos.X - WindowScale.hX(), -(MousePos.Y - WindowScale.hY()), 200.f);
+
+		std::string Msg = std::format("MousePos : {}\n", TargetPos.ToString());
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+
+	{
+		std::string Msg = std::format("LayerLevel : {}\n", LayerLevel);
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 }

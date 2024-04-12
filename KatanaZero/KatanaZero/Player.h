@@ -31,6 +31,12 @@ public:
 	{
 		return CurDir;
 	}
+
+	int GetLayerLevel()
+	{
+		return LayerLevel;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -41,6 +47,7 @@ private:
 	float4 Color;
 	EActorDir CurDir = EActorDir::None;
 	FVector MoveVector = FVector::Zero;
+	int LayerLevel = 0;
 
 	void StateInit();
 	void RendererInit();

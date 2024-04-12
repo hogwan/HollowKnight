@@ -24,7 +24,7 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	USpriteRenderer* Renderer = nullptr;
-
+	int LayerLevel = 0;
 private:
 
 };
