@@ -19,25 +19,32 @@ void APlayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UConstValue::MainCameraManager = GetWorld()->SpawnActor<CameraManager>("CameraManager");
-	UConstValue::MainCameraManager->SetCameraMode(ECameraMode::ChasePlayer);
+	/*UConstValue::MainCameraManager = GetWorld()->SpawnActor<ACameraManager>("CameraManager");
+	UConstValue::MainCameraManager->SetCameraMode(ECameraMode::ChasePlayer);*/
+
+	Camera = GetWorld()->GetMainCamera();
+	Camera->SetActorLocation(FVector(640.0f, -360.0f, -100.0f));
 
 	UConstValue::MapTex = UEngineTexture::FindRes("TestColMap.png");
 	UConstValue::MapTexScale = UConstValue::MapTex->GetScale() * UConstValue::Ratio;
 
 	float4 ImageScale = UConstValue::MapTexScale;
 
-	UConstValue::BackMap = GetWorld()->SpawnActor<BackGroundMap>("BackMap");
+	UConstValue::BackMap = GetWorld()->SpawnActor<ABackGroundMap>("BackMap");
 	UConstValue::BackMap->SetActorLocation({ ImageScale.hX(), -ImageScale.hY(), 500.0f });
 
-	UConstValue::MainCharacter = GetWorld()->SpawnActor<Player>("Player");
-	UConstValue::MainCharacter->SetActorLocation({ 200.0f, -500.0f, 200.0f });
+	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
+	UConstValue::Player->SetActorLocation({ 200.0f, -500.0f, 200.0f });
 
-	UConstValue::MainCursor = GetWorld()->SpawnActor<Cursor>("Cursor");
+	UConstValue::MainCursor = GetWorld()->SpawnActor<ACursor>("Cursor");
 }
 
 void APlayGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+
+	FVector PlayerPos = UConstValue::Player->GetActorLocation();
+	PlayerPos.Z -= 1000;
+	Camera->SetActorLocation(PlayerPos);
 }
 

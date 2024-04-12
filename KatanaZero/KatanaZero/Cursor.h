@@ -3,19 +3,19 @@
 #include <EngineCore/SpriteRenderer.h>
 
 // Ό³Έν :
-class Cursor : public AActor
+class ACursor : public AActor
 {
 	GENERATED_BODY(AActor)
 public:
 	// constructor destructor
-	Cursor();
-	~Cursor();
+	ACursor();
+	~ACursor();
 
 	// delete Function
-	Cursor(const Cursor& _Other) = delete;
-	Cursor(Cursor&& _Other) noexcept = delete;
-	Cursor& operator=(const Cursor& _Other) = delete;
-	Cursor& operator=(Cursor&& _Other) noexcept = delete;
+	ACursor(const ACursor& _Other) = delete;
+	ACursor(ACursor&& _Other) noexcept = delete;
+	ACursor& operator=(const ACursor& _Other) = delete;
+	ACursor& operator=(ACursor&& _Other) noexcept = delete;
 
 protected:
 	void BeginPlay() override;

@@ -2,9 +2,9 @@
 #include "FXBase.h"
 
 // Ό³Έν :
-class PlayerJumpFX : public FXBase
+class PlayerJumpFX : public AFXBase
 {
-	GENERATED_BODY(FXBase)
+	GENERATED_BODY(AFXBase)
 public:
 	// constructor destructor
 	PlayerJumpFX();

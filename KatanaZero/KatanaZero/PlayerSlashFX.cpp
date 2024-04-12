@@ -20,7 +20,7 @@ void PlayerSlashFX::BeginPlay()
 
 	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::FX);
-	Dir = UConstValue::MainCharacter->GetAttackDir();
+	Dir = UConstValue::Player->GetAttackDir();
 	
 
 	if (Dir.X < 0.f)
@@ -37,9 +37,9 @@ void PlayerSlashFX::BeginPlay()
 void PlayerSlashFX::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-	FVector PlayerPos = UConstValue::MainCharacter->GetActorLocation();
+	FVector PlayerPos = UConstValue::Player->GetActorLocation();
 
-	SetActorLocation(PlayerPos + Dir * 50.f);
+	SetActorLocation(PlayerPos + FVector(0.f,20.f,0.f) + Dir * 50.f);
 
 	if (Dir.X < 0.f)
 	{

@@ -7,8 +7,8 @@
 
 std::shared_ptr<UEngineTexture> UConstValue::MapTex;
 float4 UConstValue::MapTexScale;
-std::shared_ptr<Player> UConstValue::MainCharacter;
-std::shared_ptr<CameraManager> UConstValue::MainCameraManager;
-std::shared_ptr<BackGroundMap> UConstValue::BackMap;
-std::shared_ptr<Cursor> UConstValue::MainCursor;
+std::shared_ptr<APlayer> UConstValue::Player;
+std::shared_ptr<ACameraManager> UConstValue::MainCameraManager;
+std::shared_ptr<ABackGroundMap> UConstValue::BackMap;
+std::shared_ptr<ACursor> UConstValue::MainCursor;
 float UConstValue::Ratio = 0.8f;

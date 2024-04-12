@@ -3,18 +3,24 @@
 #include <EngineCore/Renderer.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineDebugMsgWindow.h>
+#include <EngineCore/DefaultSceneComponent.h>
 
-Player::Player() 
+APlayer::APlayer() 
 {
+	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Renderer");
+
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
+	Renderer->SetupAttachment(Root);
+	Renderer->SetPivot(EPivot::BOT);
+	SetRoot(Root);
 	InputOn();
 }
 
-Player::~Player() 
+APlayer::~APlayer() 
 {
 }
 
-void Player::BeginPlay()
+void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -22,7 +28,7 @@ void Player::BeginPlay()
 	StateInit();
 }
 
-void Player::Tick(float _DeltaTime)
+void APlayer::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
@@ -45,7 +51,7 @@ void Player::Tick(float _DeltaTime)
 	DebugMessageFunction();
 }
 
-void Player::RendererInit()
+void APlayer::RendererInit()
 {
 	Renderer->CreateAnimation("Idle", "Idle", 0.05f, true);
 	Renderer->CreateAnimation("Run", "Run", 0.05f, true);
@@ -61,14 +67,15 @@ void Player::RendererInit()
 
 	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::Player);
+	
 }
-void Player::CheckPosInit()
+void APlayer::CheckPosInit()
 {
 	FVector Pos = GetActorLocation();
-	BottomCheckPos = Pos + FVector(0.f, -20.f, 0.f);
-	RightCheckPos = Pos + FVector(20.f, 10.f, 0.f);
-	LeftCheckPos = Pos + FVector(-20.f, 10.f, 0.f);
-	TopCheckPos = Pos + FVector(0.f, 20.f, 0.f);
+	BottomCheckPos = Pos;
+	RightCheckPos = Pos + FVector(20.f, 30.f, 0.f);
+	LeftCheckPos = Pos + FVector(-20.f, 30.f, 0.f);
+	TopCheckPos = Pos + FVector(0.f, 40.f, 0.f);
 
 	BottomCheckPos /= UConstValue::Ratio;
 	BottomCheckPos.Y = -BottomCheckPos.Y;
@@ -80,7 +87,7 @@ void Player::CheckPosInit()
 	TopCheckPos.Y = -TopCheckPos.Y;
 }
 
-void Player::DebugMessageFunction()
+void APlayer::DebugMessageFunction()
 {
 
 	{

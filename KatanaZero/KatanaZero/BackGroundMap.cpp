@@ -4,17 +4,21 @@
 #include <EngineCore/SpriteRenderer.h>
 #include "ContentsHelper.h"
 
-BackGroundMap::BackGroundMap() 
+ABackGroundMap::ABackGroundMap() 
 {
+	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Root");
+
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
+	Renderer->SetupAttachment(Root);
+	SetRoot(Root);
 	InputOn();
 }
 
-BackGroundMap::~BackGroundMap() 
+ABackGroundMap::~ABackGroundMap() 
 {
 }
 
-void BackGroundMap::BeginPlay()
+void ABackGroundMap::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -22,10 +26,9 @@ void BackGroundMap::BeginPlay()
 
 	Renderer->SetAutoSize(UConstValue::Ratio, true);
 	Renderer->SetOrder(ERenderOrder::Back);
-
 }
 
-void BackGroundMap::Tick(float _DeltaTime)
+void ABackGroundMap::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 }

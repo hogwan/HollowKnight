@@ -3,19 +3,19 @@
 #include "ContentsHelper.h"
 
 
-class CameraManager : public AActor
+class ACameraManager : public AActor
 {
 	GENERATED_BODY(AActor)
 public:
 	//constructer destructer
-	CameraManager();
-	~CameraManager();
+	ACameraManager();
+	~ACameraManager();
 
 	//delete Function
-	CameraManager(const CameraManager& _Other) = delete;
-	CameraManager(CameraManager&& _Other) noexcept = delete;
-	CameraManager& operator=(const CameraManager& _Other) = delete;
-	CameraManager& operator=(CameraManager&& _Other) noexcept = delete;
+	ACameraManager(const ACameraManager& _Other) = delete;
+	ACameraManager(ACameraManager&& _Other) noexcept = delete;
+	ACameraManager& operator=(const ACameraManager& _Other) = delete;
+	ACameraManager& operator=(ACameraManager&& _Other) noexcept = delete;
 
 	void SetCameraMode(ECameraMode _CameraMode)
 	{

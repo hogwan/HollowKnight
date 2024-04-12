@@ -1,19 +1,19 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <EngineCore/SpriteRenderer.h>
-class FXBase : public AActor
+class AFXBase : public AActor
 {
 	GENERATED_BODY(AActor)
 public:
 	//constructer destructer
-	FXBase();
-	~FXBase();
+	AFXBase();
+	~AFXBase();
 
 	//delete Function
-	FXBase(const FXBase& _Other) = delete;
-	FXBase(FXBase&& _Other) noexcept = delete;
-	FXBase& operator=(const FXBase& _Other) = delete;
-	FXBase& operator=(FXBase&& _Other) noexcept = delete;
+	AFXBase(const AFXBase& _Other) = delete;
+	AFXBase(AFXBase&& _Other) noexcept = delete;
+	AFXBase& operator=(const AFXBase& _Other) = delete;
+	AFXBase& operator=(AFXBase&& _Other) noexcept = delete;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

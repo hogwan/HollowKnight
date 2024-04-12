@@ -4,10 +4,10 @@ class UConstValue
 {
 public:
 	static std::shared_ptr<class UEngineTexture> MapTex;
-	static std::shared_ptr<class Player> MainCharacter;
-	static std::shared_ptr<class CameraManager> MainCameraManager;
-	static std::shared_ptr<class BackGroundMap> BackMap;
-	static std::shared_ptr<class Cursor> MainCursor;
+	static std::shared_ptr<class APlayer> Player;
+	static std::shared_ptr<class ACameraManager> MainCameraManager;
+	static std::shared_ptr<class ABackGroundMap> BackMap;
+	static std::shared_ptr<class ACursor> MainCursor;
 	static float4 MapTexScale;
 	static float Ratio;
 };
@@ -16,6 +16,7 @@ public:
 enum class ERenderOrder
 {
 	Back,
+	Enemy,
 	Player,
 	FX,
 	Cursor,

@@ -7,7 +7,7 @@
 #include "PlayerJumpFX.h"
 #include "PlayerLandFX.h"
 
-void Player::StateInit()
+void APlayer::StateInit()
 {
 	State.CreateState("None");
 	State.CreateState("Idle");
@@ -22,48 +22,48 @@ void Player::StateInit()
 	State.CreateState("WallSlide");
 	State.CreateState("Flip");
 
-	State.SetUpdateFunction("None", std::bind(&Player::None, this, std::placeholders::_1));
-	State.SetStartFunction("None", std::bind(&Player::NoneStart, this));
+	State.SetUpdateFunction("None", std::bind(&APlayer::None, this, std::placeholders::_1));
+	State.SetStartFunction("None", std::bind(&APlayer::NoneStart, this));
 
-	State.SetUpdateFunction("Idle", std::bind(&Player::Idle, this, std::placeholders::_1));
-	State.SetStartFunction("Idle", std::bind(&Player::IdleStart, this));
+	State.SetUpdateFunction("Idle", std::bind(&APlayer::Idle, this, std::placeholders::_1));
+	State.SetStartFunction("Idle", std::bind(&APlayer::IdleStart, this));
 
-	State.SetUpdateFunction("Run", std::bind(&Player::Run, this, std::placeholders::_1));
-	State.SetStartFunction("Run", std::bind(&Player::RunStart, this));
+	State.SetUpdateFunction("Run", std::bind(&APlayer::Run, this, std::placeholders::_1));
+	State.SetStartFunction("Run", std::bind(&APlayer::RunStart, this));
 
-	State.SetUpdateFunction("RunToIdle", std::bind(&Player::RunToIdle, this, std::placeholders::_1));
-	State.SetStartFunction("RunToIdle", std::bind(&Player::RunToIdleStart, this));
+	State.SetUpdateFunction("RunToIdle", std::bind(&APlayer::RunToIdle, this, std::placeholders::_1));
+	State.SetStartFunction("RunToIdle", std::bind(&APlayer::RunToIdleStart, this));
 
-	State.SetUpdateFunction("Roll", std::bind(&Player::Roll, this, std::placeholders::_1));
-	State.SetStartFunction("Roll", std::bind(&Player::RollStart, this));
+	State.SetUpdateFunction("Roll", std::bind(&APlayer::Roll, this, std::placeholders::_1));
+	State.SetStartFunction("Roll", std::bind(&APlayer::RollStart, this));
 
-	State.SetUpdateFunction("Jump", std::bind(&Player::Jump, this, std::placeholders::_1));
-	State.SetStartFunction("Jump", std::bind(&Player::JumpStart, this));
+	State.SetUpdateFunction("Jump", std::bind(&APlayer::Jump, this, std::placeholders::_1));
+	State.SetStartFunction("Jump", std::bind(&APlayer::JumpStart, this));
 
-	State.SetUpdateFunction("Crouch", std::bind(&Player::Crouch, this, std::placeholders::_1));
-	State.SetStartFunction("Crouch", std::bind(&Player::CrouchStart, this));
+	State.SetUpdateFunction("Crouch", std::bind(&APlayer::Crouch, this, std::placeholders::_1));
+	State.SetStartFunction("Crouch", std::bind(&APlayer::CrouchStart, this));
 
-	State.SetUpdateFunction("CrouchEnd", std::bind(&Player::CrouchEnd, this, std::placeholders::_1));
-	State.SetStartFunction("CrouchEnd", std::bind(&Player::CrouchEndStart, this));
+	State.SetUpdateFunction("CrouchEnd", std::bind(&APlayer::CrouchEnd, this, std::placeholders::_1));
+	State.SetStartFunction("CrouchEnd", std::bind(&APlayer::CrouchEndStart, this));
 
-	State.SetUpdateFunction("Fall", std::bind(&Player::Fall, this, std::placeholders::_1));
-	State.SetStartFunction("Fall", std::bind(&Player::FallStart, this));
-	State.SetEndFunction("Fall", std::bind(&Player::FallEnd, this));
+	State.SetUpdateFunction("Fall", std::bind(&APlayer::Fall, this, std::placeholders::_1));
+	State.SetStartFunction("Fall", std::bind(&APlayer::FallStart, this));
+	State.SetEndFunction("Fall", std::bind(&APlayer::FallEnd, this));
 
-	State.SetUpdateFunction("Attack", std::bind(&Player::Attack, this, std::placeholders::_1));
-	State.SetStartFunction("Attack", std::bind(&Player::AttackStart, this));
+	State.SetUpdateFunction("Attack", std::bind(&APlayer::Attack, this, std::placeholders::_1));
+	State.SetStartFunction("Attack", std::bind(&APlayer::AttackStart, this));
 
-	State.SetUpdateFunction("WallSlide", std::bind(&Player::WallSlide, this, std::placeholders::_1));
-	State.SetStartFunction("WallSlide", std::bind(&Player::WallSlideStart, this));
+	State.SetUpdateFunction("WallSlide", std::bind(&APlayer::WallSlide, this, std::placeholders::_1));
+	State.SetStartFunction("WallSlide", std::bind(&APlayer::WallSlideStart, this));
 
-	State.SetUpdateFunction("Flip", std::bind(&Player::Flip, this, std::placeholders::_1));
-	State.SetStartFunction("Flip", std::bind(&Player::FlipStart, this));
+	State.SetUpdateFunction("Flip", std::bind(&APlayer::Flip, this, std::placeholders::_1));
+	State.SetStartFunction("Flip", std::bind(&APlayer::FlipStart, this));
 
 	State.ChangeState("None");
 }
 
 
-void Player::DirCheck()
+void APlayer::DirCheck()
 {
 	if ((true == IsPress('A') || true == IsPress('a')) &&
 		(false == IsPress('D') && false == IsPress('d')))
@@ -78,7 +78,7 @@ void Player::DirCheck()
 	}
 }
 
-void Player::DirUpdate()
+void APlayer::DirUpdate()
 {
 	FVector Scale = GetActorScale3D();
 
@@ -100,12 +100,12 @@ void Player::DirUpdate()
 	}
 }
 
-void Player::None(float _DeltaTime)
+void APlayer::None(float _DeltaTime)
 {
 	State.ChangeState("Idle");
 }
 
-void Player::Idle(float _DeltaTime)
+void APlayer::Idle(float _DeltaTime)
 {
 	if ((IsPress('D') || IsPress('d')) &&
 		(IsPress('A') || IsPress('a')))
@@ -179,7 +179,7 @@ void Player::Idle(float _DeltaTime)
 	}
 }
 
-void Player::Run(float _DeltaTime)
+void APlayer::Run(float _DeltaTime)
 {
 	DirCheck();
 
@@ -209,16 +209,17 @@ void Player::Run(float _DeltaTime)
 		FVector Dir = FVector::Zero;
 		if (OnLeftUpStep)
 		{
-			Dir = { 1.f,-1.f,0.f };
+			Dir = { 100.f,-100.f,0.f };
 		}
 		else if (OnRightUpStep)
 		{
-			Dir = { 1.f,1.f,0.f };
+			Dir = { 100.f,100.f,0.f };
 		}
 		else
 		{
 			Dir = { 1.f,0.f,0.f };
 		}
+		Dir.Normalize3D();
 
 		if (MoveVector.Size3D() < MaxRunSpeed)
 		{
@@ -301,7 +302,7 @@ void Player::Run(float _DeltaTime)
 	}
 }
 
-void Player::RunToIdle(float _DeltaTime)
+void APlayer::RunToIdle(float _DeltaTime)
 {
 	if (LeftWallCheck() || RightWallCheck())
 	{
@@ -322,7 +323,7 @@ void Player::RunToIdle(float _DeltaTime)
 
 }
 
-void Player::Roll(float _DeltaTime)
+void APlayer::Roll(float _DeltaTime)
 {
 	FVector MoveDir = FVector::Zero;
 	if (CurDir == EActorDir::Left)
@@ -388,7 +389,7 @@ void Player::Roll(float _DeltaTime)
 	}
 }
 
-void Player::Jump(float _DeltaTime)
+void APlayer::Jump(float _DeltaTime)
 {
 	DirCheck();
 
@@ -469,7 +470,7 @@ void Player::Jump(float _DeltaTime)
 	}
 }
 
-void Player::Fall(float _DeltaTime)
+void APlayer::Fall(float _DeltaTime)
 {
 	DirCheck();
 
@@ -548,7 +549,7 @@ void Player::Fall(float _DeltaTime)
 	}
 }
 
-void Player::Attack(float _DeltaTime)
+void APlayer::Attack(float _DeltaTime)
 {
 	AccAttack += _DeltaTime;
 	if (AccAttack > AttackBreakStartTime)
@@ -579,7 +580,7 @@ void Player::Attack(float _DeltaTime)
 	}
 }
 
-void Player::WallSlide(float _DeltaTime)
+void APlayer::WallSlide(float _DeltaTime)
 {
 	AccDustFXRespawn += _DeltaTime;
 	if (AccDustFXRespawn > DustFXRespawnTime)
@@ -684,7 +685,7 @@ void Player::WallSlide(float _DeltaTime)
 	}
 }
 
-void Player::Flip(float _DeltaTime)
+void APlayer::Flip(float _DeltaTime)
 {
 	FVector FlipDirVector = FVector::Zero;
 	if (CurDir == EActorDir::Left)
@@ -738,7 +739,7 @@ void Player::Flip(float _DeltaTime)
 	
 }
 
-void Player::Crouch(float _DeltaTime)
+void APlayer::Crouch(float _DeltaTime)
 {
 	DirCheck();
 	if (true == IsFree('S') && true == IsFree('s'))
@@ -767,7 +768,7 @@ void Player::Crouch(float _DeltaTime)
 	}
 }
 
-void Player::CrouchEnd(float _DeltaTime)
+void APlayer::CrouchEnd(float _DeltaTime)
 {
 	Renderer->SetFrameCallback("CrouchEnd", 2, [=]
 		{
@@ -776,18 +777,18 @@ void Player::CrouchEnd(float _DeltaTime)
 		});
 }
 
-void Player::NoneStart()
+void APlayer::NoneStart()
 {
 }
 
-void Player::IdleStart()
+void APlayer::IdleStart()
 {
 	MoveVector = FVector::Zero;
 	Renderer->ChangeAnimation("Idle");
 	return;
 }
 
-void Player::RunStart()
+void APlayer::RunStart()
 {
 	DirCheck();
 	for (int i = 0; i < 5; i++)
@@ -801,7 +802,7 @@ void Player::RunStart()
 	return;
 }
 
-void Player::RunToIdleStart()
+void APlayer::RunToIdleStart()
 {
 	if (OnLeftUpStep)
 	{
@@ -835,13 +836,13 @@ void Player::RunToIdleStart()
 	return;
 }
 
-void Player::RollStart()
+void APlayer::RollStart()
 {
 	Renderer->ChangeAnimation("Roll");
 	return;
 }
 
-void Player::JumpStart()
+void APlayer::JumpStart()
 {
 	std::shared_ptr<PlayerJumpFX> JumpFX = GetWorld()->SpawnActor<PlayerJumpFX>("JumpFX");
 	JumpFX->SetActorLocation(GetActorLocation() + JumpFXOffset);
@@ -850,18 +851,18 @@ void Player::JumpStart()
 	return;
 }
 
-void Player::FallStart()
+void APlayer::FallStart()
 {
 	Renderer->ChangeAnimation("Fall");
 	return;
 }
 
-void Player::FallEnd()
+void APlayer::FallEnd()
 {
 	MoveVector.Y = 0.f;
 }
 
-void Player::AttackStart()
+void APlayer::AttackStart()
 {
 	FVector PlayerPos = GetActorLocation();
 	FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
@@ -893,13 +894,13 @@ void Player::AttackStart()
 	return;
 }
 
-void Player::WallSlideStart()
+void APlayer::WallSlideStart()
 {
 	Renderer->ChangeAnimation("WallSlide");
 	return;
 }
 
-void Player::FlipStart()
+void APlayer::FlipStart()
 {
 	std::shared_ptr<PlayerJumpFX> FlipFX = GetWorld()->SpawnActor<PlayerJumpFX>("FlipFX");
 	if (CurDir == EActorDir::Left)
@@ -917,23 +918,23 @@ void Player::FlipStart()
 	return;
 }
 
-void Player::CrouchStart()
+void APlayer::CrouchStart()
 {
 	Renderer->ChangeAnimation("Crouch");
 	return;
 }
 
-void Player::CrouchEndStart()
+void APlayer::CrouchEndStart()
 {
 	Renderer->ChangeAnimation("CrouchEnd");
 	return;
 }
-void Player::GravityCheck(float _DeltaTime)
+void APlayer::GravityCheck(float _DeltaTime)
 {
 	MoveVector += Gravity * _DeltaTime;
 }
 
-bool Player::LandCheck()
+bool APlayer::LandCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos, Color8Bit::Black);
 
@@ -991,7 +992,7 @@ bool Player::LandCheck()
 
 }
 
-bool Player::RightWallCheck()
+bool APlayer::RightWallCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(RightCheckPos, Color8Bit::Black);
 	
@@ -1005,7 +1006,7 @@ bool Player::RightWallCheck()
 	}
 }
 
-bool Player::LeftWallCheck()
+bool APlayer::LeftWallCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(LeftCheckPos, Color8Bit::Black);
 	
@@ -1019,7 +1020,7 @@ bool Player::LeftWallCheck()
 	}
 }
 
-bool Player::TopWallCheck()
+bool APlayer::TopWallCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(TopCheckPos, Color8Bit::Black);
 
@@ -1033,7 +1034,7 @@ bool Player::TopWallCheck()
 	}
 }
 
-void Player::GroundUp()
+void APlayer::GroundUp()
 {
 	while (true)
 	{

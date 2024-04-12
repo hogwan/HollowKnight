@@ -6,19 +6,19 @@
 // Ό³Έν :
 class USpriteRenderer;
 
-class Player : public AActor
+class APlayer : public AActor
 {
 	GENERATED_BODY(AActor)
 public:
 	// constructor destructor
-	Player();
-	~Player();
+	APlayer();
+	~APlayer();
 
 	// delete Function
-	Player(const Player& _Other) = delete;
-	Player(Player&& _Other) noexcept = delete;
-	Player& operator=(const Player& _Other) = delete;
-	Player& operator=(Player&& _Other) noexcept = delete;
+	APlayer(const APlayer& _Other) = delete;
+	APlayer(APlayer&& _Other) noexcept = delete;
+	APlayer& operator=(const APlayer& _Other) = delete;
+	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 	UStateManager State;
 
@@ -41,7 +41,6 @@ private:
 	float4 Color;
 	EActorDir CurDir = EActorDir::None;
 	FVector MoveVector = FVector::Zero;
-
 
 	void StateInit();
 	void RendererInit();
@@ -130,13 +129,13 @@ private:
 
 	float DustFXRespawnTime = 0.05f;
 	float AccDustFXRespawn = 0.f;
-	FVector JumpFXOffset = FVector(0.f, 15.f, 0.f); 
-	FVector RightFlipFXOffset = FVector(20.f, 0.f, 0.f);
-	FVector LeftFlipFXOffset = FVector(-20.f, 0.f, 0.f);
-	FVector LandFXOffset = FVector(0.f, -20.f, 0.f);
-	FVector DustFXOffset = FVector(0.f, -20.f, 0.f);
-	FVector RightWallSlideFXOffset = FVector(20.f, -30.f, 0.f);
-	FVector LeftWallSlideFXOffset = FVector(-20.f, -30.f, 0.f);
+	FVector JumpFXOffset = FVector(0.f, 50.f, 0.f); 
+	FVector RightFlipFXOffset = FVector(20.f, 10.f, 0.f);
+	FVector LeftFlipFXOffset = FVector(-20.f, 10.f, 0.f);
+	FVector LandFXOffset = FVector(0.f, 10.f, 0.f);
+	FVector DustFXOffset = FVector(0.f, 0.f, 0.f);
+	FVector RightWallSlideFXOffset = FVector(20.f, 0.f, 0.f);
+	FVector LeftWallSlideFXOffset = FVector(-20.f, 0.f, 0.f);
 
 };
 

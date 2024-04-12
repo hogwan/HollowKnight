@@ -4,33 +4,36 @@
 #include "Player.h"
 #include <EngineCore/Camera.h>
 
-Cursor::Cursor() 
+ACursor::ACursor() 
 {
+	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Root");
+
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
+	Renderer->SetupAttachment(Root);
+
+	SetRoot(Root);
 }
 
-Cursor::~Cursor() 
+ACursor::~ACursor() 
 {
 }
 
-void Cursor::BeginPlay()
+void ACursor::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	SetActorScale3D(FVector(25.f, 25.f, 10.f));
-
 	Renderer->SetSprite("spr_cursor_0.png");
 	Renderer->SetOrder(ERenderOrder::Cursor);
 	Renderer->SetAutoSize(2.f, true);
+	GEngine->EngineWindow.CursorOff();
 }
 
-void Cursor::Tick(float _DeltaTime)
+void ACursor::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
 	FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
 	FVector MousePos = GEngine->EngineWindow.GetScreenMousePos();
-	FVector PlayerPos = UConstValue::MainCharacter->GetActorLocation();
+	FVector PlayerPos = UConstValue::Player->GetActorLocation();
 
 	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
 	FVector TargetPos =

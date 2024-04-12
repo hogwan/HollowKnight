@@ -35,7 +35,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="FXBase.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Grunt.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -89,7 +97,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FXBase.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Grunt.cpp">
       <SubType>
       </SubType>
     </ClCompile>

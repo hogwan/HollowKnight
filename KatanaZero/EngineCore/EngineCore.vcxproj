@@ -171,14 +171,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imconfig.h" />
-    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imgui.h" />
-    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_impl_dx11.h" />
-    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_impl_win32.h" />
-    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_internal.h" />
-    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imstb_rectpack.h" />
-    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imstb_textedit.h" />
-    <ClInclude Include="..\..\..\GM\DX\DirectX\EngineCore\imstb_truetype.h" />
     <ClInclude Include="Actor.h">
       <SubType>
       </SubType>
@@ -191,6 +183,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineDefines.h" />
     <ClInclude Include="EngineBlend.h">
       <SubType>
       </SubType>
@@ -274,6 +267,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="imconfig.h" />
+    <ClInclude Include="imgui.h" />
+    <ClInclude Include="imgui_impl_dx11.h" />
+    <ClInclude Include="imgui_impl_win32.h" />
+    <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="imstb_rectpack.h" />
+    <ClInclude Include="imstb_textedit.h" />
+    <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
       </SubType>
@@ -323,19 +324,16 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="WorldObject.h">
       <SubType>
       </SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui.cpp" />
-    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_demo.cpp" />
-    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_draw.cpp" />
-    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_impl_dx11.cpp" />
-    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_impl_win32.cpp" />
-    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_tables.cpp" />
-    <ClCompile Include="..\..\..\GM\DX\DirectX\EngineCore\imgui_widgets.cpp" />
     <ClCompile Include="Actor.cpp">
       <SubType>
       </SubType>
@@ -431,6 +429,13 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="imgui.cpp" />
+    <ClCompile Include="imgui_demo.cpp" />
+    <ClCompile Include="imgui_draw.cpp" />
+    <ClCompile Include="imgui_impl_dx11.cpp" />
+    <ClCompile Include="imgui_impl_win32.cpp" />
+    <ClCompile Include="imgui_tables.cpp" />
+    <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>
       </SubType>
@@ -480,6 +485,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="DirectXHelper.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
       <SubType>
       </SubType>
     </ClCompile>

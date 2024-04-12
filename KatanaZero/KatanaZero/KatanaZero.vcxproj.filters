@@ -28,6 +28,9 @@
     <Filter Include="Actor\Player\FX">
       <UniqueIdentifier>{353d1c73-470d-4d0e-980a-0a34421c120c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Grunt">
+      <UniqueIdentifier>{41a572de-2931-49d0-9c82-c7ef25cdb69a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KatanaZeroCore.cpp">
@@ -72,6 +75,12 @@
     <ClCompile Include="CameraManager.cpp">
       <Filter>Helper</Filter>
     </ClCompile>
+    <ClCompile Include="Grunt.cpp">
+      <Filter>Actor\Grunt</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -112,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Grunt.h">
+      <Filter>Actor\Grunt</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

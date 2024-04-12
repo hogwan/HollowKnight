@@ -7,5 +7,6 @@
 #include <EngineCore/Renderer.h>
 #include <EngineCore/EngineShaderResources.h>
 #include <EngineCore/EngineCore.h>
+#include <EngineCore/DefaultSceneComponent.h>
 
 #include "ContentsHelper.h"

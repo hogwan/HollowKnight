@@ -22,6 +22,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-
+	std::shared_ptr<UCamera> Camera;
+	std::shared_ptr<APlayer> Player;
 };
 

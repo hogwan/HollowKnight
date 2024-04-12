@@ -1,7 +1,7 @@
 #include "PreCompile.h"
-#include "FXBase.h"
+#include "Enemy.h"
 
-AFXBase::AFXBase()
+AEnemy::AEnemy() 
 {
 	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Root");
 
@@ -11,21 +11,17 @@ AFXBase::AFXBase()
 	SetRoot(Root);
 }
 
-AFXBase::~AFXBase()
+AEnemy::~AEnemy() 
 {
 }
 
-void AFXBase::BeginPlay()
+void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-void AFXBase::Tick(float _DeltaTime)
+void AEnemy::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-	if (Renderer->IsCurAnimationEnd())
-	{
-		Renderer->SetActive(false);
-	}
-
 }
+

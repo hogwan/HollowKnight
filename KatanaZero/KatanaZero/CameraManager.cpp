@@ -5,22 +5,22 @@
 #include "BackGroundMap.h"
 #include <EngineCore/Camera.h>
 
-CameraManager::CameraManager()
+ACameraManager::ACameraManager()
 {
 }
 
-CameraManager::~CameraManager()
+ACameraManager::~ACameraManager()
 {
 }
 
-void CameraManager::BeginPlay()
+void ACameraManager::BeginPlay()
 {
 	Super::BeginPlay();
 
 	Camera = GetWorld()->GetMainCamera();
 }
 
-void CameraManager::Tick(float _DeltaTime)
+void ACameraManager::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
@@ -34,26 +34,20 @@ void CameraManager::Tick(float _DeltaTime)
 	case ECameraMode::None:
 		break;
 	case ECameraMode::ChasePlayer:
-		FVector PlayerPos = UConstValue::MainCharacter->GetActorLocation();
+		FVector PlayerPos = UConstValue::Player->GetActorLocation();
 
 		float XGap = 0.f;
 		float YGap = 0.f;
 
-		if (XEndCheck())
-		{
-			XGap = PlayerPos.X - CameraPos.X;
-		}
-		if (YEndCheck())
-		{
-			YGap = PlayerPos.Y - CameraPos.Y;
-		}
+		XGap = PlayerPos.X - CameraPos.X;
+		YGap = PlayerPos.Y - CameraPos.Y;
 
 		Camera->AddActorLocation(FVector(XGap, YGap, 0.f) * 1.5f * _DeltaTime);
 		break;
 	}
 }
 
-bool CameraManager::XEndCheck()
+bool ACameraManager::XEndCheck()
 {
 	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
 	float CameraLeft = Camera->GetActorLocation().X - WindowScale.X / 2.f;
@@ -83,7 +77,7 @@ bool CameraManager::XEndCheck()
 
 }
 
-bool CameraManager::YEndCheck()
+bool ACameraManager::YEndCheck()
 {
 	FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
 	float CameraBottom = Camera->GetActorLocation().Y - WindowScale.Y / 2.f;
