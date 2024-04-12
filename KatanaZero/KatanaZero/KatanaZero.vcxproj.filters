@@ -45,9 +45,6 @@
     <ClCompile Include="ContentsHelper.cpp">
       <Filter>Helper</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Actor\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Player_State.cpp">
       <Filter>Actor\Player</Filter>
     </ClCompile>
@@ -80,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -23,9 +23,9 @@ public:
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+	USpriteRenderer* Renderer = nullptr;
 
 private:
-	USpriteRenderer* Renderer = nullptr;
 
 };
 

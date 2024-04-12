@@ -25,7 +25,7 @@ void AFXBase::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 	if (Renderer->IsCurAnimationEnd())
 	{
-		Renderer->SetActive(false);
+		Destroy();
 	}
 
 }

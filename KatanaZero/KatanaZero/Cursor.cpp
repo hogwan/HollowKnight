@@ -24,7 +24,6 @@ void ACursor::BeginPlay()
 	Renderer->SetSprite("spr_cursor_0.png");
 	Renderer->SetOrder(ERenderOrder::Cursor);
 	Renderer->SetAutoSize(2.f, true);
-	GEngine->EngineWindow.CursorOff();
 }
 
 void ACursor::Tick(float _DeltaTime)

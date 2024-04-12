@@ -209,11 +209,11 @@ void APlayer::Run(float _DeltaTime)
 		FVector Dir = FVector::Zero;
 		if (OnLeftUpStep)
 		{
-			Dir = { 100.f,-100.f,0.f };
+			Dir = { 1.f,-1.f,0.f };
 		}
 		else if (OnRightUpStep)
 		{
-			Dir = { 100.f,100.f,0.f };
+			Dir = { 1.f,1.f,0.f };
 		}
 		else
 		{

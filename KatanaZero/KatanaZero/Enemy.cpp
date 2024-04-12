@@ -7,6 +7,7 @@ AEnemy::AEnemy()
 
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
 	Renderer->SetupAttachment(Root);
+	Renderer->SetPivot(EPivot::BOT);
 
 	SetRoot(Root);
 }

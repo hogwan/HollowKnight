@@ -1,16 +1,16 @@
 #pragma once
 #include "Enemy.h"
 
-enum class GruntPattern
+enum class EGruntPattern
 {
 	Patrol,
 	ChasePlayer,
 };
 
 // Ό³Έν :
-class AGrunt : public AActor
+class AGrunt : public AEnemy
 {
-	GENERATED_BODY(AActor)
+	GENERATED_BODY(AEnemy)
 public:
 	// constructor destructor
 	AGrunt();
@@ -27,7 +27,11 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
-	USpriteRenderer* Renderer = nullptr;
+	EActorDir CurDir = EActorDir::Right;
+	EGruntPattern CurPattern = EGruntPattern::Patrol;
+	FVector MoveVector = FVector::Zero;
+	FVector GravityVector = FVector(0.f,-500.f,0.f);
+	void DirUpdate();
 
 	void None(float _DeltaTime);
 	void Idle(float _DeltaTime);
@@ -49,5 +53,12 @@ private:
 
 	void StateInit();
 	void RendererInit();
+
+	float AccTime = 0.f;
+	float IdleTime = 1.f;
+	float WalkTime = 3.f;
+
+	bool LandCheck();
+	void GravityCheck(float _DeltaTime);
 };
 

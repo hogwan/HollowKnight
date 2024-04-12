@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "CameraManager.h"
 #include "Cursor.h"
+#include "Grunt.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -35,6 +36,9 @@ void APlayGameMode::BeginPlay()
 
 	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
 	UConstValue::Player->SetActorLocation({ 200.0f, -500.0f, 200.0f });
+
+	std::shared_ptr<AGrunt> Grunt = GetWorld()->SpawnActor<AGrunt>("Grunt");
+	Grunt->SetActorLocation({ 500.f,-500.f,200.f });
 
 	UConstValue::MainCursor = GetWorld()->SpawnActor<ACursor>("Cursor");
 }
