@@ -2,6 +2,7 @@
 #include <EngineCore/Actor.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/StateManager.h>
+#include <EngineCore/DefaultSceneComponent.h>
 #include "Player.h"
 
 enum class EEnemyPattern

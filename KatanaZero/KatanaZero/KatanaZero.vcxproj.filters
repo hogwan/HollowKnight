@@ -37,6 +37,9 @@
     <Filter Include="Actor\Enemy\Cop">
       <UniqueIdentifier>{0e4a946d-42cc-4fd0-973b-bf865992a43f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Enemy\Pomp">
+      <UniqueIdentifier>{70407adb-942f-4ff7-aa56-35efa7b920d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KatanaZeroCore.cpp">
@@ -93,6 +96,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Actor</Filter>
     </ClCompile>
+    <ClCompile Include="Pomp.cpp">
+      <Filter>Actor\Enemy\Pomp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -145,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Pomp.h">
+      <Filter>Actor\Enemy\Pomp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

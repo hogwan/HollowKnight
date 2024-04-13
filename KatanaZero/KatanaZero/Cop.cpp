@@ -108,6 +108,15 @@ void ACop::Attack(float _DeltaTime)
 	FVector AimVector = PlayerPos - CopPos;
 	AimVector.Normalize3D();
 
+	if (AimVector.X > 0.f)
+	{
+		CurDir = EActorDir::Right;
+	}
+	else
+	{
+		CurDir = EActorDir::Left;
+	}
+
 	Arms->SetRotationDeg(FVector({ 0.f,0.f,AimVector.Y * 90.f }));
 
 	AccAim += _DeltaTime;

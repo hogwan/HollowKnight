@@ -8,6 +8,7 @@
 #include "Cursor.h"
 #include "Grunt.h"
 #include "Cop.h"
+#include "Pomp.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -38,11 +39,14 @@ void APlayGameMode::BeginPlay()
 	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
 	UConstValue::Player->SetActorLocation({ 200.0f, -500.0f, 200.0f });
 
-	std::shared_ptr<AGrunt> Grunt = GetWorld()->SpawnActor<AGrunt>("Grunt");
-	Grunt->SetActorLocation({ 600.f,-500.f,200.f });
+	/*std::shared_ptr<AGrunt> Grunt = GetWorld()->SpawnActor<AGrunt>("Grunt");
+	Grunt->SetActorLocation({ 500.f,-500.f,200.f });
 
 	std::shared_ptr<ACop> Cop = GetWorld()->SpawnActor<ACop>("Cop");
-	Cop->SetActorLocation({ 600.f,-500.f,200.f });
+	Cop->SetActorLocation({ 600.f,-500.f,200.f });*/
+
+	std::shared_ptr<APomp> Pomp = GetWorld()->SpawnActor<APomp>("Cop");
+	Pomp->SetActorLocation({ 700.f,-400.f,200.f });
 
 	UConstValue::MainCursor = GetWorld()->SpawnActor<ACursor>("Cursor");
 }
