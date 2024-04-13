@@ -30,6 +30,7 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	USpriteRenderer* Renderer = nullptr;
+	UDefaultSceneComponent* Root = nullptr;
 	int LayerLevel = 0;
 
 	EActorDir CurDir = EActorDir::Right;
@@ -57,6 +58,8 @@ protected:
 	virtual void DeathStart();
 	virtual void DeathInAirStart();
 	virtual void ChangeLayerLevelStart();
+
+	virtual void AttackEnd();
 
 	virtual void StateInit();
 	virtual void RendererInit();

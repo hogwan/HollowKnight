@@ -16,10 +16,11 @@ public:
 	AGrunt& operator=(const AGrunt& _Other) = delete;
 	AGrunt& operator=(AGrunt&& _Other) noexcept = delete;
 
-	UStateManager State;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+	void StateInit() override;
+	void RendererInit() override;
 
 	void None(float _DeltaTime) override;
 	void Idle(float _DeltaTime) override;
@@ -39,8 +40,6 @@ protected:
 	void DeathStart() override;
 	void DeathInAirStart() override;
 	void ChangeLayerLevelStart() override;
-	void StateInit() override;
-	void RendererInit() override;
 
 };
 

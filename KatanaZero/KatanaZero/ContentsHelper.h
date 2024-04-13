@@ -17,7 +17,9 @@ enum class ERenderOrder
 {
 	Back,
 	Enemy,
+	EnemyArms,
 	Player,
+	Bullet,
 	FX,
 	Cursor,
 };

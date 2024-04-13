@@ -20,6 +20,26 @@ void AGrunt::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 }
 
+void AGrunt::StateInit()
+{
+	Super::StateInit();
+}
+
+void AGrunt::RendererInit()
+{
+	Super::RendererInit();
+	Renderer->CreateAnimation("Idle", "grunt_idle", 0.05f, true);
+	Renderer->CreateAnimation("Walk", "grunt_walk", 0.05f, true);
+	Renderer->CreateAnimation("Run", "Grunt_Run", 0.05f, true);
+	Renderer->CreateAnimation("Turn", "Grunt_Turn", 0.05f, false);
+	Renderer->CreateAnimation("Attack", "Grunt_Attack", 0.05f, false);
+	Renderer->CreateAnimation("Death", "grunt_hurtground", 0.05f, false);
+	Renderer->CreateAnimation("DeathInAir", "grunt_hurtfly", 0.05f, false);
+
+	Renderer->SetAutoSize(2.0f, true);
+	Renderer->SetOrder(ERenderOrder::Enemy);
+}
+
 void AGrunt::None(float _DeltaTime)
 {
 	Super::None(_DeltaTime);
@@ -110,24 +130,5 @@ void AGrunt::ChangeLayerLevelStart()
 	Super::ChangeLayerLevelStart();
 }
 
-void AGrunt::StateInit()
-{
-	Super::StateInit();
-}
 
-void AGrunt::RendererInit()
-{
-	Super::RendererInit();
-	Renderer->CreateAnimation("Idle", "grunt_idle", 0.05f, true);
-	Renderer->CreateAnimation("Walk", "grunt_walk", 0.05f, true);
-	Renderer->CreateAnimation("Run", "Grunt_Run", 0.05f, true);
-	Renderer->CreateAnimation("Turn", "Grunt_Turn", 0.05f, false);
-	Renderer->CreateAnimation("Attack", "Grunt_Attack", 0.05f, false); 
-	Renderer->CreateAnimation("Death", "grunt_hurtground", 0.05f, false);
-	Renderer->CreateAnimation("DeathInAir", "grunt_hurtfly", 0.05f, false);
-	Renderer->CreateAnimation("ChangeLayerLevel", "grunt_ChangeLayerLevel", 0.05f, false);
-
-	Renderer->SetAutoSize(2.0f, true);
-	Renderer->SetOrder(ERenderOrder::Enemy);
-}
 

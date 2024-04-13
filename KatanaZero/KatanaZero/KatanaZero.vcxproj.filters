@@ -90,6 +90,9 @@
     <ClCompile Include="Cop.cpp">
       <Filter>Actor\Enemy\Cop</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -139,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="Cop.h">
       <Filter>Actor\Enemy\Cop</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

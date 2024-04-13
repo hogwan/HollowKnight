@@ -3,7 +3,7 @@
 
 AEnemy::AEnemy() 
 {
-	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Root");
+	Root = CreateDefaultSubObject<UDefaultSceneComponent>("Root");
 
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
 	Renderer->SetupAttachment(Root);
@@ -34,7 +34,7 @@ void AEnemy::Tick(float _DeltaTime)
 	State.Update(_DeltaTime);
 
 	FVector PlayerPos = UConstValue::Player->GetActorLocation();
-	if (abs(PlayerPos.X - GetActorLocation().X))
+	if (abs(PlayerPos.X - GetActorLocation().X) < 500.f)
 	{
 		CurPattern = EEnemyPattern::ChasePlayer;
 	}
@@ -58,7 +58,6 @@ void AEnemy::StateInit()
 	State.SetUpdateFunction("None", std::bind(&AEnemy::None, this, std::placeholders::_1));
 	State.SetStartFunction("None", std::bind(&AEnemy::NoneStart, this));
 
-
 	State.SetUpdateFunction("Idle", std::bind(&AEnemy::Idle, this, std::placeholders::_1));
 	State.SetStartFunction("Idle", std::bind(&AEnemy::IdleStart, this));
 
@@ -73,6 +72,7 @@ void AEnemy::StateInit()
 
 	State.SetUpdateFunction("Attack", std::bind(&AEnemy::Attack, this, std::placeholders::_1));
 	State.SetStartFunction("Attack", std::bind(&AEnemy::AttackStart, this));
+	State.SetEndFunction("Attack", std::bind(&AEnemy::AttackEnd, this));
 
 	State.SetUpdateFunction("Death", std::bind(&AEnemy::Death, this, std::placeholders::_1));
 	State.SetStartFunction("Death", std::bind(&AEnemy::DeathStart, this));
@@ -251,56 +251,36 @@ void AEnemy::Run(float _DeltaTime)
 }
 void AEnemy::Turn(float _DeltaTime)
 {
-	Renderer->SetFrameCallback("Turn", 8, [=]
-		{
-			State.ChangeState("Walk");
-			return;
-		});
+	if (Renderer->IsCurAnimationEnd())
+	{
+		State.ChangeState("Walk");
+		return;
+	}
 }
 
 void AEnemy::Attack(float _DeltaTime)
 {
-	Renderer->SetFrameCallback("Attack", 8, [=]
-		{
-			State.ChangeState("Idle");
-			return;
-		});
+
 }
 
 void AEnemy::Death(float _DeltaTime)
 {
-	Renderer->SetFrameCallback("Death", 16, [=]
-		{
-			Destroy();
-			return;
-		});
+	
 }
 
 void AEnemy::DeathInAir(float _DeltaTime)
 {
-	Renderer->SetFrameCallback("DeathInAir", 2, [=]
-		{
-			Destroy();
-			return;
-		});
+	
 }
 
 void AEnemy::ChangeLayerLevel(float _DeltaTime)
 {
-	Renderer->SetFrameCallback("ChangeLayerLevel", 8, [=] {
+	if (Renderer->IsCurAnimationEnd()) {
 		if (UConstValue::Player->GetLayerLevel() > LayerLevel)
 		{
 			LayerLevel++;
 			AddActorLocation(FVector::Up * 5.f);
 			State.ChangeState("Run");
-			if (CurDir == EActorDir::Left)
-			{
-				CurDir = EActorDir::Right;
-			}
-			else
-			{
-				CurDir = EActorDir::Left;
-			}
 			return;
 		}
 		else if (UConstValue::Player->GetLayerLevel() < LayerLevel)
@@ -308,17 +288,9 @@ void AEnemy::ChangeLayerLevel(float _DeltaTime)
 			LayerLevel--;
 			AddActorLocation(FVector::Down * 5.f);
 			State.ChangeState("Run");
-			if (CurDir == EActorDir::Left)
-			{
-				CurDir = EActorDir::Right;
-			}
-			else
-			{
-				CurDir = EActorDir::Left;
-			}
 			return;
 		}
-		});
+	}
 }
 
 void AEnemy::NoneStart()
@@ -361,6 +333,7 @@ void AEnemy::TurnStart()
 
 void AEnemy::AttackStart()
 {
+	MoveVector = FVector::Zero;
 	Renderer->ChangeAnimation("Attack");
 	return;
 }
@@ -379,8 +352,20 @@ void AEnemy::DeathInAirStart()
 
 void AEnemy::ChangeLayerLevelStart()
 {
-	Renderer->ChangeAnimation("ChangeLayerLevel");
+	if (CurDir == EActorDir::Left)
+	{
+		CurDir = EActorDir::Right;
+	}
+	else
+	{
+		CurDir = EActorDir::Left;
+	}
+	Renderer->ChangeAnimation("Turn");
 	return;
+}
+
+void AEnemy::AttackEnd()
+{
 }
 
 void AEnemy::DirUpdate()

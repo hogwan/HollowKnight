@@ -7,6 +7,7 @@
 #include "CameraManager.h"
 #include "Cursor.h"
 #include "Grunt.h"
+#include "Cop.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -38,7 +39,10 @@ void APlayGameMode::BeginPlay()
 	UConstValue::Player->SetActorLocation({ 200.0f, -500.0f, 200.0f });
 
 	std::shared_ptr<AGrunt> Grunt = GetWorld()->SpawnActor<AGrunt>("Grunt");
-	Grunt->SetActorLocation({ 500.f,-500.f,200.f });
+	Grunt->SetActorLocation({ 600.f,-500.f,200.f });
+
+	std::shared_ptr<ACop> Cop = GetWorld()->SpawnActor<ACop>("Cop");
+	Cop->SetActorLocation({ 600.f,-500.f,200.f });
 
 	UConstValue::MainCursor = GetWorld()->SpawnActor<ACursor>("Cursor");
 }
