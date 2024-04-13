@@ -100,6 +100,8 @@ void APlayer::DirUpdate()
 	}
 }
 
+
+
 void APlayer::None(float _DeltaTime)
 {
 	State.ChangeState("Idle");
@@ -172,7 +174,7 @@ void APlayer::Idle(float _DeltaTime)
 		return;
 	}
 
-	if (false == IsLanded)
+	if (FallCheck())
 	{
 		State.ChangeState("Fall");
 		return;
@@ -295,7 +297,7 @@ void APlayer::Run(float _DeltaTime)
 		return;
 	}
 
-	if (false == IsLanded)
+	if (FallCheck())
 	{
 		State.ChangeState("Fall");
 		return;
@@ -369,7 +371,7 @@ void APlayer::Roll(float _DeltaTime)
 		return;
 	}
 
-	if (false == IsLanded)
+	if (FallCheck())
 	{
 		State.ChangeState("Fall");
 		return;
@@ -1034,19 +1036,13 @@ bool APlayer::TopWallCheck()
 	}
 }
 
-void APlayer::GroundUp()
+bool APlayer::FallCheck()
 {
-	while (true)
+	Color8Bit Color = UConstValue::MapTex->GetColor(FallCheckPos, Color8Bit::Black);
+
+	if (Color == Color8Bit::Black || Color == Color8Bit::Red || Color == Color8Bit::Blue || Color == Color8Bit::Yellow)
 	{
-		BottomCheckPos = GetActorLocation() + FVector(0.f, -20.f, 0.f);
-		Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos + FVector::Up*2, Color8Bit::Magenta);
-		if (Color == Color8Bit::Black)
-		{
-			AddActorLocation(FVector::Up);
-		}
-		else
-		{
-			break;
-		}
+		return false;
 	}
+	else return true;
 }

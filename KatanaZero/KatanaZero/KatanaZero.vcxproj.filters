@@ -28,8 +28,14 @@
     <Filter Include="Actor\Player\FX">
       <UniqueIdentifier>{353d1c73-470d-4d0e-980a-0a34421c120c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Grunt">
+    <Filter Include="Actor\Enemy">
+      <UniqueIdentifier>{aa806eea-2cbd-42c1-b7c7-de91ebc10cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Enemy\Grunt">
       <UniqueIdentifier>{41a572de-2931-49d0-9c82-c7ef25cdb69a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Enemy\Cop">
+      <UniqueIdentifier>{0e4a946d-42cc-4fd0-973b-bf865992a43f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,13 +79,16 @@
       <Filter>Helper</Filter>
     </ClCompile>
     <ClCompile Include="Grunt.cpp">
-      <Filter>Actor\Grunt</Filter>
+      <Filter>Actor\Enemy\Grunt</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Actor</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Cop.cpp">
+      <Filter>Actor\Enemy\Cop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,10 +132,13 @@
       <Filter>Helper</Filter>
     </ClInclude>
     <ClInclude Include="Grunt.h">
-      <Filter>Actor\Grunt</Filter>
+      <Filter>Actor\Enemy\Grunt</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Cop.h">
+      <Filter>Actor\Enemy\Cop</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

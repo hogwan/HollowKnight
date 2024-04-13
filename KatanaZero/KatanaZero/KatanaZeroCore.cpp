@@ -21,6 +21,25 @@ void KatanaZeroCore::Initialize()
 		{
 			UEngineSprite::Load(File.GetFullPath());
 		}
+	}
+
+	{
+		UEngineDirectory Dir;
+		Dir.MoveToSearchChild("KZ_Resources");
+		Dir.Move("Player");
+
+		std::vector<UEngineDirectory> Directorys = Dir.GetAllDirectory();
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			std::string Name = Directorys[i].GetFolderName();
+			UEngineSprite::LoadFolder(Directorys[i].GetFullPath());
+		}
+	}
+
+	{
+		UEngineDirectory Dir;
+		Dir.MoveToSearchChild("KZ_Resources");
+		Dir.Move("Enemy");
 
 		std::vector<UEngineDirectory> Directorys = Dir.GetAllDirectory();
 		for (size_t i = 0; i < Directorys.size(); i++)

@@ -55,7 +55,7 @@ private:
 	void DebugMessageFunction();
 	void DirCheck();
 	void DirUpdate();
-	void GroundUp();
+	bool FallCheck();
 
 	void None(float _DeltaTime);
 	void Idle(float _DeltaTime);
@@ -132,6 +132,7 @@ private:
 	float4 RightCheckPos = FVector::Zero;
 	float4 LeftCheckPos = FVector::Zero;
 	float4 TopCheckPos = FVector::Zero;
+	float4 FallCheckPos = FVector::Zero;
 
 
 	float DustFXRespawnTime = 0.05f;

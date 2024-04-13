@@ -1,12 +1,6 @@
 #pragma once
 #include "Enemy.h"
 
-enum class EGruntPattern
-{
-	Patrol,
-	ChasePlayer,
-};
-
 // Ό³Έν :
 class AGrunt : public AEnemy
 {
@@ -26,48 +20,27 @@ public:
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-private:
-	EActorDir CurDir = EActorDir::Right;
-	EGruntPattern CurPattern = EGruntPattern::Patrol;
-	FVector MoveVector = FVector::Zero;
-	FVector GravityVector = FVector(0.f,-500.f,0.f);
-	void DirUpdate();
 
-	void None(float _DeltaTime);
-	void Idle(float _DeltaTime);
-	void Walk(float _DeltaTime);
-	void Run(float _DeltaTime);
-	void Turn(float _DeltaTime);
-	void Attack(float _DeltaTime);
-	void Death(float _DeltaTime);
-	void DeathInAir(float _DeltaTime);
-	void ChangeLayerLevel(float _DeltaTime);
-
-	void NoneStart();
-	void IdleStart();
-	void WalkStart();
-	void RunStart();
-	void TurnStart();
-	void AttackStart();
-	void DeathStart();
-	void DeathInAirStart();
-	void ChangeLayerLevelStart();
-
-	void StateInit();
-	void RendererInit();
-
-	bool LandCheck();
-	void GravityCheck(float _DeltaTime);
-
-
-	float AccTime = 0.f;
-	float IdleTime = 1.f;
-	float WalkTime = 4.f;
-	float WalkSpeed = 100.f;
-	float MoveSpeed = 300.f;
-
-	bool OnLeftUpStep = false;
-	bool OnRightUpStep = false;
+	void None(float _DeltaTime) override;
+	void Idle(float _DeltaTime) override;
+	void Walk(float _DeltaTime) override;
+	void Run(float _DeltaTime) override;
+	void Turn(float _DeltaTime) override;
+	void Attack(float _DeltaTime) override;
+	void Death(float _DeltaTime) override;
+	void DeathInAir(float _DeltaTime) override;
+	void ChangeLayerLevel(float _DeltaTime) override;
+	void NoneStart() override;
+	void IdleStart() override;
+	void WalkStart() override;
+	void RunStart() override;
+	void TurnStart() override;
+	void AttackStart() override;
+	void DeathStart() override;
+	void DeathInAirStart() override;
+	void ChangeLayerLevelStart() override;
+	void StateInit() override;
+	void RendererInit() override;
 
 };
 

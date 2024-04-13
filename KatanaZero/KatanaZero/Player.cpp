@@ -91,6 +91,7 @@ void APlayer::CheckPosInit()
 	RightCheckPos = Pos + FVector(20.f, 30.f, 0.f);
 	LeftCheckPos = Pos + FVector(-20.f, 30.f, 0.f);
 	TopCheckPos = Pos + FVector(0.f, 40.f, 0.f);
+	FallCheckPos = Pos + FVector(0.f, -1.f, 0.f);
 
 	BottomCheckPos /= UConstValue::Ratio;
 	BottomCheckPos.Y = -BottomCheckPos.Y;
@@ -100,6 +101,8 @@ void APlayer::CheckPosInit()
 	LeftCheckPos.Y = -LeftCheckPos.Y;
 	TopCheckPos /= UConstValue::Ratio;
 	TopCheckPos.Y = -TopCheckPos.Y;
+	FallCheckPos /= UConstValue::Ratio;
+	FallCheckPos.Y = -FallCheckPos.Y;
 }
 
 void APlayer::DebugMessageFunction()
