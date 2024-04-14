@@ -87,6 +87,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PompSlashFX.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
       </SubType>
@@ -162,6 +163,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PompSlashFX.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>
       </SubType>

@@ -99,6 +99,9 @@
     <ClCompile Include="Pomp.cpp">
       <Filter>Actor\Enemy\Pomp</Filter>
     </ClCompile>
+    <ClCompile Include="PompSlashFX.cpp">
+      <Filter>Actor\Enemy\Pomp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -153,6 +156,9 @@
       <Filter>Actor</Filter>
     </ClInclude>
     <ClInclude Include="Pomp.h">
+      <Filter>Actor\Enemy\Pomp</Filter>
+    </ClInclude>
+    <ClInclude Include="PompSlashFX.h">
       <Filter>Actor\Enemy\Pomp</Filter>
     </ClInclude>
   </ItemGroup>
