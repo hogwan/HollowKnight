@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Grunt.h"
+#include "GruntSlashFX.h"
 
 AGrunt::AGrunt() 
 {
@@ -58,6 +59,13 @@ void AGrunt::Walk(float _DeltaTime)
 void AGrunt::Run(float _DeltaTime)
 {
 	Super::Run(_DeltaTime);
+	FVector PlayerPos = UConstValue::Player->GetActorLocation();
+	if (abs(PlayerPos.X - GetActorLocation().X) < 100.f)
+	{
+		State.ChangeState("Attack");
+		return;
+	}
+
 }
 
 void AGrunt::Turn(float _DeltaTime)
@@ -68,6 +76,11 @@ void AGrunt::Turn(float _DeltaTime)
 void AGrunt::Attack(float _DeltaTime)
 {
 	Super::Attack(_DeltaTime);
+	if (Renderer->IsCurAnimationEnd())
+	{
+		State.ChangeState("Idle");
+		return;
+	}
 }
 
 void AGrunt::Death(float _DeltaTime)
@@ -113,6 +126,16 @@ void AGrunt::TurnStart()
 void AGrunt::AttackStart()
 {
 	Super::AttackStart();
+	std::shared_ptr<AGruntSlashFX> GruntSlashFX = GetWorld()->SpawnActor<AGruntSlashFX>("PompSlashFX");
+	if (CurDir == EActorDir::Left)
+	{
+		GruntSlashFX->SetActorLocation(GetActorLocation() + FVector(-30.f, 50.f, 0.f));
+		GruntSlashFX->ReverseX();
+	}
+	else
+	{
+		GruntSlashFX->SetActorLocation(GetActorLocation() + FVector(30.f, 50.f, 0.f));
+	}
 }
 
 void AGrunt::DeathStart()

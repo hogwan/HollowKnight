@@ -14,6 +14,7 @@ public:
 	AFXBase(AFXBase&& _Other) noexcept = delete;
 	AFXBase& operator=(const AFXBase& _Other) = delete;
 	AFXBase& operator=(AFXBase&& _Other) noexcept = delete;
+	void ReverseX();
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

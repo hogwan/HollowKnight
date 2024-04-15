@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Pomp.h"
+#include "PompSlashFX.h"
 
 APomp::APomp()
 {
@@ -63,6 +64,12 @@ void APomp::Walk(float _DeltaTime)
 void APomp::Run(float _DeltaTime)
 {
 	Super::Run(_DeltaTime);
+	FVector PlayerPos = UConstValue::Player->GetActorLocation();
+	if (abs(PlayerPos.X - GetActorLocation().X) < 100.f)
+	{
+		State.ChangeState("Attack");
+		return;
+	}
 }
 
 void APomp::Turn(float _DeltaTime)
@@ -73,6 +80,11 @@ void APomp::Turn(float _DeltaTime)
 void APomp::Attack(float _DeltaTime)
 {
 	Super::Attack(_DeltaTime);
+	if (Renderer->IsCurAnimationEnd())
+	{
+		State.ChangeState("Idle");
+		return;
+	}
 }
 
 void APomp::Death(float _DeltaTime)
@@ -118,6 +130,17 @@ void APomp::TurnStart()
 void APomp::AttackStart()
 {
 	Super::AttackStart();
+	std::shared_ptr<APompSlashFX> PompSlashFX = GetWorld()->SpawnActor<APompSlashFX>("PompSlashFX");
+	if (CurDir == EActorDir::Left)
+	{
+		PompSlashFX->SetActorLocation(GetActorLocation() + FVector(-30.f,50.f,0.f));
+		PompSlashFX->ReverseX();
+	}
+	else
+	{
+		PompSlashFX->SetActorLocation(GetActorLocation() + FVector(30.f, 50.f, 0.f));
+	}
+
 }
 
 void APomp::DeathStart()

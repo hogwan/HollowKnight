@@ -15,6 +15,13 @@ AFXBase::~AFXBase()
 {
 }
 
+void AFXBase::ReverseX()
+{
+	FVector Scale = GetActorScale3D();
+	Scale.X = -Scale.X;
+	SetActorScale3D(Scale);
+}
+
 void AFXBase::BeginPlay()
 {
 	Super::BeginPlay();

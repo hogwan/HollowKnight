@@ -21,7 +21,5 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-	float4 Color;
-	FVector Dir = FVector::Zero;
 };
 

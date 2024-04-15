@@ -55,6 +55,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GruntSlashFX.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="KatanaZeroCore.h">
       <SubType>
       </SubType>
@@ -127,6 +131,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Grunt.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GruntSlashFX.cpp">
       <SubType>
       </SubType>
     </ClCompile>

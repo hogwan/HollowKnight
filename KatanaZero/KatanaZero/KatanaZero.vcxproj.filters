@@ -84,9 +84,6 @@
     <ClCompile Include="Grunt.cpp">
       <Filter>Actor\Enemy\Grunt</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Actor</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Actor\Player</Filter>
     </ClCompile>
@@ -101,6 +98,12 @@
     </ClCompile>
     <ClCompile Include="PompSlashFX.cpp">
       <Filter>Actor\Enemy\Pomp</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Actor\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GruntSlashFX.cpp">
+      <Filter>Actor\Enemy\Grunt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +149,6 @@
     <ClInclude Include="Grunt.h">
       <Filter>Actor\Enemy\Grunt</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Actor</Filter>
-    </ClInclude>
     <ClInclude Include="Cop.h">
       <Filter>Actor\Enemy\Cop</Filter>
     </ClInclude>
@@ -160,6 +160,12 @@
     </ClInclude>
     <ClInclude Include="PompSlashFX.h">
       <Filter>Actor\Enemy\Pomp</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Actor\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GruntSlashFX.h">
+      <Filter>Actor\Enemy\Grunt</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
