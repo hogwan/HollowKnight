@@ -6,6 +6,7 @@
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/Camera.h>
 
+
 APlayer::APlayer() 
 {
 	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Renderer");
@@ -13,6 +14,12 @@ APlayer::APlayer()
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
 	Renderer->SetupAttachment(Root);
 	Renderer->SetPivot(EPivot::BOT);
+
+	BottomCol = CreateDefaultSubObject<UCollision>("BottomCol");
+	BottomCol->SetupAttachment(Root);
+	BottomCol->SetPosition(FVector(0.f, 0.f, 0.f));
+	BottomCol->SetScale(FVector(1.f, 1.f, 100.f));
+
 	SetRoot(Root);
 	InputOn();
 }
@@ -33,6 +40,7 @@ void APlayer::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+	LayerCheck();
 	CheckPosInit();
 	if (LandCheck() == false)
 	{
@@ -49,21 +57,6 @@ void APlayer::Tick(float _DeltaTime)
 	AddActorLocation(MoveVector * _DeltaTime);
 
 	DebugMessageFunction();
-
-	if (LayerLevel == 0)
-	{
-		if ((IsDown('r') || IsDown('R')))
-		{
-			LayerLevel = 1;
-		}
-	}
-	else if (LayerLevel == 1)
-	{
-		if ((IsDown('r') || IsDown('R')))
-		{
-			LayerLevel = 0;
-		}
-	}
 }
 
 void APlayer::RendererInit()

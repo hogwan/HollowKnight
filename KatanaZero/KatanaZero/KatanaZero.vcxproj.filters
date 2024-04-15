@@ -40,6 +40,9 @@
     <Filter Include="Actor\Enemy\Pomp">
       <UniqueIdentifier>{70407adb-942f-4ff7-aa56-35efa7b920d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Collision">
+      <UniqueIdentifier>{b1bbb56e-6b7e-4190-98c2-fc29d132a474}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KatanaZeroCore.cpp">
@@ -105,6 +108,15 @@
     <ClCompile Include="GruntSlashFX.cpp">
       <Filter>Actor\Enemy\Grunt</Filter>
     </ClCompile>
+    <ClCompile Include="ActionCollider.cpp">
+      <Filter>Actor\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLayerChangeCollider.cpp">
+      <Filter>Actor\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyLayerChangeCol.cpp">
+      <Filter>Actor\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -166,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="GruntSlashFX.h">
       <Filter>Actor\Enemy\Grunt</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionCollider.h">
+      <Filter>Actor\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLayerChangeCollider.h">
+      <Filter>Actor\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyLayerChangeCol.h">
+      <Filter>Actor\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

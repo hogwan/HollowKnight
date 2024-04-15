@@ -32,6 +32,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 	USpriteRenderer* Renderer = nullptr;
 	UDefaultSceneComponent* Root = nullptr;
+	UCollision* Collider = nullptr;
 	int LayerLevel = 0;
 
 	EActorDir CurDir = EActorDir::Right;

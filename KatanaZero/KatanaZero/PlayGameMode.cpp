@@ -9,6 +9,8 @@
 #include "Grunt.h"
 #include "Cop.h"
 #include "Pomp.h"
+#include "PlayerLayerChangeCollider.h"
+#include "EnemyLayerChangeCol.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -38,6 +40,11 @@ void APlayGameMode::BeginPlay()
 
 	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
 	UConstValue::Player->SetActorLocation({ 200.0f, -500.0f, 200.0f });
+
+	std::shared_ptr<APlayerLayerChangeCollider> LayerChangeCol = GetWorld()->SpawnActor<APlayerLayerChangeCollider>("LCC");
+	LayerChangeCol->SetActorLocation(FVector(680.f, -315.f, 200.f));
+
+	UConstValue::EnemyLayerChangeCols.push_back(FVector(900.f, -300.f, 200.f));
 
 	std::shared_ptr<AGrunt> Grunt = GetWorld()->SpawnActor<AGrunt>("Grunt");
 	Grunt->SetActorLocation({ 500.f,-500.f,200.f });

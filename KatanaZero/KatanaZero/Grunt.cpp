@@ -4,7 +4,10 @@
 
 AGrunt::AGrunt() 
 {
-	
+	USpriteRenderer* Test = CreateDefaultSubObject<USpriteRenderer>("Test");
+	Test->SetupAttachment(Root);
+	Test->SetScale(FVector(36.f, 72.f, 100.f));
+	Test->SetPosition(FVector(0.f, 36.f, 0.f));
 }
 
 AGrunt::~AGrunt() 
@@ -39,6 +42,10 @@ void AGrunt::RendererInit()
 
 	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::Enemy);
+	
+	Collider->SetScale(FVector(36.f, 72.f, 100.f));
+	Collider->SetPosition(FVector(0.f, 36.f, 0.f));
+
 }
 
 void AGrunt::None(float _DeltaTime)
@@ -59,12 +66,12 @@ void AGrunt::Walk(float _DeltaTime)
 void AGrunt::Run(float _DeltaTime)
 {
 	Super::Run(_DeltaTime);
-	FVector PlayerPos = UConstValue::Player->GetActorLocation();
+	/*FVector PlayerPos = UConstValue::Player->GetActorLocation();
 	if (abs(PlayerPos.X - GetActorLocation().X) < 100.f)
 	{
 		State.ChangeState("Attack");
 		return;
-	}
+	}*/
 
 }
 

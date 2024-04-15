@@ -1036,6 +1036,22 @@ bool APlayer::TopWallCheck()
 	}
 }
 
+void APlayer::LayerCheck()
+{
+	BottomCol->CollisionExit(ECollisionOrder::PlayerLayerChange, [=](std::shared_ptr<UCollision> _Collison)
+		{
+			if (MoveVector.Y > 0.f)
+			{
+				LayerLevel++;
+			}
+			else if(MoveVector.Y < 0.f)
+			{
+				LayerLevel--;
+			}
+		}
+	);
+}
+
 bool APlayer::FallCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(FallCheckPos, Color8Bit::Black);

@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Enemy.h"
+#include "EnemyLayerChangeCol.h"
 
 AEnemy::AEnemy() 
 {
@@ -8,6 +9,11 @@ AEnemy::AEnemy()
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
 	Renderer->SetupAttachment(Root);
 	Renderer->SetPivot(EPivot::BOT);
+
+	Collider = CreateDefaultSubObject<UCollision>("Collider");
+	Collider->SetupAttachment(Root);
+	Collider->SetCollisionGroup(ECollisionOrder::Enemy);
+	Collider->SetCollisionType(ECollisionType::Rect);
 
 	SetRoot(Root);
 }
@@ -180,16 +186,27 @@ void AEnemy::Walk(float _DeltaTime)
 
 void AEnemy::Run(float _DeltaTime)
 {
+	FVector CurPos = GetActorLocation();
 	FVector PlayerPos = UConstValue::Player->GetActorLocation();
 	FVector ChangeLayerPos = FVector(870.f, 0.f, 0.f);
 	FVector Gap = PlayerPos - GetActorLocation();
 
 	if (LayerLevel != UConstValue::Player->GetLayerLevel())
 	{
-		Gap = ChangeLayerPos - GetActorLocation();
-		if (Gap.X < 0.f)
+		FVector TargetPos = FVector::Zero;
+		if (UConstValue::Player->GetLayerLevel() > LayerLevel)
 		{
-			MoveVector = FVector::Zero;
+			TargetPos = UConstValue::EnemyLayerChangeCols[LayerLevel];
+		}
+		else if (UConstValue::Player->GetLayerLevel() < LayerLevel)
+		{
+			TargetPos = UConstValue::EnemyLayerChangeCols[LayerLevel - 1];
+		}
+
+		Gap = TargetPos - CurPos;
+
+		if (abs(Gap.X) < 5.f)
+		{
 			State.ChangeState("ChangeLayerLevel");
 			return;
 		}
@@ -352,6 +369,7 @@ void AEnemy::DeathInAirStart()
 
 void AEnemy::ChangeLayerLevelStart()
 {
+	MoveVector = FVector::Zero;
 	if (CurDir == EActorDir::Left)
 	{
 		CurDir = EActorDir::Right;
@@ -431,4 +449,5 @@ void AEnemy::GravityCheck(float _DeltaTime)
 		MoveVector.Y = 0.f;
 	}
 }
+
 
