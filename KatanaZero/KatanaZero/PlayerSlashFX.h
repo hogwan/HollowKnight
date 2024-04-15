@@ -20,6 +20,8 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	UCollision* Collider = nullptr;
+
 private:
 	float4 Color;
 	FVector Dir = FVector::Zero;

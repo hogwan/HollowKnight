@@ -77,6 +77,11 @@ protected:
 
 	bool OnLeftUpStep = false;
 	bool OnRightUpStep = false;
+
+	void DeathCheck();
+	float FlyPower = 500.f;
+	float DeathBreak = 500.f;
+	bool IsDeath = false;
 	
 private:
 

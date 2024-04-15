@@ -6,6 +6,10 @@
 #include "PlayerDustFX.h"
 #include "PlayerJumpFX.h"
 #include "PlayerLandFX.h"
+#include "Bottle.h"
+#include "FireBottle.h"
+#include "Knife.h"
+#include "Smoke.h"
 
 void APlayer::StateInit()
 {
@@ -1050,6 +1054,58 @@ void APlayer::LayerCheck()
 			}
 		}
 	);
+}
+
+void APlayer::PickUpItem()
+{
+	Collider->CollisionStay(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
+		{
+			if (IsDown(VK_RBUTTON))
+			{
+				
+			}
+		}
+	);
+}
+
+void APlayer::ThrowItem()
+{
+	if (PossessItem != ItemType::None)
+	{
+		FVector PlayerPos = GetActorLocation();
+		FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
+		FVector MousePos = GEngine->EngineWindow.GetScreenMousePos();
+
+		FVector WindowScale = GEngine->EngineWindow.GetWindowScale();
+		FVector TargetPos =
+			FVector(CameraPos.X, CameraPos.Y, 0.f) +
+			FVector(MousePos.X - WindowScale.hX(), -(MousePos.Y - WindowScale.hY()), 0.f);
+
+		FVector ThrowDir = TargetPos - PlayerPos;
+		ThrowDir.Z = 0.f;
+		ThrowDir.Normalize3D();
+
+		std::shared_ptr<AItem> Item = nullptr;
+
+		switch (PossessItem)
+		{
+		case ItemType::Bottle:
+			Item = GetWorld()->SpawnActor<ABottle>("Bottle");
+			break;
+		case ItemType::FireBottle:
+			Item = GetWorld()->SpawnActor<AFireBottle>("FireBottle");
+			break;
+		case ItemType::Knife:
+			Item = GetWorld()->SpawnActor<AKnife>("FireBottle");
+			break;
+		case ItemType::Smoke:
+			Item = GetWorld()->SpawnActor<ASmoke>("FireBottle");
+			break;
+		}
+
+		Item->SetActorLocation(GetActorLocation());
+		Item->SetThrow(ThrowDir);
+	}
 }
 
 bool APlayer::FallCheck()

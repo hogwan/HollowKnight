@@ -44,6 +44,7 @@ protected:
 
 private:
 	USpriteRenderer* Renderer = nullptr;
+	UCollision* Collider = nullptr;
 	float4 Color;
 	EActorDir CurDir = EActorDir::None;
 	FVector MoveVector = FVector::Zero;
@@ -146,7 +147,10 @@ private:
 	FVector LeftWallSlideFXOffset = FVector(-20.f, 0.f, 0.f);
 
 	UCollision* BottomCol = nullptr;
+	ItemType PossessItem = ItemType::Knife;
 	void LayerCheck();
+	void PickUpItem();
+	void ThrowItem();
 
 };
 

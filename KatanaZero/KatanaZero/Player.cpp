@@ -15,6 +15,9 @@ APlayer::APlayer()
 	Renderer->SetupAttachment(Root);
 	Renderer->SetPivot(EPivot::BOT);
 
+	Collider = CreateDefaultSubObject<UCollision>("Collider");
+	Collider->SetupAttachment(Root);
+
 	BottomCol = CreateDefaultSubObject<UCollision>("BottomCol");
 	BottomCol->SetupAttachment(Root);
 	BottomCol->SetPosition(FVector(0.f, 0.f, 0.f));
@@ -31,6 +34,11 @@ APlayer::~APlayer()
 void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Collider->SetScale(FVector(36.f, 72.f, 100.f));
+	Collider->SetPosition(FVector(0.f, 36.f, 0.f));
+	Collider->SetCollisionGroup(ECollisionOrder::Player);
+	Collider->SetCollisionType(ECollisionType::Rect);
 
 	RendererInit();
 	StateInit();
@@ -55,6 +63,11 @@ void APlayer::Tick(float _DeltaTime)
 		MoveVector.Y = -MoveVector.Y;
 	}
 	AddActorLocation(MoveVector * _DeltaTime);
+
+	if (IsDown(VK_RBUTTON))
+	{
+		ThrowItem();
+	}
 
 	DebugMessageFunction();
 }

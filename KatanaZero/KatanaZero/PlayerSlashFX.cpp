@@ -4,7 +4,8 @@
 
 PlayerSlashFX::PlayerSlashFX() 
 {
-
+	Collider = CreateDefaultSubObject<UCollision>("Collider");
+	Collider->SetupAttachment(Root);
 }
 
 PlayerSlashFX::~PlayerSlashFX() 
@@ -20,6 +21,11 @@ void PlayerSlashFX::BeginPlay()
 
 	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::FX);
+
+	Collider->SetScale(Renderer->GetLocalScale());
+	Collider->SetCollisionGroup(ECollisionOrder::PlayerSlash);
+	Collider->SetCollisionType(ECollisionType::Rect);
+
 	Dir = UConstValue::Player->GetAttackDir();
 	
 

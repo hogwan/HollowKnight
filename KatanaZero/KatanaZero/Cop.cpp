@@ -7,6 +7,11 @@ ACop::ACop()
 	Arms = CreateDefaultSubObject<USpriteRenderer>("Arms");
 	Arms->SetupAttachment(Root);
 	Arms->SetPivot(EPivot::RIGHT);
+
+	USpriteRenderer* Test = CreateDefaultSubObject<USpriteRenderer>("Test");
+	Test->SetupAttachment(Root);
+	Test->SetScale(FVector(36.f, 72.f, 100.f));
+	Test->SetPosition(FVector(0.f, 36.f, 0.f));
 }
 
 ACop::~ACop()
@@ -57,6 +62,9 @@ void ACop::RendererInit()
 	Arms->SetActive(false);
 	Arms->SetAutoSize(2.f, true);
 	Arms->SetOrder(ERenderOrder::EnemyArms);
+
+	Collider->SetScale(FVector(36.f, 72.f, 100.f));
+	Collider->SetPosition(FVector(0.f, 36.f, 0.f));
 }
 
 void ACop::None(float _DeltaTime)
@@ -81,7 +89,8 @@ void ACop::Run(float _DeltaTime)
 	FVector PlayerPos = UConstValue::Player->GetActorLocation();
 	FVector Gap = PlayerPos - GetActorLocation();
 
-	if (abs(Gap.X) < Range)
+	if (abs(Gap.X) < Range
+		&& abs(PlayerPos.Y - GetActorLocation().Y) < 100.f)
 	{
 		State.ChangeState("Attack");
 		return;

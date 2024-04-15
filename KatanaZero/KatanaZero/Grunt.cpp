@@ -66,12 +66,13 @@ void AGrunt::Walk(float _DeltaTime)
 void AGrunt::Run(float _DeltaTime)
 {
 	Super::Run(_DeltaTime);
-	/*FVector PlayerPos = UConstValue::Player->GetActorLocation();
-	if (abs(PlayerPos.X - GetActorLocation().X) < 100.f)
+	FVector PlayerPos = UConstValue::Player->GetActorLocation();
+	if (abs(PlayerPos.X - GetActorLocation().X) < 100.f
+		&& abs(PlayerPos.Y - GetActorLocation().Y) <100.f)
 	{
 		State.ChangeState("Attack");
 		return;
-	}*/
+	}
 
 }
 

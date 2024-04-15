@@ -27,6 +27,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Bottle.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Bullet.h">
       <SubType>
       </SubType>
@@ -55,6 +59,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="FireBottle.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="FXBase.h">
       <SubType>
       </SubType>
@@ -67,7 +75,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="KatanaZeroCore.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Knife.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -108,6 +124,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Smoke.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionCollider.cpp">
@@ -115,6 +139,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="BackGroundMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Bottle.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -146,6 +174,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="FireBottle.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FXBase.cpp">
       <SubType>
       </SubType>
@@ -158,7 +190,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="KatanaZeroCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Knife.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -203,6 +243,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Smoke.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">

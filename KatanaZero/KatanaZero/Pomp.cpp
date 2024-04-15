@@ -4,6 +4,10 @@
 
 APomp::APomp()
 {
+	USpriteRenderer* Test = CreateDefaultSubObject<USpriteRenderer>("Test");
+	Test->SetupAttachment(Root);
+	Test->SetScale(FVector(36.f, 72.f, 100.f));
+	Test->SetPosition(FVector(0.f, 36.f, 0.f));
 }
 
 APomp::~APomp()
@@ -44,6 +48,9 @@ void APomp::RendererInit()
 
 	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::Enemy);
+
+	Collider->SetScale(FVector(36.f, 72.f, 100.f));
+	Collider->SetPosition(FVector(0.f, 36.f, 0.f));
 }
 
 void APomp::None(float _DeltaTime)
@@ -65,7 +72,8 @@ void APomp::Run(float _DeltaTime)
 {
 	Super::Run(_DeltaTime);
 	FVector PlayerPos = UConstValue::Player->GetActorLocation();
-	if (abs(PlayerPos.X - GetActorLocation().X) < 100.f)
+	if (abs(PlayerPos.X - GetActorLocation().X) < 100.f
+		&& abs(PlayerPos.Y - GetActorLocation().Y) < 100.f)
 	{
 		State.ChangeState("Attack");
 		return;

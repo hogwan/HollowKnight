@@ -21,6 +21,7 @@ enum class ERenderOrder
 	EnemyArms,
 	Player,
 	Bullet,
+	Item,
 	FX,
 	Cursor,
 };
@@ -31,6 +32,8 @@ enum class ECollisionOrder
 	Enemy,
 	PlayerLayerChange,
 	EnemyLayerChange,
+	PlayerSlash,
+	Item,
 };
 
 enum class EActorDir
@@ -44,4 +47,20 @@ enum class ECameraMode
 {
 	None,
 	ChasePlayer,
+};
+
+enum class ItemState
+{
+	Idle,
+	Throw,
+};
+
+enum class ItemType
+{
+	None,
+	Knife,
+	Smoke,
+	FireBottle,
+	Bottle,
+
 };

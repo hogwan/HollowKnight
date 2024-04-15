@@ -37,6 +37,23 @@ void AEnemy::Tick(float _DeltaTime)
 
 	GravityCheck(_DeltaTime);
 
+	DeathCheck();
+	if (IsDeath)
+	{
+		if (abs(MoveVector.X) < 5.0f)
+		{
+			MoveVector.X = 0.f;
+		}
+		else if(MoveVector.X > 0.f)
+		{
+			MoveVector.X -= DeathBreak * _DeltaTime;
+		}
+		else if (MoveVector.X < 0.f)
+		{
+			MoveVector.X += DeathBreak * _DeltaTime;
+		}
+	}
+
 	State.Update(_DeltaTime);
 
 	FVector PlayerPos = UConstValue::Player->GetActorLocation();
@@ -46,7 +63,6 @@ void AEnemy::Tick(float _DeltaTime)
 	}
 
 	AddActorLocation(MoveVector * _DeltaTime);
-
 }
 
 void AEnemy::StateInit()
@@ -287,7 +303,11 @@ void AEnemy::Death(float _DeltaTime)
 
 void AEnemy::DeathInAir(float _DeltaTime)
 {
-	
+	if (LandCheck())
+	{
+		State.ChangeState("Death");
+		return;
+	}
 }
 
 void AEnemy::ChangeLayerLevel(float _DeltaTime)
@@ -363,6 +383,9 @@ void AEnemy::DeathStart()
 
 void AEnemy::DeathInAirStart()
 {
+	FVector AttackDir = UConstValue::Player->GetAttackDir();
+	MoveVector = AttackDir * FlyPower;
+
 	Renderer->ChangeAnimation("DeathInAir");
 	return;
 }
@@ -448,6 +471,16 @@ void AEnemy::GravityCheck(float _DeltaTime)
 	{
 		MoveVector.Y = 0.f;
 	}
+}
+
+void AEnemy::DeathCheck()
+{
+	Collider->CollisionEnter(ECollisionOrder::PlayerSlash, [=](std::shared_ptr<UCollision> _Collison)
+		{
+			State.ChangeState("DeathInAir");
+			IsDeath = true;
+		}
+	);
 }
 
 

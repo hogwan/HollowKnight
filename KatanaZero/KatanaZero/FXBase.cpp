@@ -3,7 +3,7 @@
 
 AFXBase::AFXBase()
 {
-	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Root");
+	Root = CreateDefaultSubObject<UDefaultSceneComponent>("Root");
 
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
 	Renderer->SetupAttachment(Root);

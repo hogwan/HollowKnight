@@ -20,5 +20,6 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 	USpriteRenderer* Renderer = nullptr;
+	UDefaultSceneComponent* Root = nullptr;
 private:
 };

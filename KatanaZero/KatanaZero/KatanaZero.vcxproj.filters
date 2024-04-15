@@ -43,6 +43,12 @@
     <Filter Include="Actor\Collision">
       <UniqueIdentifier>{b1bbb56e-6b7e-4190-98c2-fc29d132a474}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\ThrowItem">
+      <UniqueIdentifier>{c3fbdacd-b7e6-4151-97e6-40467f3eb818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UI">
+      <UniqueIdentifier>{bce76771-34ca-4012-8789-88aff52b524e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KatanaZeroCore.cpp">
@@ -117,6 +123,24 @@
     <ClCompile Include="EnemyLayerChangeCol.cpp">
       <Filter>Actor\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Knife.cpp">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBottle.cpp">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Bottle.cpp">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Smoke.cpp">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -187,6 +211,24 @@
     </ClInclude>
     <ClInclude Include="EnemyLayerChangeCol.h">
       <Filter>Actor\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Knife.h">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBottle.h">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Bottle.h">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Smoke.h">
+      <Filter>Actor\ThrowItem</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>Actor\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
