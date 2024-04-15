@@ -1058,7 +1058,7 @@ void APlayer::LayerCheck()
 
 void APlayer::PickUpItem()
 {
-	Collider->CollisionStay(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
+	Collider->CollisionStay(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collison)
 		{
 			if (IsDown(VK_RBUTTON))
 			{
@@ -1102,7 +1102,6 @@ void APlayer::ThrowItem()
 			Item = GetWorld()->SpawnActor<ASmoke>("FireBottle");
 			break;
 		}
-
 		Item->SetActorLocation(GetActorLocation());
 		Item->SetThrow(ThrowDir);
 	}

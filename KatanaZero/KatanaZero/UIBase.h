@@ -1,20 +1,28 @@
 #pragma once
+#include <EngineCore/Actor.h>
+#include <EngineCore/Camera.h>
 
 // Ό³Έν :
-class UIBase
+class AUIBase : public AActor
 {
+	GENERATED_BODY(AActor)
 public:
 	// constructor destructor
-	UIBase();
-	~UIBase();
+	AUIBase();
+	~AUIBase();
 
 	// delete Function
-	UIBase(const UIBase& _Other) = delete;
-	UIBase(UIBase&& _Other) noexcept = delete;
-	UIBase& operator=(const UIBase& _Other) = delete;
-	UIBase& operator=(UIBase&& _Other) noexcept = delete;
+	AUIBase(const AUIBase& _Other) = delete;
+	AUIBase(AUIBase&& _Other) noexcept = delete;
+	AUIBase& operator=(const AUIBase& _Other) = delete;
+	AUIBase& operator=(AUIBase&& _Other) noexcept = delete;
 
 protected:
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
+
+	UDefaultSceneComponent* Root = nullptr;
+	USpriteRenderer* Renderer = nullptr;
 
 private:
 

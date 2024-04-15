@@ -23,6 +23,8 @@ enum class ERenderOrder
 	Bullet,
 	Item,
 	FX,
+	UIBoard,
+	UI,
 	Cursor,
 };
 

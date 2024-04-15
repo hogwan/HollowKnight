@@ -12,6 +12,8 @@
 #include "PlayerLayerChangeCollider.h"
 #include "EnemyLayerChangeCol.h"
 #include "Knife.h"
+#include "UIBoard.h"
+#include "BatteryBody.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -41,6 +43,9 @@ void APlayGameMode::BeginPlay()
 
 	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
 	UConstValue::Player->SetActorLocation({ 200.0f, -500.0f, 200.0f });
+
+	std::shared_ptr<AUIBoard> UIBoard = GetWorld()->SpawnActor<AUIBoard>("UIBoard");
+	std::shared_ptr<ABatteryBody> BatteryBody = GetWorld()->SpawnActor<ABatteryBody>("BatteryBody");
 
 	std::shared_ptr<APlayerLayerChangeCollider> LayerChangeCol = GetWorld()->SpawnActor<APlayerLayerChangeCollider>("LCC");
 	LayerChangeCol->SetActorLocation(FVector(680.f, -315.f, 200.f));

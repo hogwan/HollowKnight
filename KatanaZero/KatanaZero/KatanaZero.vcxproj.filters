@@ -141,6 +141,12 @@
     <ClCompile Include="UIBase.cpp">
       <Filter>Actor\UI</Filter>
     </ClCompile>
+    <ClCompile Include="UIBoard.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BatteryBody.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -228,6 +234,12 @@
       <Filter>Actor\ThrowItem</Filter>
     </ClInclude>
     <ClInclude Include="UIBase.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBoard.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BatteryBody.h">
       <Filter>Actor\UI</Filter>
     </ClInclude>
   </ItemGroup>
