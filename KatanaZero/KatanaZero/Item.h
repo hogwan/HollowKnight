@@ -19,10 +19,10 @@ public:
 	void SetThrow(FVector _Dir)
 	{
 		MoveVector = _Dir * MoveSpeed;
-		CurState = ItemState::Throw;
+		CurState = EItemState::Throw;
 	}
 
-	ItemType GetItemType()
+	EItemType GetItemType()
 	{
 		return CurItem;
 	}
@@ -35,8 +35,8 @@ protected:
 	UCollision* Collider = nullptr;
 	USpriteRenderer* Renderer = nullptr;
 
-	ItemState CurState = ItemState::Idle;
-	ItemType CurItem = ItemType::None;
+	EItemState CurState = EItemState::Idle;
+	EItemType CurItem = EItemType::None;
 	FVector MoveVector = FVector::Zero;
 	float MoveSpeed = 2000.f;
 

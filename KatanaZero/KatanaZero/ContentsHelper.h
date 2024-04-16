@@ -6,9 +6,8 @@ public:
 	static std::shared_ptr<class UEngineTexture> MapTex;
 	static std::shared_ptr<class APlayer> Player;
 	static std::shared_ptr<class ACameraManager> MainCameraManager;
-	static std::shared_ptr<class ABackGroundMap> BackMap;
 	static std::shared_ptr<class ACursor> MainCursor;
-	static std::vector<FVector> EnemyLayerChangeCols;
+	static std::vector<FVector> LayerChangePos;
 	static float4 MapTexScale;
 	static float Ratio;
 };
@@ -25,6 +24,7 @@ enum class ERenderOrder
 	FX,
 	UIBoard,
 	UI,
+	UIFront,
 	Cursor,
 };
 
@@ -51,18 +51,17 @@ enum class ECameraMode
 	ChasePlayer,
 };
 
-enum class ItemState
+enum class EItemState
 {
 	Idle,
 	Throw,
 };
 
-enum class ItemType
+enum class EItemType
 {
 	None,
 	Knife,
 	Smoke,
 	FireBottle,
 	Bottle,
-
 };

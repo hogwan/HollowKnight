@@ -18,7 +18,7 @@ void AKnife::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurItem = ItemType::Knife;
+	CurItem = EItemType::Knife;
 	SetActorScale3D(FVector(30.f, 30.f, 10.f));
 	Renderer->SetSprite("Knife_0.png");
 }

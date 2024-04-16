@@ -1042,18 +1042,29 @@ bool APlayer::TopWallCheck()
 
 void APlayer::LayerCheck()
 {
-	BottomCol->CollisionExit(ECollisionOrder::PlayerLayerChange, [=](std::shared_ptr<UCollision> _Collison)
+	std::vector<FVector> LayerPos = UConstValue::LayerChangePos;
+
+	int LayerSize = static_cast<int>(LayerPos.size());
+	float PlayerY = GetActorLocation().Y;
+
+	int i = LayerSize - 1;
+	while (true)
+	{
+		if (PlayerY > LayerPos[i].Y)
 		{
-			if (MoveVector.Y > 0.f)
-			{
-				LayerLevel++;
-			}
-			else if(MoveVector.Y < 0.f)
-			{
-				LayerLevel--;
-			}
+			LayerLevel = i+1;
+			break;
 		}
-	);
+		else
+		{
+			if (i == 0)
+			{
+				LayerLevel = 0;
+				break;
+			}
+			i--;
+		}
+	}
 }
 
 void APlayer::PickUpItem()
@@ -1070,7 +1081,7 @@ void APlayer::PickUpItem()
 
 void APlayer::ThrowItem()
 {
-	if (PossessItem != ItemType::None)
+	if (PossessItem != EItemType::None)
 	{
 		FVector PlayerPos = GetActorLocation();
 		FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
@@ -1089,16 +1100,16 @@ void APlayer::ThrowItem()
 
 		switch (PossessItem)
 		{
-		case ItemType::Bottle:
+		case EItemType::Bottle:
 			Item = GetWorld()->SpawnActor<ABottle>("Bottle");
 			break;
-		case ItemType::FireBottle:
+		case EItemType::FireBottle:
 			Item = GetWorld()->SpawnActor<AFireBottle>("FireBottle");
 			break;
-		case ItemType::Knife:
+		case EItemType::Knife:
 			Item = GetWorld()->SpawnActor<AKnife>("FireBottle");
 			break;
-		case ItemType::Smoke:
+		case EItemType::Smoke:
 			Item = GetWorld()->SpawnActor<ASmoke>("FireBottle");
 			break;
 		}

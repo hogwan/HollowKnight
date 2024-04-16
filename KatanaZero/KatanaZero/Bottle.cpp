@@ -18,7 +18,7 @@ void ABottle::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurItem = ItemType::Bottle;
+	CurItem = EItemType::Bottle;
 	SetActorScale3D(FVector(30.f, 30.f, 10.f));
 	Renderer->SetSprite("Bottle.png");
 }

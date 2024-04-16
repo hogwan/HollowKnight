@@ -32,10 +32,17 @@ public:
 		return CurDir;
 	}
 
+	EItemType GetPossessItem()
+	{
+		return PossessItem;
+	}
+
 	int GetLayerLevel()
 	{
 		return LayerLevel;
 	}
+
+	bool NextLevel = false;
 
 protected:
 	void BeginPlay() override;
@@ -146,8 +153,7 @@ private:
 	FVector RightWallSlideFXOffset = FVector(20.f, 0.f, 0.f);
 	FVector LeftWallSlideFXOffset = FVector(-20.f, 0.f, 0.f);
 
-	UCollision* BottomCol = nullptr;
-	ItemType PossessItem = ItemType::Knife;
+	EItemType PossessItem = EItemType::Knife;
 	void LayerCheck();
 	void PickUpItem();
 	void ThrowItem();

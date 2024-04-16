@@ -25,8 +25,13 @@ public:
 	AEnemy(AEnemy&& _Other) noexcept = delete;
 	AEnemy& operator=(const AEnemy& _Other) = delete;
 	AEnemy& operator=(AEnemy&& _Other) noexcept = delete;
-
+	
 	UStateManager State;
+
+	void SetLayerLevel(int _LayerLevel)
+	{
+		LayerLevel = _LayerLevel;
+	}
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "KatanaZeroCore.h"
-#include "PlayGameMode.h"
+#include "Factory_0.h"
+#include "Factory_2.h"
 #include <EngineCore/EngineSprite.h>
 
 KatanaZeroCore::KatanaZeroCore() 
@@ -73,7 +74,8 @@ void KatanaZeroCore::Initialize()
 		}
 	}
 
-	GEngine->CreateLevel<APlayGameMode>("PlayLevel");
-	GEngine->ChangeLevel("PlayLevel");
+	GEngine->CreateLevel<AFactory_0>("Factory_0");
+	GEngine->CreateLevel<AFactory_2>("Factroy_2");
+	GEngine->ChangeLevel("Factory_0");
 }
 

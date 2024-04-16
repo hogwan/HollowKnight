@@ -212,11 +212,11 @@ void AEnemy::Run(float _DeltaTime)
 		FVector TargetPos = FVector::Zero;
 		if (UConstValue::Player->GetLayerLevel() > LayerLevel)
 		{
-			TargetPos = UConstValue::EnemyLayerChangeCols[LayerLevel];
+			TargetPos = UConstValue::LayerChangePos[LayerLevel];
 		}
 		else if (UConstValue::Player->GetLayerLevel() < LayerLevel)
 		{
-			TargetPos = UConstValue::EnemyLayerChangeCols[LayerLevel - 1];
+			TargetPos = UConstValue::LayerChangePos[LayerLevel - 1];
 		}
 
 		Gap = TargetPos - CurPos;

@@ -18,7 +18,7 @@ void ASmoke::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurItem = ItemType::Smoke;
+	CurItem = EItemType::Smoke;
 	SetActorScale3D(FVector(30.f, 30.f, 10.f));
 	Renderer->SetSprite("Smoke_0.png");
 }

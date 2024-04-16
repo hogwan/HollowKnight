@@ -23,6 +23,6 @@ void ABatteryBody::Tick(float _DeltaTime)
 
 	FVector CameraPos = GetWorld()->GetMainCamera()->GetActorLocation();
 	CameraPos.Z = 300.f;
-	SetActorLocation(CameraPos + FVector(-500.f, 337.f, 0.f));
+	SetActorLocation(CameraPos + FVector(-560.f, 337.f, 0.f));
 }
 

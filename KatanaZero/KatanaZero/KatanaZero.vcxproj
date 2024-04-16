@@ -27,6 +27,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="BackMap_F0.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BackMap_F2.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BatteryBody.h">
       <SubType>
       </SubType>
@@ -36,10 +44,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="CameraManager.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -63,11 +67,23 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Factory_0.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Factory_2.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="FireBottle.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="FXBase.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Gangster.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -83,11 +99,23 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ItemIcon.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="KatanaIcon.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="KatanaZeroCore.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Knife.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="KZGameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -115,10 +143,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayGameMode.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Pomp.h">
       <SubType>
       </SubType>
@@ -132,11 +156,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TimerBoard.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="UIBase.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="UIBoard.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="WeaponSlot.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -150,6 +182,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BackMap_F0.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BackMap_F2.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BatteryBody.cpp">
       <SubType>
       </SubType>
@@ -159,10 +199,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="CameraManager.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -186,11 +222,23 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Factory_0.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Factory_2.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FireBottle.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="FXBase.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Gangster.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -206,11 +254,23 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ItemIcon.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="KatanaIcon.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="KatanaZeroCore.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="Knife.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="KZGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -239,10 +299,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Player_State.cpp" />
-    <ClCompile Include="PlayGameMode.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Pomp.cpp">
       <SubType>
       </SubType>
@@ -260,11 +316,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="TimerBoard.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="UIBase.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="UIBoard.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WeaponSlot.cpp">
       <SubType>
       </SubType>
     </ClCompile>

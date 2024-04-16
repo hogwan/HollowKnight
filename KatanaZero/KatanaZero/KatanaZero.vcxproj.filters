@@ -7,9 +7,6 @@
     <Filter Include="Level">
       <UniqueIdentifier>{6cc1b8c3-592b-4f69-b50d-f3117ecced7d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Level\PlayLevel">
-      <UniqueIdentifier>{b7f67844-9ce7-43b7-8eb3-8bff339e8241}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PreCompile">
       <UniqueIdentifier>{4d3248fd-d86e-4188-bfba-b92b1ae2f8f3}</UniqueIdentifier>
     </Filter>
@@ -49,6 +46,18 @@
     <Filter Include="Actor\UI">
       <UniqueIdentifier>{bce76771-34ca-4012-8789-88aff52b524e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level\1.Factory">
+      <UniqueIdentifier>{89e3c5d1-3e2f-48c8-95c4-c6db26fb4795}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\1.Factory\Factory_0">
+      <UniqueIdentifier>{4177c9d4-fa89-4e92-be75-92347d1e53a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Enemy\Gangster">
+      <UniqueIdentifier>{17441ef9-48f7-433e-ba77-05c959cd4891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\1.Factory\Factroy_2">
+      <UniqueIdentifier>{16d09f88-dfc9-45ae-9f44-4b2fb4855f8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KatanaZeroCore.cpp">
@@ -56,9 +65,6 @@
     </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayGameMode.cpp">
-      <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="ContentsHelper.cpp">
       <Filter>Helper</Filter>
@@ -86,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="FXBase.cpp">
       <Filter>Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraManager.cpp">
-      <Filter>Helper</Filter>
     </ClCompile>
     <ClCompile Include="Grunt.cpp">
       <Filter>Actor\Enemy\Grunt</Filter>
@@ -147,6 +150,36 @@
     <ClCompile Include="BatteryBody.cpp">
       <Filter>Actor\UI</Filter>
     </ClCompile>
+    <ClCompile Include="TimerBoard.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponSlot.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemIcon.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="KatanaIcon.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory_0.cpp">
+      <Filter>Level\1.Factory\Factory_0</Filter>
+    </ClCompile>
+    <ClCompile Include="BackMap_F0.cpp">
+      <Filter>Level\1.Factory\Factory_0</Filter>
+    </ClCompile>
+    <ClCompile Include="Gangster.cpp">
+      <Filter>Actor\Enemy\Gangster</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory_2.cpp">
+      <Filter>Level\1.Factory\Factroy_2</Filter>
+    </ClCompile>
+    <ClCompile Include="BackMap_F2.cpp">
+      <Filter>Level\1.Factory\Factroy_2</Filter>
+    </ClCompile>
+    <ClCompile Include="KZGameMode.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -154,9 +187,6 @@
     </ClInclude>
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayGameMode.h">
-      <Filter>Level\PlayLevel</Filter>
     </ClInclude>
     <ClInclude Include="ContentsHelper.h">
       <Filter>Helper</Filter>
@@ -184,9 +214,6 @@
     </ClInclude>
     <ClInclude Include="FXBase.h">
       <Filter>Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraManager.h">
-      <Filter>Helper</Filter>
     </ClInclude>
     <ClInclude Include="Grunt.h">
       <Filter>Actor\Enemy\Grunt</Filter>
@@ -241,6 +268,36 @@
     </ClInclude>
     <ClInclude Include="BatteryBody.h">
       <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerBoard.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponSlot.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemIcon.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="KatanaIcon.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory_0.h">
+      <Filter>Level\1.Factory\Factory_0</Filter>
+    </ClInclude>
+    <ClInclude Include="BackMap_F0.h">
+      <Filter>Level\1.Factory\Factory_0</Filter>
+    </ClInclude>
+    <ClInclude Include="Gangster.h">
+      <Filter>Actor\Enemy\Gangster</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory_2.h">
+      <Filter>Level\1.Factory\Factroy_2</Filter>
+    </ClInclude>
+    <ClInclude Include="BackMap_F2.h">
+      <Filter>Level\1.Factory\Factroy_2</Filter>
+    </ClInclude>
+    <ClInclude Include="KZGameMode.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

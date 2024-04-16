@@ -11,7 +11,6 @@ ABackGroundMap::ABackGroundMap()
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
 	Renderer->SetupAttachment(Root);
 	SetRoot(Root);
-	InputOn();
 }
 
 ABackGroundMap::~ABackGroundMap() 
@@ -22,7 +21,7 @@ void ABackGroundMap::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Renderer->SetSprite("room_factory_2_colmap.png");
+	Renderer->SetSprite("room_factory_3.png");
 
 	Renderer->SetAutoSize(UConstValue::Ratio, true);
 	Renderer->SetOrder(ERenderOrder::Back);

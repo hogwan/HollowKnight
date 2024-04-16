@@ -18,11 +18,6 @@ APlayer::APlayer()
 	Collider = CreateDefaultSubObject<UCollision>("Collider");
 	Collider->SetupAttachment(Root);
 
-	BottomCol = CreateDefaultSubObject<UCollision>("BottomCol");
-	BottomCol->SetupAttachment(Root);
-	BottomCol->SetPosition(FVector(0.f, 0.f, 0.f));
-	BottomCol->SetScale(FVector(1.f, 1.f, 100.f));
-
 	SetRoot(Root);
 	InputOn();
 }
@@ -70,6 +65,12 @@ void APlayer::Tick(float _DeltaTime)
 	}
 
 	DebugMessageFunction();
+	
+	Color8Bit Color = UConstValue::MapTex->GetColor(RightCheckPos, Color8Bit::Black);
+	if (Color == Color8Bit::Green)
+	{
+		NextLevel = true;
+	}
 }
 
 void APlayer::RendererInit()

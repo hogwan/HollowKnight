@@ -18,7 +18,7 @@ void AFireBottle::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurItem = ItemType::FireBottle;
+	CurItem = EItemType::FireBottle;
 	SetActorScale3D(FVector(30.f, 30.f, 10.f));
 	Renderer->SetSprite("FireBottle_0.png");
 }
