@@ -18,11 +18,10 @@ void PlayerSlashFX::BeginPlay()
 	Renderer->CreateAnimation("Slash", "Player_Slash", 0.05f);
 	Renderer->ChangeAnimation("Slash");
 
-
 	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::FX);
 
-	Collider->SetScale(Renderer->GetLocalScale());
+	Collider->SetScale(FVector(150.f, 50.f, 10.f));
 	Collider->SetCollisionGroup(ECollisionOrder::PlayerSlash);
 	Collider->SetCollisionType(ECollisionType::Rect);
 
