@@ -221,7 +221,7 @@ void AEnemy::Run(float _DeltaTime)
 
 		Gap = TargetPos - CurPos;
 
-		if (abs(Gap.X) < 5.f)
+		if (abs(Gap.X) < 1.f)
 		{
 			State.ChangeState("ChangeLayerLevel");
 			return;

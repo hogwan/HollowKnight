@@ -79,6 +79,12 @@
     <Filter Include="Object\Component\Rendering">
       <UniqueIdentifier>{d6cf3cbc-9156-4119-87dc-ba04912b170b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{162555bd-f67b-47c1-b86a-3559871974a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Rendering\Contents">
+      <UniqueIdentifier>{a09aac9f-2b9d-46b5-9358-259eb6cfa0dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineCore.cpp">
@@ -177,9 +183,6 @@
     <ClCompile Include="EngineSampler.cpp">
       <Filter>Resources\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteRenderer.cpp">
-      <Filter>Object\Component\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="EngineSprite.cpp">
       <Filter>Resources\Texture</Filter>
     </ClCompile>
@@ -221,6 +224,21 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Object\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineStruct.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDebug3D.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Object\Component\Rendering\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderUnit.cpp">
+      <Filter>Object\Component\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="TileRenderer.cpp">
+      <Filter>Object\Component\Rendering\Contents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,9 +341,6 @@
     <ClInclude Include="ThirdParty\DirectxTex\inc\DirectXTex.h">
       <Filter>ThirdParty\DirectXTex\Inc</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteRenderer.h">
-      <Filter>Object\Component\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="EngineSprite.h">
       <Filter>Resources\Texture</Filter>
     </ClInclude>
@@ -373,6 +388,21 @@
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Object\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineStruct.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDebug3D.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Object\Component\Rendering\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderUnit.h">
+      <Filter>Object\Component\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="TileRenderer.h">
+      <Filter>Object\Component\Rendering\Contents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,9 @@
     <FxCompile Include="ColorShader.fx">
       <Filter>2D</Filter>
     </FxCompile>
+    <FxCompile Include="DebugShader.fx">
+      <Filter>2D</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="TransformData.hlsli">
