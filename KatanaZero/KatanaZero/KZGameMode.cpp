@@ -17,5 +17,6 @@ void KZGameMode::BeginPlay()
 void KZGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+	
 }
 

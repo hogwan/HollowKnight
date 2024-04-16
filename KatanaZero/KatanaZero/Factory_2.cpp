@@ -25,10 +25,30 @@ void AFactory_2::BeginPlay()
 {
 	Super::BeginPlay();
 
+}
+
+void AFactory_2::Tick(float _DeltaTime)
+{
+	Super::Tick(_DeltaTime);
+
+	FVector PlayerPos = UConstValue::Player->GetActorLocation();
+	PlayerPos.Z = -1000;
+	Camera->SetActorLocation(PlayerPos);
+
+	if (UConstValue::Player->NextLevel)
+	{
+		GEngine->ChangeLevel("Factory_3");
+	}
+}
+
+void AFactory_2::LevelStart(ULevel* _PrevLevel)
+{
+	Super::LevelStart(_PrevLevel);
+
 	Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation(FVector(640.0f, -360.0f, -100.0f));
 
-	UConstValue::MapTex = UEngineTexture::FindRes("room_factory_2_colmap.png");
+	UConstValue::MapTex = UEngineTexture::FindRes("room_factory_3_colmap.png");
 	UConstValue::MapTexScale = UConstValue::MapTex->GetScale() * UConstValue::Ratio;
 
 	float4 ImageScale = UConstValue::MapTexScale;
@@ -37,7 +57,7 @@ void AFactory_2::BeginPlay()
 	BackMap->SetActorLocation({ ImageScale.hX(), -ImageScale.hY(), 500.0f });
 
 	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
-	UConstValue::Player->SetActorLocation({ 200.0f, -700.0f, 200.0f });
+	UConstValue::Player->SetActorLocation({ 200.0f, -1180.0f, 200.0f });
 
 	UConstValue::LayerChangePos.push_back(FVector(1100.f, -400.f, 200.f));
 
@@ -57,20 +77,5 @@ void AFactory_2::BeginPlay()
 	std::shared_ptr<AGrunt> Grunt2 = GetWorld()->SpawnActor<AGrunt>("Grunt1");
 	Grunt2->SetActorLocation(FVector(1400.f, -300.f, 200.f));
 	Grunt2->SetLayerLevel(1);
-
-}
-
-void AFactory_2::Tick(float _DeltaTime)
-{
-	Super::Tick(_DeltaTime);
-
-	FVector PlayerPos = UConstValue::Player->GetActorLocation();
-	PlayerPos.Z = -1000;
-	Camera->SetActorLocation(PlayerPos);
-
-	if (UConstValue::Player->NextLevel)
-	{
-		GEngine->ChangeLevel("Factory_3");
-	}
 }
 

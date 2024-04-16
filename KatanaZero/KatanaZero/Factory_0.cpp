@@ -27,6 +27,26 @@ void AFactory_0::BeginPlay()
 {
 	Super::BeginPlay();
 
+}
+
+void AFactory_0::Tick(float _DeltaTime)
+{
+	Super::Tick(_DeltaTime);
+
+	FVector PlayerPos = UConstValue::Player->GetActorLocation();
+	PlayerPos.Z = -1000;
+	Camera->SetActorLocation(PlayerPos);
+
+	if (UConstValue::Player->NextLevel)
+	{
+		GEngine->ChangeLevel("Factory_2");
+	}
+}
+
+void AFactory_0::LevelStart(ULevel* _PrevLevel)
+{
+	Super::LevelStart(_PrevLevel);
+
 	Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation(FVector(640.0f, -360.0f, -100.0f));
 
@@ -39,7 +59,7 @@ void AFactory_0::BeginPlay()
 	BackMap->SetActorLocation({ ImageScale.hX(), -ImageScale.hY(), 500.0f });
 
 	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
-	UConstValue::Player->SetActorLocation({ 200.0f, -700.0f, 200.0f });
+	UConstValue::Player->SetActorLocation({ 200.0f, -660.0f, 200.0f });
 
 	UConstValue::LayerChangePos.push_back(FVector(1100.f, -400.f, 200.f));
 
@@ -63,19 +83,5 @@ void AFactory_0::BeginPlay()
 	std::shared_ptr<AGangster> Gangster = GetWorld()->SpawnActor<AGangster>("Gangster");
 	Gangster->SetActorLocation(FVector(500.f, -300.f, 200.f));
 	Gangster->SetLayerLevel(1);
-}
-
-void AFactory_0::Tick(float _DeltaTime)
-{
-	Super::Tick(_DeltaTime);
-
-	FVector PlayerPos = UConstValue::Player->GetActorLocation();
-	PlayerPos.Z = -1000;
-	Camera->SetActorLocation(PlayerPos);
-
-	if (UConstValue::Player->NextLevel)
-	{
-		GEngine->ChangeLevel("Factory_2");
-	}
 }
 
