@@ -15,7 +15,7 @@ void AItem::BeginPlay()
 {
 	Super::BeginPlay();
 	Collider->SetCollisionGroup(ECollisionOrder::Item);
-	Collider->SetCollisionType(ECollisionType::Rect);
+	Collider->SetCollisionType(ECollisionType::RotRect);
 
 	Renderer->SetOrder(ERenderOrder::Item);
 }

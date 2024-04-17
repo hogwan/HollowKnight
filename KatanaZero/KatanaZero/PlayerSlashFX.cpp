@@ -23,7 +23,7 @@ void PlayerSlashFX::BeginPlay()
 
 	Collider->SetScale(FVector(150.f, 50.f, 10.f));
 	Collider->SetCollisionGroup(ECollisionOrder::PlayerSlash);
-	Collider->SetCollisionType(ECollisionType::Rect);
+	Collider->SetCollisionType(ECollisionType::RotRect);
 
 	Dir = UConstValue::Player->GetAttackDir();
 	

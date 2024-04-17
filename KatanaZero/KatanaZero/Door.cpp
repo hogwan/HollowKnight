@@ -28,7 +28,7 @@ void ADoor::BeginPlay()
 
 	Collider->SetScale(FVector(50.f, 100.f, 30.f));
 	Collider->SetCollisionGroup(ECollisionOrder::Door);
-	Collider->SetCollisionType(ECollisionType::Rect);
+	Collider->SetCollisionType(ECollisionType::RotRect);
 
 	Renderer->ChangeAnimation("Idle");
 }

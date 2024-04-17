@@ -39,7 +39,7 @@ void ALaser::BeginPlay()
 	Renderer->SetOrder(ERenderOrder::Object);
 
 	Collider->SetCollisionGroup(ECollisionOrder::Laser);
-	Collider->SetCollisionType(ECollisionType::Rect);
+	Collider->SetCollisionType(ECollisionType::RotRect);
 	
 
 	Renderer->ChangeAnimation("Idle");

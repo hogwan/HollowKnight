@@ -1043,7 +1043,10 @@ bool APlayer::TopWallCheck()
 
 void APlayer::LayerCheck()
 {
+	
 	std::vector<FVector> LayerPos = UConstValue::LayerChangePos;
+
+	if (!LayerPos.size()) return;
 
 	int LayerSize = static_cast<int>(LayerPos.size());
 	float PlayerY = GetActorLocation().Y;

@@ -27,6 +27,8 @@ void AFanBlade::BeginPlay()
 	Renderer->SetOrder(ERenderOrder::Object);
 
 	Collider->SetScale(FVector(100.f, 50.f, 10.f));
+	Collider->SetCollisionGroup(ECollisionOrder::FanBlade);
+	Collider->SetCollisionType(ECollisionType::RotRect);
 
 
 	Renderer->ChangeAnimation("FanBlade_Spin");

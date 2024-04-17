@@ -12,6 +12,8 @@
 #include "WeaponSlot.h"
 #include "ItemIcon.h"
 #include "KatanaIcon.h"
+#include "Door.h"
+#include "LaserLauncher.h"
 
 AFactory_3::AFactory_3() 
 {
@@ -60,4 +62,36 @@ void AFactory_3::LevelStart(ULevel* _PrevLevel)
 	std::shared_ptr<AKatanaIcon> KatanaIcon = GetWorld()->SpawnActor<AKatanaIcon>("KatanaIcon");
 
 	UConstValue::MainCursor = GetWorld()->SpawnActor<ACursor>("Cursor");
+
+	std::shared_ptr<ADoor> Door1 = GetWorld()->SpawnActor<ADoor>("Gangster");
+	Door1->SetActorLocation({ 1420.0f, -607.0f, 200.0f });
+	Door1->SetDir(EActorDir::Right);
+
+	std::shared_ptr<ALaserLauncher> Laser1 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
+	Laser1->SetActorLocation({ 650.f, -450.f, 200.0f });
+	Laser1->SetLaserSize(220.f);
+
+	std::shared_ptr<ALaserLauncher> Laser2 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
+	Laser2->SetActorLocation({ 680.f, -450.f, 200.0f });
+	Laser2->SetLaserSize(220.f);
+
+	std::shared_ptr<ALaserLauncher> Laser3 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
+	Laser3->SetActorLocation({ 750.f, -160.f, 200.0f });
+	Laser3->SetLaserSize(220.f);
+
+	std::shared_ptr<ALaserLauncher> Laser4 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
+	Laser4->SetActorLocation({ 780.f, -160.f, 200.0f });
+	Laser4->SetLaserSize(220.f);
+
+	std::shared_ptr<ADoor> Door2 = GetWorld()->SpawnActor<ADoor>("Gangster");
+	Door2->SetActorLocation({ 1070.0f, -320.0f, 200.0f });
+	Door2->SetDir(EActorDir::Right);
+
+	std::shared_ptr<ALaserLauncher> Laser5 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
+	Laser5->SetActorLocation({ 1715.f, -225.f, 200.0f });
+	Laser5->SetLaserSize(155.f);
+
+	std::shared_ptr<ALaserLauncher> Laser6 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
+	Laser6->SetActorLocation({ 1745.f, -225.f, 200.0f });
+	Laser6->SetLaserSize(155.f);
 }

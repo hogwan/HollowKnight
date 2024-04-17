@@ -33,7 +33,7 @@ void APlayer::BeginPlay()
 	Collider->SetScale(FVector(36.f, 72.f, 100.f));
 	Collider->SetPosition(FVector(0.f, 36.f, 0.f));
 	Collider->SetCollisionGroup(ECollisionOrder::Player);
-	Collider->SetCollisionType(ECollisionType::Rect);
+	Collider->SetCollisionType(ECollisionType::RotRect);
 
 	RendererInit();
 	StateInit();

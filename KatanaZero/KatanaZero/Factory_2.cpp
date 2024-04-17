@@ -79,19 +79,15 @@ void AFactory_2::LevelStart(ULevel* _PrevLevel)
 	std::shared_ptr<AGrunt> Grunt2 = GetWorld()->SpawnActor<AGrunt>("Grunt1");
 	Grunt2->SetActorLocation(FVector(1400.f, -300.f, 200.f));
 
-	std::shared_ptr<AFanBlade> Fan = GetWorld()->SpawnActor<AFanBlade>("Gangster");
+	std::shared_ptr<AFanBlade> Fan = GetWorld()->SpawnActor<AFanBlade>("Fan");
 	Fan->SetActorLocation({ 1422.0f, -367.0f, 200.0f });
 
-	std::shared_ptr<AFanFront> FanFront = GetWorld()->SpawnActor<AFanFront>("Gangster");
+	std::shared_ptr<AFanFront> FanFront = GetWorld()->SpawnActor<AFanFront>("FanFront");
 	FanFront->SetActorLocation({ 1422.0f, -367.0f, 200.0f });
 
-	std::shared_ptr<ALaserLauncher> Laser1 = GetWorld()->SpawnActor<ALaserLauncher>("Gangster");
-	Laser1->SetActorLocation({ 480.f, -540.f, 200.0f });
-	Laser1->SetLaserSize(640.f);
 
-	std::shared_ptr<ALaserLauncher> Laser2 = GetWorld()->SpawnActor<ALaserLauncher>("Gangster");
+	std::shared_ptr<ALaserLauncher> Laser2 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser2->SetActorLocation({ 940.f, -255.f, 200.0f });
 	Laser2->SetLaserSize(510.f);
-	//480 -540
 }
 

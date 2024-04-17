@@ -114,9 +114,9 @@ private:
 	float MaxRunSpeed = 400.0f;
 	float MaxAirSpeed = 350.0f;
 
-	float FlipSpeed = 500.f;
-	float FlipBreakAccel = 600.f;
-	float FlipBreakStartTime = 0.1f;
+	float FlipSpeed = 1000.f;
+	float FlipBreakAccel = 1800.f;
+	float FlipBreakStartTime = 0.05f;
 	float AccFlip = 0.f;
 
 	float JumpForce = 0.f;
