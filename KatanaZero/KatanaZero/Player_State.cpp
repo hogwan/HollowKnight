@@ -1081,11 +1081,11 @@ void APlayer::PickUpItem()
 		}
 	);
 
-	Collider->CollisionEnter(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
+	/*Collider->CollisionEnter(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
 		{
 
 		}
-	);
+	);*/
 
 }
 
@@ -1123,7 +1123,7 @@ void APlayer::ThrowItem()
 			Item = GetWorld()->SpawnActor<ASmoke>("FireBottle");
 			break;
 		}
-		Item->SetActorLocation(GetActorLocation() + FVector(0.f,50.f,0.f));
+		Item->SetActorLocation(GetActorLocation() + FVector(0.f,30.f,0.f));
 		Item->SetThrow(ThrowDir);
 
 		PossessItem = EItemType::None;
