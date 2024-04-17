@@ -27,6 +27,11 @@ public:
 		return CurItem;
 	}
 
+	EItemState GetCurState()
+	{
+		return CurState;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

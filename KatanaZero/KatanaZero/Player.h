@@ -153,7 +153,7 @@ private:
 	FVector RightWallSlideFXOffset = FVector(20.f, 0.f, 0.f);
 	FVector LeftWallSlideFXOffset = FVector(-20.f, 0.f, 0.f);
 
-	EItemType PossessItem = EItemType::Knife;
+	EItemType PossessItem = EItemType::None;
 	void LayerCheck();
 	void PickUpItem();
 	void ThrowItem();

@@ -63,6 +63,7 @@ void APlayer::Tick(float _DeltaTime)
 	{
 		ThrowItem();
 	}
+	PickUpItem();
 
 	DebugMessageFunction();
 	
@@ -160,6 +161,11 @@ void APlayer::DebugMessageFunction()
 
 	{
 		std::string Msg = std::format("LayerLevel : {}\n", LayerLevel);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+
+	{
+		std::string Msg = std::format("CurItem : {}\n", static_cast<int>(PossessItem));
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 }

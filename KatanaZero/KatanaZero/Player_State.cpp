@@ -10,6 +10,7 @@
 #include "FireBottle.h"
 #include "Knife.h"
 #include "Smoke.h"
+#include "Item.h"
 
 void APlayer::StateInit()
 {
@@ -1073,10 +1074,19 @@ void APlayer::PickUpItem()
 		{
 			if (IsDown(VK_RBUTTON))
 			{
-				
+				AItem* Item = dynamic_cast<AItem*>(_Collision->GetActor());
+				PossessItem = Item->GetItemType();
+				Item->Destroy();
 			}
 		}
 	);
+
+	Collider->CollisionEnter(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
+		{
+
+		}
+	);
+
 }
 
 void APlayer::ThrowItem()
@@ -1107,14 +1117,16 @@ void APlayer::ThrowItem()
 			Item = GetWorld()->SpawnActor<AFireBottle>("FireBottle");
 			break;
 		case EItemType::Knife:
-			Item = GetWorld()->SpawnActor<AKnife>("FireBottle");
+			Item = GetWorld()->SpawnActor<AKnife>("Knife");
 			break;
 		case EItemType::Smoke:
 			Item = GetWorld()->SpawnActor<ASmoke>("FireBottle");
 			break;
 		}
-		Item->SetActorLocation(GetActorLocation());
+		Item->SetActorLocation(GetActorLocation() + FVector(0.f,50.f,0.f));
 		Item->SetThrow(ThrowDir);
+
+		PossessItem = EItemType::None;
 	}
 }
 

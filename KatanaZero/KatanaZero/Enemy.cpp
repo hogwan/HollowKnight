@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "EnemyLayerChangeCol.h"
 #include "BloodFX.h"
+#include "Item.h"
 
 AEnemy::AEnemy() 
 {
@@ -475,26 +476,31 @@ void AEnemy::GravityCheck(float _DeltaTime)
 
 void AEnemy::DeathCheck()
 {
-	Collider->CollisionEnter(ECollisionOrder::PlayerSlash, [=](std::shared_ptr<UCollision> _Collison)
+	Collider->CollisionEnter(ECollisionOrder::PlayerSlash, [=](std::shared_ptr<UCollision> _Collision)
 		{
-			if (IsCol == false)
-			{
-				State.ChangeState("DeathInAir");
-				
-				std::shared_ptr<ABloodFX> BloodFX = GetWorld()->SpawnActor<ABloodFX>("BloodFX");
-				BloodFX->SetActorLocation(GetActorLocation());
+			State.ChangeState("DeathInAir");
+			
+			std::shared_ptr<ABloodFX> BloodFX = GetWorld()->SpawnActor<ABloodFX>("BloodFX");
+			BloodFX->SetActorLocation(GetActorLocation());
 
-				IsDeath = true;
-			}
+			IsDeath = true;
 		}
 	);
 
-	Collider->CollisionExit(ECollisionOrder::PlayerSlash, [=](std::shared_ptr<UCollision> _Collison)
+	Collider->CollisionEnter(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
 		{
-			if (IsCol == true)
+			AItem* Item = dynamic_cast<AItem*>(_Collision->GetActor());
+
+			if (Item->GetCurState() == EItemState::Throw)
 			{
-				IsCol = false;
+				State.ChangeState("DeathInAir");
+
+				std::shared_ptr<ABloodFX> BloodFX = GetWorld()->SpawnActor<ABloodFX>("BloodFX");
+				BloodFX->SetActorLocation(GetActorLocation());
 			}
+
+			IsDeath = true;
+			
 		}
 	);
 }

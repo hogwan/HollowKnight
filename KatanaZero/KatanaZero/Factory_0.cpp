@@ -14,6 +14,9 @@
 #include "KatanaIcon.h"
 #include "Gangster.h"
 #include "Factory_2.h"
+#include "Cop.h"
+#include "Knife.h"
+#include "FireBottle.h"
 
 AFactory_0::AFactory_0() 
 {
@@ -80,8 +83,14 @@ void AFactory_0::LevelStart(ULevel* _PrevLevel)
 	Grunt2->SetActorLocation(FVector(1400.f, -300.f, 200.f));
 	Grunt2->SetLayerLevel(1);
 
-	std::shared_ptr<AGangster> Gangster = GetWorld()->SpawnActor<AGangster>("Gangster");
+	std::shared_ptr<ACop> Gangster = GetWorld()->SpawnActor<ACop>("Gangster");
 	Gangster->SetActorLocation(FVector(500.f, -300.f, 200.f));
 	Gangster->SetLayerLevel(1);
+
+	std::shared_ptr<AKnife> Knife = GetWorld()->SpawnActor<AKnife>("Gangster");
+	Knife->SetActorLocation({ 200.0f, -660.0f, 200.0f });
+
+	std::shared_ptr<AFireBottle> FireBottle = GetWorld()->SpawnActor<AFireBottle>("Gangster");
+	FireBottle->SetActorLocation({ 300.0f, -660.0f, 200.0f });
 }
 
