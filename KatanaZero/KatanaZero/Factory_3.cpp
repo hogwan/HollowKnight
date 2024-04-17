@@ -52,8 +52,6 @@ void AFactory_3::LevelStart(ULevel* _PrevLevel)
 	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
 	UConstValue::Player->SetActorLocation({ 200.0f, -900.0f, 200.0f });
 
-	UConstValue::LayerChangePos.push_back(FVector(1100.f, -400.f, 200.f));
-
 	std::shared_ptr<AUIBoard> UIBoard = GetWorld()->SpawnActor<AUIBoard>("UIBoard");
 	std::shared_ptr<ABatteryBody> BatteryBody = GetWorld()->SpawnActor<ABatteryBody>("BatteryBody");
 	std::shared_ptr<ATimerBoard> TimerBoard = GetWorld()->SpawnActor<ATimerBoard>("TimerBoard");

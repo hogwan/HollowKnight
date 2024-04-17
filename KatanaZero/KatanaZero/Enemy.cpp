@@ -1,6 +1,5 @@
 #include "PreCompile.h"
 #include "Enemy.h"
-#include "EnemyLayerChangeCol.h"
 #include "BloodFX.h"
 #include "Item.h"
 

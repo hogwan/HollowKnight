@@ -3,7 +3,6 @@
 #include "Player.h"
 #include "BackGroundMap.h"
 #include "Cursor.h"
-#include "EnemyLayerChangeCol.h"
 
 std::shared_ptr<UEngineTexture> UConstValue::MapTex;
 float4 UConstValue::MapTexScale;

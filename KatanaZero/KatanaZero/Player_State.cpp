@@ -1081,11 +1081,11 @@ void APlayer::PickUpItem()
 		}
 	);
 
-	/*Collider->CollisionEnter(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
+	Collider->CollisionEnter(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
 		{
 
 		}
-	);*/
+	);
 
 }
 

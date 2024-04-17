@@ -67,11 +67,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
+    <ClInclude Include="Door.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EnemyLayerChangeCol.h">
+    <ClInclude Include="Enemy.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -84,6 +84,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Factory_3.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="FanBlade.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="FanFront.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -131,6 +139,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Laser.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LaserLauncher.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -144,10 +160,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayerDustFX.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="PlayerLayerChangeCollider.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -234,11 +246,11 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
+    <ClCompile Include="Door.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EnemyLayerChangeCol.cpp">
+    <ClCompile Include="Enemy.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -251,6 +263,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Factory_3.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="FanBlade.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="FanFront.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -298,6 +318,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Laser.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LaserLauncher.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
@@ -311,10 +339,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerDustFX.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PlayerLayerChangeCollider.cpp">
       <SubType>
       </SubType>
     </ClCompile>

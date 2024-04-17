@@ -61,6 +61,18 @@
     <Filter Include="Level\1.Factory\Factory_3">
       <UniqueIdentifier>{faea6704-d476-4103-ba1b-23e3b180293c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Object">
+      <UniqueIdentifier>{d318e610-c885-44f1-b73d-06fffb21fd3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Object\FanBlade">
+      <UniqueIdentifier>{e9b03010-e4ea-4a94-8dcd-14e8eb667b93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Object\Door">
+      <UniqueIdentifier>{c178645f-7af1-4c9e-b469-7167ec20d7c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Object\Laser">
+      <UniqueIdentifier>{0013e7a3-9649-4630-afd1-1570d6b728c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KatanaZeroCore.cpp">
@@ -121,12 +133,6 @@
       <Filter>Actor\Enemy\Grunt</Filter>
     </ClCompile>
     <ClCompile Include="ActionCollider.cpp">
-      <Filter>Actor\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerLayerChangeCollider.cpp">
-      <Filter>Actor\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyLayerChangeCol.cpp">
       <Filter>Actor\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
@@ -192,6 +198,21 @@
     <ClCompile Include="BloodFX.cpp">
       <Filter>Actor</Filter>
     </ClCompile>
+    <ClCompile Include="FanBlade.cpp">
+      <Filter>Actor\Object\FanBlade</Filter>
+    </ClCompile>
+    <ClCompile Include="FanFront.cpp">
+      <Filter>Actor\Object\FanBlade</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Actor\Object\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="LaserLauncher.cpp">
+      <Filter>Actor\Object\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="Laser.cpp">
+      <Filter>Actor\Object\Laser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -249,12 +270,6 @@
       <Filter>Actor\Enemy\Grunt</Filter>
     </ClInclude>
     <ClInclude Include="ActionCollider.h">
-      <Filter>Actor\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerLayerChangeCollider.h">
-      <Filter>Actor\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyLayerChangeCol.h">
       <Filter>Actor\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
@@ -319,6 +334,21 @@
     </ClInclude>
     <ClInclude Include="BloodFX.h">
       <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="FanBlade.h">
+      <Filter>Actor\Object\FanBlade</Filter>
+    </ClInclude>
+    <ClInclude Include="FanFront.h">
+      <Filter>Actor\Object\FanBlade</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Actor\Object\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="LaserLauncher.h">
+      <Filter>Actor\Object\Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser.h">
+      <Filter>Actor\Object\Laser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

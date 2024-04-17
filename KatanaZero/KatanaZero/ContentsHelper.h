@@ -18,10 +18,12 @@ enum class ERenderOrder
 	Back,
 	Enemy,
 	EnemyArms,
+	Object,
 	Player,
 	Bullet,
 	Item,
 	FX,
+	ObjectFront,
 	UIBoard,
 	UI,
 	UIFront,
@@ -35,6 +37,9 @@ enum class ECollisionOrder
 	PlayerLayerChange,
 	EnemyLayerChange,
 	PlayerSlash,
+	FanBlade,
+	Door,
+	Laser,
 	Item,
 };
 
