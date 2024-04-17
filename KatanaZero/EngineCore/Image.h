@@ -1,22 +1,28 @@
 #pragma once
-
+#include "Widget.h"
+#include "EngineEnums.h"
+#include "EngineSprite.h"
+#include "EngineStruct.h"
 // Ό³Έν :
-class Image
+class UImage : public UWidget
 {
+	GENERATED_BODY(UWidget);
+
 public:
-	// constructor destructor
-	Image();
-	~Image();
+	UImage();
+	~UImage();
 
 	// delete Function
-	Image(const Image& _Other) = delete;
-	Image(Image&& _Other) noexcept = delete;
-	Image& operator=(const Image& _Other) = delete;
-	Image& operator=(Image&& _Other) noexcept = delete;
+	UImage(const UImage& _Other) = delete;
+	UImage(UImage&& _Other) noexcept = delete;
+	UImage& operator=(const UImage& _Other) = delete;
+	UImage& operator=(UImage&& _Other) noexcept = delete;
 
 protected:
+	void MaterialSettingEnd() override;
 
 private:
-
+	ResultColorValue ColorData;
+	FCuttingData CuttingDataValue;
 };
 

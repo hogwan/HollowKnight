@@ -1,11 +1,21 @@
 #include "PreCompile.h"
 #include "Image.h"
 
-Image::Image() 
+UImage::UImage() 
+{
+	SetMesh("Rect");
+	SetMaterial("2DImage");
+}
+
+UImage::~UImage() 
 {
 }
 
-Image::~Image() 
-{
-}
 
+void UImage::MaterialSettingEnd()
+{
+	Super::MaterialSettingEnd();
+	Resources->SettingTexture("Image", "EngineBaseTexture.png", "POINT");
+	Resources->SettingConstantBuffer("ResultColorValue", ColorData);
+	Resources->SettingConstantBuffer("FCuttingData", CuttingDataValue);
+}
