@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Enemy.h"
 #include "EnemyLayerChangeCol.h"
+#include "BloodFX.h"
 
 AEnemy::AEnemy() 
 {
@@ -34,7 +35,6 @@ void AEnemy::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 	DirUpdate();
-
 	GravityCheck(_DeltaTime);
 
 	DeathCheck();
@@ -465,7 +465,7 @@ void AEnemy::GravityCheck(float _DeltaTime)
 {
 	if (!LandCheck())
 	{
-		MoveVector += GravityVector * _DeltaTime;
+		AddActorLocation(GravityVector * _DeltaTime);
 	}
 	else
 	{
@@ -477,8 +477,24 @@ void AEnemy::DeathCheck()
 {
 	Collider->CollisionEnter(ECollisionOrder::PlayerSlash, [=](std::shared_ptr<UCollision> _Collison)
 		{
-			State.ChangeState("DeathInAir");
-			IsDeath = true;
+			if (IsCol == false)
+			{
+				State.ChangeState("DeathInAir");
+				
+				std::shared_ptr<ABloodFX> BloodFX = GetWorld()->SpawnActor<ABloodFX>("BloodFX");
+				BloodFX->SetActorLocation(GetActorLocation());
+
+				IsDeath = true;
+			}
+		}
+	);
+
+	Collider->CollisionExit(ECollisionOrder::PlayerSlash, [=](std::shared_ptr<UCollision> _Collison)
+		{
+			if (IsCol == true)
+			{
+				IsCol = false;
+			}
 		}
 	);
 }

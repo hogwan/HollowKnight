@@ -2,6 +2,7 @@
 #include "KatanaZeroCore.h"
 #include "Factory_0.h"
 #include "Factory_2.h"
+#include "Factory_3.h"
 #include <EngineCore/EngineSprite.h>
 
 KatanaZeroCore::KatanaZeroCore() 
@@ -76,6 +77,7 @@ void KatanaZeroCore::Initialize()
 
 	GEngine->CreateLevel<AFactory_0>("Factory_0");
 	GEngine->CreateLevel<AFactory_2>("Factory_2");
+	GEngine->CreateLevel<AFactory_3>("Factory_3");
 
 	GEngine->ChangeLevel("Factory_0");
 }

@@ -35,7 +35,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="BackMap_F3.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BatteryBody.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BloodFX.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -72,6 +80,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Factory_2.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Factory_3.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -190,7 +202,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BackMap_F3.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BatteryBody.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BloodFX.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -227,6 +247,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Factory_2.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Factory_3.cpp">
       <SubType>
       </SubType>
     </ClCompile>

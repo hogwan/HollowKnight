@@ -111,7 +111,7 @@ private:
 	float RunAccel = 1000.0f;
 	float AirAccel = 300.f;
 	float BreakAccel = 1500.f;
-	float MaxRunSpeed = 300.0f;
+	float MaxRunSpeed = 400.0f;
 	float MaxAirSpeed = 350.0f;
 
 	float FlipSpeed = 500.f;
@@ -120,17 +120,17 @@ private:
 	float AccFlip = 0.f;
 
 	float JumpForce = 0.f;
-	FVector LongJumpForce = FVector(0.f, 300.f, 0.f);
-	FVector ShortJumpForce = FVector(0.f, 200.f, 0.f);
+	FVector LongJumpForce = FVector(0.f, 400.f, 0.f);
+	FVector ShortJumpForce = FVector(0.f, 300.f, 0.f);
 
-	float RollSpeed = 300.0f;
+	float RollSpeed = 500.0f;
 	FVector AttackDir = FVector::Zero;
 	float AttackSpeed = 800.f;
 	float AttackBreakAccel = 2000.f;
 	float AttackBreakStartTime = 0.05f;
 	float AccAttack = 0.f;
 
-	FVector Gravity = FVector(0.f, -500.f, 0.f);
+	FVector Gravity = FVector(0.f, -800.f, 0.f);
 
 	bool OnLeftUpStep = false;
 	bool OnRightUpStep = false;

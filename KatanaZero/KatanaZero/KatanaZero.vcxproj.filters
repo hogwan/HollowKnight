@@ -58,6 +58,9 @@
     <Filter Include="Level\1.Factory\Factroy_2">
       <UniqueIdentifier>{16d09f88-dfc9-45ae-9f44-4b2fb4855f8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level\1.Factory\Factory_3">
+      <UniqueIdentifier>{faea6704-d476-4103-ba1b-23e3b180293c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KatanaZeroCore.cpp">
@@ -180,6 +183,15 @@
     <ClCompile Include="KZGameMode.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="BackMap_F3.cpp">
+      <Filter>Level\1.Factory\Factory_3</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory_3.cpp">
+      <Filter>Level\1.Factory\Factory_3</Filter>
+    </ClCompile>
+    <ClCompile Include="BloodFX.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -298,6 +310,15 @@
     </ClInclude>
     <ClInclude Include="KZGameMode.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BackMap_F3.h">
+      <Filter>Level\1.Factory\Factory_3</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory_3.h">
+      <Filter>Level\1.Factory\Factory_3</Filter>
+    </ClInclude>
+    <ClInclude Include="BloodFX.h">
+      <Filter>Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

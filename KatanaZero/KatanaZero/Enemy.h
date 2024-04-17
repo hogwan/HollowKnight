@@ -88,6 +88,8 @@ protected:
 	float DeathBreak = 500.f;
 	bool IsDeath = false;
 	
+	bool IsCol = false;
+
 private:
 
 };

@@ -1069,7 +1069,7 @@ void APlayer::LayerCheck()
 
 void APlayer::PickUpItem()
 {
-	Collider->CollisionStay(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collison)
+	Collider->CollisionStay(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
 		{
 			if (IsDown(VK_RBUTTON))
 			{

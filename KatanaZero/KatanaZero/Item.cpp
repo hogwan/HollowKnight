@@ -14,6 +14,8 @@ AItem::~AItem()
 void AItem::BeginPlay()
 {
 	Super::BeginPlay();
+	Collider->SetCollisionGroup(ECollisionOrder::Item);
+	Collider->SetCollisionType(ECollisionType::Rect);
 }
 
 void AItem::Tick(float _DeltaTime)
