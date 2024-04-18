@@ -41,6 +41,9 @@ enum class ECollisionOrder
 	Door,
 	Laser,
 	Item,
+	Switch,
+	WallObject,
+	ColCheck,
 };
 
 enum class EActorDir

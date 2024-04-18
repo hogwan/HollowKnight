@@ -11,6 +11,7 @@
 #include "Knife.h"
 #include "Smoke.h"
 #include "Item.h"
+#include "LaserSwitch.h"
 
 void APlayer::StateInit()
 {
@@ -944,8 +945,20 @@ void APlayer::GravityCheck(float _DeltaTime)
 bool APlayer::LandCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos, Color8Bit::Black);
+	bool Check = false;
+	BottomCol->CollisionStay(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
+		{
+			Check = true;
+		});
 
-	if (Color == Color8Bit::Black)
+	BottomCol->CollisionEnter(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
+		{
+
+		});
+
+
+
+	if (Color == Color8Bit::Black || Check)
 	{
 		MoveVector.Y = 0.f;
 		IsLanded = true;
@@ -954,7 +967,7 @@ bool APlayer::LandCheck()
 		OnRightUpStep = false;
 		return true;
 	}
-	else if (Color == Color8Bit::Red)
+	else if (Color == Color8Bit::Red )
 	{
 		IsLanded = true;
 		OnLeftUpStep = true;
@@ -1002,8 +1015,21 @@ bool APlayer::LandCheck()
 bool APlayer::RightWallCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(RightCheckPos, Color8Bit::Black);
+	Check = false;
+	if (CurDir == EActorDir::Right)
+	{
+		FrontCol->CollisionStay(ECollisionOrder::WallObject, [=](std::shared_ptr<UCollision> _Collision)
+			{
+				Check = true;
+			});
+
+		FrontCol->CollisionEnter(ECollisionOrder::WallObject, [=](std::shared_ptr<UCollision> _Collision)
+			{
+				int a = 0;
+			});
+	}
 	
-	if (Color == Color8Bit::Black)
+	if (Color == Color8Bit::Black || Check)
 	{
 		return true;
 	}
@@ -1016,8 +1042,21 @@ bool APlayer::RightWallCheck()
 bool APlayer::LeftWallCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(LeftCheckPos, Color8Bit::Black);
-	
-	if (Color == Color8Bit::Black)
+	bool Check = false;
+
+	if (CurDir == EActorDir::Left)
+	{
+		FrontCol->CollisionStay(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
+			{
+				Check = true;
+			});
+
+		FrontCol->CollisionEnter(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
+			{
+
+			});
+	}
+	if (Color == Color8Bit::Black || Check)
 	{
 		return true;
 	}
@@ -1030,8 +1069,18 @@ bool APlayer::LeftWallCheck()
 bool APlayer::TopWallCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(TopCheckPos, Color8Bit::Black);
+	bool Check = false;
+	TopCol->CollisionStay(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
+		{
+			Check = true;
+		});
 
-	if (Color == Color8Bit::Black)
+	TopCol->CollisionEnter(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
+		{
+
+		});
+
+	if (Color == Color8Bit::Black || Check)
 	{
 		return true;
 	}
@@ -1071,7 +1120,7 @@ void APlayer::LayerCheck()
 	}
 }
 
-void APlayer::PickUpItem()
+void APlayer::ObjectInteract()
 {
 	Collider->CollisionStay(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
 		{
@@ -1085,6 +1134,29 @@ void APlayer::PickUpItem()
 	);
 
 	Collider->CollisionEnter(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
+		{
+
+		}
+	);
+
+	Collider->CollisionStay(ECollisionOrder::Switch, [=](std::shared_ptr<UCollision> _Collision)
+		{
+			if (IsDown(VK_SPACE))
+			{
+				ALaserSwitch* Switch = dynamic_cast<ALaserSwitch*>(_Collision->GetActor());
+				if (Switch->GetState())
+				{
+					Switch->Off();
+				}
+				else
+				{
+					Switch->On();
+				}
+			}
+		}
+	);
+
+	Collider->CollisionEnter(ECollisionOrder::Switch, [=](std::shared_ptr<UCollision> _Collision)
 		{
 
 		}

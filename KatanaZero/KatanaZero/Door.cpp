@@ -27,7 +27,8 @@ void ADoor::BeginPlay()
 	Renderer->SetOrder(ERenderOrder::Object);
 
 	Collider->SetScale(FVector(50.f, 100.f, 30.f));
-	Collider->SetCollisionGroup(ECollisionOrder::Door);
+	Collider->SetPosition(FVector(-25.f, 0.f, 0.f));
+	Collider->SetCollisionGroup(ECollisionOrder::WallObject);
 	Collider->SetCollisionType(ECollisionType::RotRect);
 
 	Renderer->ChangeAnimation("Idle");
@@ -37,16 +38,10 @@ void ADoor::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-
-	if (IsOpen)
-	{
-		Collider->SetActive(false);
-	}
-
 	Collider->CollisionEnter(ECollisionOrder::PlayerSlash, [=](std::shared_ptr<UCollision> _Collision)
 		{
 			Renderer->ChangeAnimation("Open");
-			IsOpen = true;
+			Collider->SetActive(false);
 		}
 	);
 

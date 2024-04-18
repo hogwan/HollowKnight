@@ -1,6 +1,6 @@
 #include "PreCompile.h"
-#include "Factory_2.h"
-#include "BackMap_F2.h"
+#include "Factory_3.h"
+#include "BackMap_F3.h"
 #include <EngineCore/Camera.h>
 #include "ContentsHelper.h"
 #include "Player.h"
@@ -12,57 +12,48 @@
 #include "WeaponSlot.h"
 #include "ItemIcon.h"
 #include "KatanaIcon.h"
-#include "FanBlade.h"
-#include "FanFront.h"
+#include "Door.h"
 #include "LaserLauncher.h"
+#include "LaserSwitch.h"
 
-AFactory_2::AFactory_2()
+AFactory_3::AFactory_3()
 {
 }
 
-AFactory_2::~AFactory_2()
+AFactory_3::~AFactory_3()
 {
 }
 
-void AFactory_2::BeginPlay()
+void AFactory_3::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
-void AFactory_2::Tick(float _DeltaTime)
+void AFactory_3::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-
 	FVector PlayerPos = UConstValue::Player->GetActorLocation();
 	PlayerPos.Z = -1000;
 	Camera->SetActorLocation(PlayerPos);
-
-	if (UConstValue::Player->NextLevel)
-	{
-		GEngine->ChangeLevel("Factory_3");
-	}
 }
 
-void AFactory_2::LevelStart(ULevel* _PrevLevel)
+void AFactory_3::LevelStart(ULevel* _PrevLevel)
 {
 	Super::LevelStart(_PrevLevel);
 
 	Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation(FVector(640.0f, -360.0f, -100.0f));
 
-	UConstValue::MapTex = UEngineTexture::FindRes("room_factory_3_colmap.png");
+	UConstValue::MapTex = UEngineTexture::FindRes("room_factory_4_colmap.png");
 	UConstValue::MapTexScale = UConstValue::MapTex->GetScale() * UConstValue::Ratio;
 
 	float4 ImageScale = UConstValue::MapTexScale;
 
-	std::shared_ptr<ABackMap_F2> BackMap = GetWorld()->SpawnActor<ABackMap_F2>("BackMap");
+	std::shared_ptr<ABackMap_F3> BackMap = GetWorld()->SpawnActor<ABackMap_F3>("BackMap");
 	BackMap->SetActorLocation({ ImageScale.hX(), -ImageScale.hY(), 500.0f });
 
 	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
-	UConstValue::Player->SetActorLocation({ 200.0f, -1180.0f, 200.0f });
-
-	UConstValue::LayerChangePos.push_back(FVector(1100.f, -400.f, 200.f));
+	UConstValue::Player->SetActorLocation({ 200.0f, -900.0f, 200.0f });
 
 	std::shared_ptr<AUIBoard> UIBoard = GetWorld()->SpawnActor<AUIBoard>("UIBoard");
 	std::shared_ptr<ABatteryBody> BatteryBody = GetWorld()->SpawnActor<ABatteryBody>("BatteryBody");
@@ -73,21 +64,4 @@ void AFactory_2::LevelStart(ULevel* _PrevLevel)
 
 	UConstValue::MainCursor = GetWorld()->SpawnActor<ACursor>("Cursor");
 
-	std::shared_ptr<AGrunt> Grunt1 = GetWorld()->SpawnActor<AGrunt>("Grunt1");
-	Grunt1->SetActorLocation(FVector(300.f, -300.f, 200.f));
-
-	std::shared_ptr<AGrunt> Grunt2 = GetWorld()->SpawnActor<AGrunt>("Grunt1");
-	Grunt2->SetActorLocation(FVector(1400.f, -300.f, 200.f));
-
-	std::shared_ptr<AFanBlade> Fan = GetWorld()->SpawnActor<AFanBlade>("Fan");
-	Fan->SetActorLocation({ 1422.0f, -367.0f, 200.0f });
-
-	std::shared_ptr<AFanFront> FanFront = GetWorld()->SpawnActor<AFanFront>("FanFront");
-	FanFront->SetActorLocation({ 1422.0f, -367.0f, 200.0f });
-
-
-	std::shared_ptr<ALaserLauncher> Laser2 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
-	Laser2->SetActorLocation({ 940.f, -255.f, 200.0f });
-	Laser2->SetLaserSize(510.f);
 }
-

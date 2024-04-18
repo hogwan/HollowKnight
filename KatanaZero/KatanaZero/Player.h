@@ -52,6 +52,11 @@ protected:
 private:
 	USpriteRenderer* Renderer = nullptr;
 	UCollision* Collider = nullptr;
+	UCollision* BottomCol = nullptr;
+	UCollision* FrontCol = nullptr;
+	UCollision* BackCol = nullptr;
+	UCollision* TopCol = nullptr;
+
 	float4 Color;
 	EActorDir CurDir = EActorDir::None;
 	FVector MoveVector = FVector::Zero;
@@ -59,6 +64,7 @@ private:
 
 	void StateInit();
 	void RendererInit();
+	void ColliderInit();
 	void CheckPosInit();
 	void DebugMessageFunction();
 	void DirCheck();
@@ -136,6 +142,8 @@ private:
 	bool OnRightUpStep = false;
 	bool OnProjectionWall = false;
 
+	bool Check = false;
+
 	float4 BottomCheckPos = FVector::Zero;
 	float4 RightCheckPos = FVector::Zero;
 	float4 LeftCheckPos = FVector::Zero;
@@ -155,7 +163,7 @@ private:
 
 	EItemType PossessItem = EItemType::None;
 	void LayerCheck();
-	void PickUpItem();
+	void ObjectInteract();
 	void ThrowItem();
 
 };

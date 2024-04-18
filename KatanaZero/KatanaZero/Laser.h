@@ -20,6 +20,10 @@ public:
 	void SetOwner(class ALaserLauncher* _LaserLauncher);
 	void SetY(float Y);
 
+	void On();
+
+	void Off();
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

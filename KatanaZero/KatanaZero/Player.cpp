@@ -18,6 +18,18 @@ APlayer::APlayer()
 	Collider = CreateDefaultSubObject<UCollision>("Collider");
 	Collider->SetupAttachment(Root);
 
+	TopCol = CreateDefaultSubObject<UCollision>("Collider");
+	TopCol->SetupAttachment(Root);
+
+	BottomCol = CreateDefaultSubObject<UCollision>("Collider");
+	BottomCol->SetupAttachment(Root);
+
+	FrontCol = CreateDefaultSubObject<UCollision>("Collider");
+	FrontCol->SetupAttachment(Root);
+
+	BackCol = CreateDefaultSubObject<UCollision>("Collider");
+	BackCol->SetupAttachment(Root);
+
 	SetRoot(Root);
 	InputOn();
 }
@@ -30,11 +42,7 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Collider->SetScale(FVector(36.f, 72.f, 100.f));
-	Collider->SetPosition(FVector(0.f, 36.f, 0.f));
-	Collider->SetCollisionGroup(ECollisionOrder::Player);
-	Collider->SetCollisionType(ECollisionType::RotRect);
-
+	ColliderInit();
 	RendererInit();
 	StateInit();
 }
@@ -63,7 +71,7 @@ void APlayer::Tick(float _DeltaTime)
 	{
 		ThrowItem();
 	}
-	PickUpItem();
+	ObjectInteract();
 
 	DebugMessageFunction();
 	
@@ -91,6 +99,33 @@ void APlayer::RendererInit()
 	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::Player);
 	
+}
+void APlayer::ColliderInit()
+{
+	Collider->SetScale(FVector(36.f, 72.f, 100.f));
+	Collider->SetPosition(FVector(0.f, 36.f, 0.f));
+	Collider->SetCollisionGroup(ECollisionOrder::Player);
+	Collider->SetCollisionType(ECollisionType::RotRect);
+
+	TopCol->SetScale(FVector(5.f, 1.f, 100.f));
+	TopCol->SetPosition(FVector(0.f, 72.f, 0.f));
+	TopCol->SetCollisionGroup(ECollisionOrder::ColCheck);
+	TopCol->SetCollisionType(ECollisionType::RotRect);
+
+	BottomCol->SetScale(FVector(5.f, 1.f, 100.f));
+	BottomCol->SetPosition(FVector(0.f, 0.f, 0.f));
+	BottomCol->SetCollisionGroup(ECollisionOrder::ColCheck);
+	BottomCol->SetCollisionType(ECollisionType::RotRect);
+
+	FrontCol->SetScale(FVector(1.f, 5.f, 100.f));
+	FrontCol->SetPosition(FVector(20.f, 30.f, 0.f));
+	FrontCol->SetCollisionGroup(ECollisionOrder::ColCheck);
+	FrontCol->SetCollisionType(ECollisionType::RotRect);
+
+	BackCol->SetScale(FVector(1.f, 5.f, 100.f));
+	BackCol->SetPosition(FVector(-20.f, 30.f, 0.f));
+	BackCol->SetCollisionGroup(ECollisionOrder::ColCheck);
+	BackCol->SetCollisionType(ECollisionType::RotRect);
 }
 void APlayer::CheckPosInit()
 {

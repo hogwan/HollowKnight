@@ -20,11 +20,13 @@ public:
 	inline void LaserOn()
 	{
 		IsLaserOn = true;
+		Laser->On();
 	}
 
 	inline void LaserOff()
 	{
 		IsLaserOn = false;
+		Laser->Off();
 	}
 	void SetLaserSize(float Y)
 	{

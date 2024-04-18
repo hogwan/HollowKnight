@@ -36,7 +36,5 @@ protected:
 private:
 	USpriteRenderer* Renderer = nullptr;
 	UCollision* Collider = nullptr;
-
-	bool IsOpen = false;
 };
 

@@ -92,6 +92,6 @@ void KatanaZeroCore::Initialize()
 	GEngine->CreateLevel<AFactory_2>("Factory_2");
 	GEngine->CreateLevel<AFactory_3>("Factory_3");
 
-	GEngine->ChangeLevel("Factory_3");
+	GEngine->ChangeLevel("Factory_0");
 }
 

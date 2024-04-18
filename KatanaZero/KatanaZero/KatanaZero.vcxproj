@@ -31,6 +31,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="BackMap_F1.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BackMap_F2.h">
       <SubType>
       </SubType>
@@ -76,6 +80,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Factory_0.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Factory_1.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -147,6 +155,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LaserSwitch.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -210,6 +222,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BackMap_F1.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BackMap_F2.cpp">
       <SubType>
       </SubType>
@@ -255,6 +271,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Factory_0.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Factory_1.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -323,6 +343,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="LaserLauncher.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LaserSwitch.cpp">
       <SubType>
       </SubType>
     </ClCompile>

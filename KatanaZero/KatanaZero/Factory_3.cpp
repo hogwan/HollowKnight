@@ -14,6 +14,7 @@
 #include "KatanaIcon.h"
 #include "Door.h"
 #include "LaserLauncher.h"
+#include "LaserSwitch.h"
 
 AFactory_3::AFactory_3() 
 {
@@ -63,6 +64,9 @@ void AFactory_3::LevelStart(ULevel* _PrevLevel)
 
 	UConstValue::MainCursor = GetWorld()->SpawnActor<ACursor>("Cursor");
 
+	std::shared_ptr<ALaserSwitch> LaserSwitch = GetWorld()->SpawnActor<ALaserSwitch>("LaserSwitch");
+	LaserSwitch->SetActorLocation({ 1520.f, -300.f, 200.0f });
+
 	std::shared_ptr<ADoor> Door1 = GetWorld()->SpawnActor<ADoor>("Gangster");
 	Door1->SetActorLocation({ 1420.0f, -607.0f, 200.0f });
 	Door1->SetDir(EActorDir::Right);
@@ -94,4 +98,12 @@ void AFactory_3::LevelStart(ULevel* _PrevLevel)
 	std::shared_ptr<ALaserLauncher> Laser6 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser6->SetActorLocation({ 1745.f, -225.f, 200.0f });
 	Laser6->SetLaserSize(155.f);
+
+	LaserSwitch->PushLaser(Laser1);
+	LaserSwitch->PushLaser(Laser2);
+	LaserSwitch->PushLaser(Laser3);
+	LaserSwitch->PushLaser(Laser4);
+	LaserSwitch->PushLaser(Laser5);
+	LaserSwitch->PushLaser(Laser6);
+	LaserSwitch->On();
 }
