@@ -183,10 +183,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineDebug3D.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="EngineDefines.h" />
     <ClInclude Include="EngineBlend.h">
       <SubType>
@@ -262,20 +258,13 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineStruct.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
+    <ClInclude Include="EngineStruct.h" />
     <ClInclude Include="EngineTexture.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="EngineVertex.h" />
     <ClInclude Include="GameMode.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Image.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -344,7 +333,12 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="TileRenderer.h">
+    <ClInclude Include="EngineDebug3D.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TileRenderer.h" />
+    <ClInclude Include="Image.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -383,10 +377,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineCore.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="EngineDebug3D.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -448,20 +438,13 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EngineStruct.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
+    <ClCompile Include="EngineStruct.cpp" />
     <ClCompile Include="EngineTexture.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineVertex.cpp" />
     <ClCompile Include="GameMode.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Image.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -532,7 +515,12 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="TileRenderer.cpp">
+    <ClCompile Include="EngineDebug3D.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TileRenderer.cpp" />
+    <ClCompile Include="Image.cpp">
       <SubType>
       </SubType>
     </ClCompile>
