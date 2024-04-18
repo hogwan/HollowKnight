@@ -43,5 +43,18 @@ void ALaserLauncher::Tick(float _DeltaTime)
 		Renderer->SetSprite("laser_off_00.png");
 		Laser->SetActive(false);
 	}
+
+	
+	AddActorLocation(MoveVector * MoveSpeed * _DeltaTime);
+
+	MoveAcc += MoveSpeed * _DeltaTime;
+
+	if (MoveAcc > MoveDistant)
+	{
+		MoveVector.X = -MoveVector.X;
+		MoveAcc = 0.f;
+	}
+
+	
 }
 

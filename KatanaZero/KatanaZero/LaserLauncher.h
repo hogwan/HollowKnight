@@ -2,6 +2,7 @@
 #include <EngineCore/Actor.h>
 #include "Laser.h"
 
+
 // Ό³Έν :
 class ALaserLauncher : public AActor
 {
@@ -33,6 +34,11 @@ public:
 		Laser->SetY(Y);
 	}
 
+	void SetDir(FVector _Dir)
+	{
+		MoveVector = _Dir;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -40,6 +46,12 @@ protected:
 private:
 	USpriteRenderer* Renderer = nullptr;
 	std::shared_ptr<class ALaser> Laser = nullptr;
+
+	FVector MoveVector = FVector::Zero;
+
+	float MoveDistant = 500.f;
+	float MoveAcc = 0.f;
+	float MoveSpeed = 200.f;
 
 	bool IsLaserOn = true;
 	float LaserY = 0.f;

@@ -44,7 +44,7 @@ void AFactory_3::LevelStart(ULevel* _PrevLevel)
 	Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation(FVector(640.0f, -360.0f, -100.0f));
 
-	UConstValue::MapTex = UEngineTexture::FindRes("room_factory_4_colmap.png");
+	UConstValue::MapTex = UEngineTexture::FindRes("room_factory_3_colmap.png");
 	UConstValue::MapTexScale = UConstValue::MapTex->GetScale() * UConstValue::Ratio;
 
 	float4 ImageScale = UConstValue::MapTexScale;

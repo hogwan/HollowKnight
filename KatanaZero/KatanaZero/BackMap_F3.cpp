@@ -18,7 +18,7 @@ void ABackMap_F3::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Renderer->SetSprite("room_factory_4.png");
+	Renderer->SetSprite("room_factory_3.png");
 
 	Renderer->SetAutoSize(UConstValue::Ratio, true);
 	Renderer->SetOrder(ERenderOrder::Back);

@@ -324,6 +324,78 @@ void APlayer::RunToIdle(float _DeltaTime)
 			return;
 		});
 
+	if ((IsPress('D') || IsPress('d')) &&
+		(IsPress('A') || IsPress('a')))
+	{
+		return;
+	}
+
+	if (IsPress('D') || IsPress('d'))
+	{
+		if (true == RightWallCheck())
+		{
+			return;
+		}
+
+		State.ChangeState("Run");
+		return;
+	}
+
+	if (IsPress('A') || IsPress('a'))
+	{
+		if (true == LeftWallCheck())
+		{
+			return;
+		}
+		State.ChangeState("Run");
+		return;
+
+	}
+	if (true == IsPress('W') || true == IsPress('w'))
+	{
+		AccLongJump += _DeltaTime;
+		if (AccLongJump > LongJumpTime)
+		{
+			AccLongJump = 0.f;
+			MoveVector.Y = LongJumpForce.Y;
+			State.ChangeState("Jump");
+			return;
+		}
+
+	}
+	if (true == IsUp('W') || true == IsUp('w'))
+	{
+		AccLongJump = 0.f;
+		MoveVector.Y = ShortJumpForce.Y;
+		State.ChangeState("Jump");
+		return;
+	}
+
+	if (true == IsPress('S') || true == IsPress('s'))
+	{
+		if (OnProjectionWall)
+		{
+			AddActorLocation(FVector::Down * 10.f);
+			return;
+		}
+
+		State.ChangeState("Crouch");
+		return;
+	}
+
+	if (true == IsDown(VK_LBUTTON))
+	{
+		State.ChangeState("Attack");
+		return;
+	}
+
+	if (FallCheck())
+	{
+		State.ChangeState("Fall");
+		return;
+	}
+
+
 	FVector BreakDir = -MoveVector;
 	BreakDir.Normalize3D();
 

@@ -79,6 +79,9 @@
     <Filter Include="Level\1.Factory\Factory_1">
       <UniqueIdentifier>{b8904f4e-e23e-48d6-9c36-ded3c6c5b62c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level\2.Hotel">
+      <UniqueIdentifier>{34b0ddf8-a933-4e70-a357-7cd0344546b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KatanaZeroCore.cpp">

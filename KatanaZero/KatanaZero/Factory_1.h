@@ -1,22 +1,25 @@
 #pragma once
+#include "KZGameMode.h"
 
 // Ό³Έν :
-class Factory_1
+class AFactory_1 : public KZGameMode
 {
+	GENERATED_BODY(KZGameMode)
 public:
 	// constructor destructor
-	Factory_1();
-	~Factory_1();
+	AFactory_1();
+	~AFactory_1();
 
 	// delete Function
-	Factory_1(const Factory_1& _Other) = delete;
-	Factory_1(Factory_1&& _Other) noexcept = delete;
-	Factory_1& operator=(const Factory_1& _Other) = delete;
-	Factory_1& operator=(Factory_1&& _Other) noexcept = delete;
+	AFactory_1(const AFactory_1& _Other) = delete;
+	AFactory_1(AFactory_1&& _Other) noexcept = delete;
+	AFactory_1& operator=(const AFactory_1& _Other) = delete;
+	AFactory_1& operator=(AFactory_1&& _Other) noexcept = delete;
 
 protected:
-
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
+	void LevelStart(ULevel* _PrevLevel) override;
 private:
-
+	std::shared_ptr<UCamera> Camera;
 };
-
