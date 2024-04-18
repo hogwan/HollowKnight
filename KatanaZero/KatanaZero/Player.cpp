@@ -86,7 +86,7 @@ void APlayer::RendererInit()
 {
 	Renderer->CreateAnimation("Idle", "Idle", 0.05f, true);
 	Renderer->CreateAnimation("Run", "Run", 0.05f, true);
-	Renderer->CreateAnimation("RunToIdle", "RunToIdle", 0.05f, true);
+	Renderer->CreateAnimation("RunToIdle", "RunToIdle", 0.03f, true);
 	Renderer->CreateAnimation("Roll", "Roll", 0.05f, false);
 	Renderer->CreateAnimation("Jump", "Jump", 0.08f, false);
 	Renderer->CreateAnimation("Crouch", "Crouch", 0.05f, false);
@@ -131,10 +131,10 @@ void APlayer::CheckPosInit()
 {
 	FVector Pos = GetActorLocation();
 	BottomCheckPos = Pos;
-	RightCheckPos = Pos + FVector(20.f, 30.f, 0.f);
-	LeftCheckPos = Pos + FVector(-20.f, 30.f, 0.f);
+	RightCheckPos = Pos + FVector(20.f, 50.f, 0.f);
+	LeftCheckPos = Pos + FVector(-20.f, 50.f, 0.f);
 	TopCheckPos = Pos + FVector(0.f, 40.f, 0.f);
-	FallCheckPos = Pos + FVector(0.f, -0.0f, 0.f);
+	FallCheckPos = Pos + FVector(0.f, -1.f, 0.f);
 
 	BottomCheckPos /= UConstValue::Ratio;
 	BottomCheckPos.Y = -BottomCheckPos.Y;

@@ -43,8 +43,9 @@ protected:
 	EActorDir CurDir = EActorDir::Right;
 	EEnemyPattern CurPattern = EEnemyPattern::Patrol;
 	FVector MoveVector = FVector::Zero;
-	FVector GravityVector = FVector(0.f, -500.f, 0.f);
+	FVector GravityVector = FVector(0.f, -1000.f, 0.f);
 	void DirUpdate();
+	void CheckPosInit();
 
 	virtual void None(float _DeltaTime);
 	virtual void Idle(float _DeltaTime);
@@ -70,9 +71,13 @@ protected:
 
 	virtual void StateInit();
 	virtual void RendererInit();
+	void DeathCheck();
 
 	bool LandCheck();
 	void GravityCheck(float _DeltaTime);
+	bool RightWallCheck();
+	bool LeftWallCheck();
+	bool TopWallCheck();
 
 	float AccTime = 0.f;
 	float IdleTime = 1.f;
@@ -83,12 +88,15 @@ protected:
 	bool OnLeftUpStep = false;
 	bool OnRightUpStep = false;
 
-	void DeathCheck();
 	float FlyPower = 500.f;
-	float DeathBreak = 500.f;
+	float DeathBreak = 1000.f;
 	bool IsDeath = false;
-	
-	bool IsCol = false;
+
+	float4 BottomCheckPos = FVector::Zero;
+	float4 RightCheckPos = FVector::Zero;
+	float4 LeftCheckPos = FVector::Zero;
+	float4 TopCheckPos = FVector::Zero;
+	float4 FallCheckPos = FVector::Zero;
 
 private:
 

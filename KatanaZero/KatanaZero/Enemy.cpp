@@ -35,26 +35,20 @@ void AEnemy::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 	DirUpdate();
-	GravityCheck(_DeltaTime);
+	CheckPosInit();
 
 	DeathCheck();
 	if (IsDeath)
 	{
-		if (abs(MoveVector.X) < 5.0f)
+		if (RightWallCheck() || LeftWallCheck())
 		{
 			MoveVector.X = 0.f;
 		}
-		else if(MoveVector.X > 0.f)
-		{
-			MoveVector.X -= DeathBreak * _DeltaTime;
-		}
-		else if (MoveVector.X < 0.f)
-		{
-			MoveVector.X += DeathBreak * _DeltaTime;
-		}
+
 	}
 
 	State.Update(_DeltaTime);
+	GravityCheck(_DeltaTime);
 
 	FVector PlayerPos = UConstValue::Player->GetActorLocation();
 	if (abs(PlayerPos.X - GetActorLocation().X) < 500.f)
@@ -242,18 +236,19 @@ void AEnemy::Run(float _DeltaTime)
 		if (OnLeftUpStep)
 		{
 			Dir = { -1.f,1.f,0.f };
+			MoveVector = Dir * MoveSpeed;
 		}
 		else if (OnRightUpStep)
 		{
 			Dir = { -1.f,-1.f,0.f };
+			MoveVector = Dir * MoveSpeed;
 		}
 		else
 		{
 			Dir = { -1.f,0.f,0.f };
+			MoveVector.X = Dir.X * MoveSpeed;
 		}
 		Dir.Normalize3D();
-
-		MoveVector = Dir * MoveSpeed;
 	}
 	else if (CurDir == EActorDir::Right)
 	{
@@ -268,18 +263,21 @@ void AEnemy::Run(float _DeltaTime)
 		if (OnLeftUpStep)
 		{
 			Dir = { 1.f,-1.f,0.f };
+			MoveVector = Dir * MoveSpeed;
 		}
 		else if (OnRightUpStep)
 		{
 			Dir = { 1.f,1.f,0.f };
+			MoveVector = Dir * MoveSpeed;
 		}
 		else
 		{
 			Dir = { 1.f,0.f,0.f };
+			MoveVector.X = Dir.X * MoveSpeed;
 		}
 		Dir.Normalize3D();
 
-		MoveVector = Dir * MoveSpeed;
+		
 	}
 }
 void AEnemy::Turn(float _DeltaTime)
@@ -298,11 +296,29 @@ void AEnemy::Attack(float _DeltaTime)
 
 void AEnemy::Death(float _DeltaTime)
 {
-	
+	if (abs(MoveVector.X) < 5.0f)
+	{
+		MoveVector.X = 0.f;
+	}
+	else if (MoveVector.X > 0.f)
+	{
+		MoveVector.X -= DeathBreak * _DeltaTime;
+	}
+	else if (MoveVector.X < 0.f)
+	{
+		MoveVector.X += DeathBreak * _DeltaTime;
+	}
 }
 
 void AEnemy::DeathInAir(float _DeltaTime)
 {
+	if (TopWallCheck())
+	{
+		AddActorLocation(FVector::Down * 5.f);
+		MoveVector.Y = 0.f;
+		return;
+	}
+
 	if (LandCheck())
 	{
 		State.ChangeState("Death");
@@ -384,6 +400,7 @@ void AEnemy::DeathStart()
 void AEnemy::DeathInAirStart()
 {
 	FVector AttackDir = UConstValue::Player->GetAttackDir();
+	AddActorLocation(AttackDir * 3.f);
 	MoveVector = AttackDir * FlyPower;
 
 	Renderer->ChangeAnimation("DeathInAir");
@@ -431,6 +448,27 @@ void AEnemy::DirUpdate()
 	}
 }
 
+void AEnemy::CheckPosInit()
+{
+	FVector Pos = GetActorLocation();
+	BottomCheckPos = Pos;
+	RightCheckPos = Pos + FVector(20.f, 30.f, 0.f);
+	LeftCheckPos = Pos + FVector(-20.f, 30.f, 0.f);
+	TopCheckPos = Pos + FVector(0.f, 40.f, 0.f);
+	FallCheckPos = Pos + FVector(0.f, -1.f, 0.f);
+
+	BottomCheckPos /= UConstValue::Ratio;
+	BottomCheckPos.Y = -BottomCheckPos.Y;
+	RightCheckPos /= UConstValue::Ratio;
+	RightCheckPos.Y = -RightCheckPos.Y;
+	LeftCheckPos /= UConstValue::Ratio;
+	LeftCheckPos.Y = -LeftCheckPos.Y;
+	TopCheckPos /= UConstValue::Ratio;
+	TopCheckPos.Y = -TopCheckPos.Y;
+	FallCheckPos /= UConstValue::Ratio;
+	FallCheckPos.Y = -FallCheckPos.Y;
+}
+
 bool AEnemy::LandCheck()
 {
 	FVector GruntPos = GetActorLocation();
@@ -465,7 +503,7 @@ void AEnemy::GravityCheck(float _DeltaTime)
 {
 	if (!LandCheck())
 	{
-		AddActorLocation(GravityVector * _DeltaTime);
+		MoveVector += GravityVector * _DeltaTime;
 	}
 	else
 	{
@@ -502,6 +540,57 @@ void AEnemy::DeathCheck()
 			
 		}
 	);
+}
+
+
+bool AEnemy::RightWallCheck()
+{
+	Color8Bit Color = UConstValue::MapTex->GetColor(RightCheckPos, Color8Bit::Black);
+
+	if (Color == Color8Bit::Black ||
+		Color == Color8Bit::Yellow ||
+		Color == Color8Bit::Red )
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool AEnemy::LeftWallCheck()
+{
+	Color8Bit Color = UConstValue::MapTex->GetColor(LeftCheckPos, Color8Bit::Black);
+
+	if (Color == Color8Bit::Black ||
+		Color == Color8Bit::Yellow ||
+		Color == Color8Bit::Red )
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool AEnemy::TopWallCheck()
+{
+	Color8Bit Color = UConstValue::MapTex->GetColor(TopCheckPos, Color8Bit::Black);
+
+
+
+	if (Color == Color8Bit::Black ||
+		Color == Color8Bit::Yellow ||
+		Color == Color8Bit::Red )
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 

@@ -324,64 +324,6 @@ void APlayer::RunToIdle(float _DeltaTime)
 			return;
 		});
 
-	if ((IsPress('D') || IsPress('d')) &&
-		(IsPress('A') || IsPress('a')))
-	{
-		return;
-	}
-
-	if (IsPress('D') || IsPress('d'))
-	{
-		if (true == RightWallCheck())
-		{
-			return;
-		}
-
-		State.ChangeState("Run");
-		return;
-	}
-
-	if (IsPress('A') || IsPress('a'))
-	{
-		if (true == LeftWallCheck())
-		{
-			return;
-		}
-		State.ChangeState("Run");
-		return;
-
-	}
-	if (true == IsPress('W') || true == IsPress('w'))
-	{
-		AccLongJump += _DeltaTime;
-		if (AccLongJump > LongJumpTime)
-		{
-			AccLongJump = 0.f;
-			MoveVector.Y = LongJumpForce.Y;
-			State.ChangeState("Jump");
-			return;
-		}
-
-	}
-	if (true == IsUp('W') || true == IsUp('w'))
-	{
-		AccLongJump = 0.f;
-		MoveVector.Y = ShortJumpForce.Y;
-		State.ChangeState("Jump");
-		return;
-	}
-
-	if (true == IsPress('S') || true == IsPress('s'))
-	{
-		if (OnProjectionWall)
-		{
-			AddActorLocation(FVector::Down * 10.f);
-			return;
-		}
-
-		State.ChangeState("Crouch");
-		return;
-	}
 
 	if (true == IsDown(VK_LBUTTON))
 	{
@@ -653,9 +595,22 @@ void APlayer::Attack(float _DeltaTime)
 			return;
 		});
 
-	if (TopWallCheck() || LeftWallCheck() || RightWallCheck() || LandCheck())
+	if (TopWallCheck())
 	{
-		State.ChangeState("Fall");
+		AddActorLocation(FVector::Down);
+		MoveVector.Y = 0.f;
+		return;
+	}
+
+	if (LandCheck())
+	{
+		MoveVector.Y = 0.f;
+		return;
+	}
+
+	if (LeftWallCheck() || RightWallCheck())
+	{
+		MoveVector.X = 0.f;
 		return;
 	}
 }
@@ -1023,12 +978,6 @@ bool APlayer::LandCheck()
 			Check = true;
 		});
 
-	BottomCol->CollisionEnter(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
-		{
-
-		});
-
-
 
 	if (Color == Color8Bit::Black || Check)
 	{
@@ -1095,13 +1044,12 @@ bool APlayer::RightWallCheck()
 				Check = true;
 			});
 
-		FrontCol->CollisionEnter(ECollisionOrder::WallObject, [=](std::shared_ptr<UCollision> _Collision)
-			{
-				int a = 0;
-			});
 	}
 	
-	if (Color == Color8Bit::Black || Check)
+	if (Color == Color8Bit::Black ||
+		Color == Color8Bit::Yellow ||
+		Color == Color8Bit::Red ||
+		Check)
 	{
 		return true;
 	}
@@ -1123,12 +1071,11 @@ bool APlayer::LeftWallCheck()
 				Check = true;
 			});
 
-		FrontCol->CollisionEnter(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
-			{
-
-			});
 	}
-	if (Color == Color8Bit::Black || Check)
+	if (Color == Color8Bit::Black ||
+		Color == Color8Bit::Yellow ||
+		Color == Color8Bit::Red ||
+		Check)
 	{
 		return true;
 	}
@@ -1147,12 +1094,11 @@ bool APlayer::TopWallCheck()
 			Check = true;
 		});
 
-	TopCol->CollisionEnter(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
-		{
 
-		});
-
-	if (Color == Color8Bit::Black || Check)
+	if (Color == Color8Bit::Black ||
+		Color == Color8Bit::Yellow ||
+		Color == Color8Bit::Red ||
+		Check)
 	{
 		return true;
 	}
@@ -1199,17 +1145,16 @@ void APlayer::ObjectInteract()
 			if (IsDown(VK_RBUTTON))
 			{
 				AItem* Item = dynamic_cast<AItem*>(_Collision->GetActor());
-				PossessItem = Item->GetItemType();
-				Item->Destroy();
+
+				if (Item->GetCurState() == EItemState::Idle)
+				{
+					PossessItem = Item->GetItemType();
+					Item->Destroy();
+				}
 			}
 		}
 	);
 
-	Collider->CollisionEnter(ECollisionOrder::Item, [=](std::shared_ptr<UCollision> _Collision)
-		{
-
-		}
-	);
 
 	Collider->CollisionStay(ECollisionOrder::Switch, [=](std::shared_ptr<UCollision> _Collision)
 		{
@@ -1228,11 +1173,6 @@ void APlayer::ObjectInteract()
 		}
 	);
 
-	Collider->CollisionEnter(ECollisionOrder::Switch, [=](std::shared_ptr<UCollision> _Collision)
-		{
-
-		}
-	);
 
 }
 
