@@ -75,6 +75,12 @@ void APlayer::StateInit()
 	State.SetUpdateFunction("Revert", std::bind(&APlayer::Revert, this, std::placeholders::_1));
 	State.SetStartFunction("Revert", std::bind(&APlayer::RevertStart, this));
 
+	State.SetUpdateFunction("DeathInAir", std::bind(&APlayer::DeathInAir, this, std::placeholders::_1));
+	State.SetStartFunction("DeathInAir", std::bind(&APlayer::DeathInAirStart, this));
+
+	State.SetUpdateFunction("Death", std::bind(&APlayer::Death, this, std::placeholders::_1));
+	State.SetStartFunction("Death", std::bind(&APlayer::DeathStart, this));
+
 	State.ChangeState("None");
 }
 
@@ -813,7 +819,7 @@ void APlayer::Revert(float _DeltaTime)
 {
 	if (Reverting(_DeltaTime))
 	{
-		ReStart = true;
+		Restart = true;
 	}
 }
 

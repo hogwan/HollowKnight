@@ -33,6 +33,8 @@ public:
 	{
 		LayerLevel = _LayerLevel;
 	}
+
+	bool IsDeath = false;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -91,7 +93,7 @@ protected:
 
 	float FlyPower = 500.f;
 	float DeathBreak = 1000.f;
-	bool IsDeath = false;
+	
 
 	float4 BottomCheckPos = FVector::Zero;
 	float4 RightCheckPos = FVector::Zero;

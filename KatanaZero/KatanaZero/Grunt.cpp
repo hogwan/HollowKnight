@@ -4,10 +4,7 @@
 
 AGrunt::AGrunt() 
 {
-	USpriteRenderer* Test = CreateDefaultSubObject<USpriteRenderer>("Test");
-	Test->SetupAttachment(Root);
-	Test->SetScale(FVector(36.f, 72.f, 100.f));
-	Test->SetPosition(FVector(0.f, 36.f, 0.f));
+
 }
 
 AGrunt::~AGrunt() 

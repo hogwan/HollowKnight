@@ -51,7 +51,7 @@ void APlayer::BeginPlay()
 void APlayer::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-
+	DirUpdate();
 	if(State.GetCurStateName() != "Replay") Recording(_DeltaTime);
 
 	DeathCheck();
@@ -63,7 +63,6 @@ void APlayer::Tick(float _DeltaTime)
 	}
 	
 	State.Update(_DeltaTime);
-	DirUpdate();
 
 	if (TopWallCheck())
 	{

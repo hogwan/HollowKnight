@@ -44,7 +44,7 @@ public:
 	}
 
 	bool NextLevel = false;
-	bool ReStart = false;
+	bool Restart = false;
 
 
 protected:

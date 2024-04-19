@@ -4,7 +4,7 @@
 // Ό³Έν :
 class AFactory_0 : public KZGameMode
 {
-	GENERATED_BODY(AGameMode)
+	GENERATED_BODY(KZGameMode)
 public:
 	// constructor destructor
 	AFactory_0();
@@ -21,7 +21,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 	void LevelStart(ULevel* _PrevLevel) override;
+	void LevelEnd(ULevel* _NextLevel) override;
 private:
-	std::shared_ptr<UCamera> Camera;
 };
 
