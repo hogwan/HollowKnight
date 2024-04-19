@@ -27,7 +27,7 @@ void AGangster::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		Arms->SetPosition(FVector(-50.f, 50.f, 0.f));
 	}
@@ -119,11 +119,11 @@ void AGangster::Attack(float _DeltaTime)
 
 	if (AimVector.X > 0.f)
 	{
-		CurDir = EActorDir::Right;
+		CurDir = EEngineDir::Right;
 	}
 	else
 	{
-		CurDir = EActorDir::Left;
+		CurDir = EEngineDir::Left;
 	}
 
 	Arms->SetRotationDeg(FVector({ 0.f,0.f,AimVector.Y * 90.f }));

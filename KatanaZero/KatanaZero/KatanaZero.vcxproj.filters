@@ -231,6 +231,9 @@
     <ClCompile Include="BackMap_F1.cpp">
       <Filter>Level\1.Factory\Factory_1</Filter>
     </ClCompile>
+    <ClCompile Include="RecordingObject.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KatanaZeroCore.h">
@@ -376,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="BackMap_F1.h">
       <Filter>Level\1.Factory\Factory_1</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordingObject.h">
+      <Filter>Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

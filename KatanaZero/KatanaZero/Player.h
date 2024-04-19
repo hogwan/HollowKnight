@@ -1,12 +1,13 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <EngineCore/StateManager.h>
+#include "RecordingObject.h"
 #include "ContentsHelper.h"
 
 // Ό³Έν :
 class USpriteRenderer;
 
-class APlayer : public AActor
+class APlayer : public AActor, public URecordingObject
 {
 	GENERATED_BODY(AActor)
 public:
@@ -27,7 +28,7 @@ public:
 		return AttackDir;
 	}
 
-	EActorDir GetCurDir()
+	EEngineDir GetCurDir()
 	{
 		return CurDir;
 	}
@@ -43,6 +44,8 @@ public:
 	}
 
 	bool NextLevel = false;
+	bool ReStart = false;
+
 
 protected:
 	void BeginPlay() override;
@@ -58,7 +61,7 @@ private:
 	UCollision* TopCol = nullptr;
 
 	float4 Color;
-	EActorDir CurDir = EActorDir::None;
+	EEngineDir CurDir = EEngineDir::MAX;
 	FVector MoveVector = FVector::Zero;
 	int LayerLevel = 0;
 
@@ -70,6 +73,10 @@ private:
 	void DirCheck();
 	void DirUpdate();
 	bool FallCheck();
+	void LayerCheck();
+	void ObjectInteract();
+	void ThrowItem();
+	void DeathCheck();
 
 	void None(float _DeltaTime);
 	void Idle(float _DeltaTime);
@@ -83,6 +90,10 @@ private:
 	void Attack(float _DeltaTime);
 	void WallSlide(float _DeltaTime);
 	void Flip(float _DeltaTime);
+	void DeathInAir(float _DeltaTime);
+	void Death(float _DeltaTime);
+	void Replay(float _DeltaTime);
+	void Revert(float _DeltaTime);
 
 	void NoneStart();
 	void IdleStart();
@@ -96,6 +107,10 @@ private:
 	void AttackStart();
 	void WallSlideStart();
 	void FlipStart();
+	void DeathInAirStart();
+	void DeathStart();
+	void ReplayStart();
+	void RevertStart();
 
 	void FallEnd();
 
@@ -162,9 +177,5 @@ private:
 	FVector LeftWallSlideFXOffset = FVector(-20.f, 0.f, 0.f);
 
 	EItemType PossessItem = EItemType::None;
-	void LayerCheck();
-	void ObjectInteract();
-	void ThrowItem();
-
 };
 

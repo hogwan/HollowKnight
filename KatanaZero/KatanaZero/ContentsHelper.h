@@ -10,6 +10,7 @@ public:
 	static std::vector<FVector> LayerChangePos;
 	static float4 MapTexScale;
 	static float Ratio;
+	static float recording_delay;
 };
 
 
@@ -34,6 +35,8 @@ enum class ECollisionOrder
 {
 	Player,
 	Enemy,
+	EnemyAttack,
+	Bullet,
 	PlayerLayerChange,
 	EnemyLayerChange,
 	PlayerSlash,
@@ -44,13 +47,6 @@ enum class ECollisionOrder
 	Switch,
 	WallObject,
 	ColCheck,
-};
-
-enum class EActorDir
-{
-	None,
-	Left,
-	Right,
 };
 
 enum class ECameraMode

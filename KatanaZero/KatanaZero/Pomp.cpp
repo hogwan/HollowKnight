@@ -139,7 +139,7 @@ void APomp::AttackStart()
 {
 	Super::AttackStart();
 	std::shared_ptr<APompSlashFX> PompSlashFX = GetWorld()->SpawnActor<APompSlashFX>("PompSlashFX");
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		PompSlashFX->SetActorLocation(GetActorLocation() + FVector(-30.f,50.f,0.f));
 		PompSlashFX->ReverseX();

@@ -42,8 +42,9 @@ void AFactory_0::Tick(float _DeltaTime)
 	PlayerPos.Z = -1000;
 	Camera->SetActorLocation(PlayerPos);
 
-	if (UConstValue::Player->NextLevel)
+	if (UConstValue::Player->State.GetCurStateName() == "Replay")
 	{
+		UEngineInput::IsDown(VK_RBUTTON);
 		GEngine->ChangeLevel("Factory_1");
 	}
 }
@@ -97,7 +98,7 @@ void AFactory_0::LevelStart(ULevel* _PrevLevel)
 
 	std::shared_ptr<ADoor> Door = GetWorld()->SpawnActor<ADoor>("Gangster");
 	Door->SetActorLocation({ 570.0f, -320.0f, 200.0f });
-	Door->SetDir(EActorDir::Left);
+	Door->SetDir(EEngineDir::Left);
 
-
+	
 }

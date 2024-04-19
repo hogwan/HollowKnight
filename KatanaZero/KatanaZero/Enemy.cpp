@@ -29,11 +29,18 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 	StateInit();
 	RendererInit();
+	SetActor(this);
 }
 
 void AEnemy::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+
+	if (State.GetCurStateName() != "Replay")
+	{
+		Recording(_DeltaTime);
+	}
+
 	DirUpdate();
 	CheckPosInit();
 
@@ -144,7 +151,7 @@ void AEnemy::Walk(float _DeltaTime)
 			State.ChangeState("Idle");
 			return;
 		}
-		if (CurDir == EActorDir::Left)
+		if (CurDir == EEngineDir::Left)
 		{
 
 			FVector Dir = FVector::Zero;
@@ -164,7 +171,7 @@ void AEnemy::Walk(float _DeltaTime)
 
 			MoveVector = Dir * WalkSpeed;
 		}
-		else if (CurDir == EActorDir::Right)
+		else if (CurDir == EEngineDir::Right)
 		{
 
 			FVector Dir = FVector::Zero;
@@ -223,7 +230,7 @@ void AEnemy::Run(float _DeltaTime)
 	}
 
 
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		if (Gap.X > 0.f)
 		{
@@ -250,7 +257,7 @@ void AEnemy::Run(float _DeltaTime)
 		}
 		Dir.Normalize3D();
 	}
-	else if (CurDir == EActorDir::Right)
+	else if (CurDir == EEngineDir::Right)
 	{
 		if (Gap.X < 0.f)
 		{
@@ -371,13 +378,13 @@ void AEnemy::RunStart()
 
 void AEnemy::TurnStart()
 {
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
-		CurDir = EActorDir::Right;
+		CurDir = EEngineDir::Right;
 	}
 	else
 	{
-		CurDir = EActorDir::Left;
+		CurDir = EEngineDir::Left;
 	}
 
 	Renderer->ChangeAnimation("Turn");
@@ -410,13 +417,13 @@ void AEnemy::DeathInAirStart()
 void AEnemy::ChangeLayerLevelStart()
 {
 	MoveVector = FVector::Zero;
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
-		CurDir = EActorDir::Right;
+		CurDir = EEngineDir::Right;
 	}
 	else
 	{
-		CurDir = EActorDir::Left;
+		CurDir = EEngineDir::Left;
 	}
 	Renderer->ChangeAnimation("Turn");
 	return;
@@ -430,7 +437,7 @@ void AEnemy::DirUpdate()
 {
 	FVector Scale = GetActorScale3D();
 
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		if (Scale.X > 0.f)
 		{
@@ -438,7 +445,7 @@ void AEnemy::DirUpdate()
 			SetActorScale3D(Scale);
 		}
 	}
-	else if (CurDir == EActorDir::Right)
+	else if (CurDir == EEngineDir::Right)
 	{
 		if (Scale.X < 0.f)
 		{

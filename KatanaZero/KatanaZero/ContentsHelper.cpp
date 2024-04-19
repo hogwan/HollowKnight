@@ -10,3 +10,4 @@ std::shared_ptr<APlayer> UConstValue::Player;
 std::shared_ptr<ACursor> UConstValue::MainCursor;
 std::vector<FVector> UConstValue::LayerChangePos;
 float UConstValue::Ratio = 1.0f;
+float UConstValue::recording_delay;

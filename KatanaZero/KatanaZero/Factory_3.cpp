@@ -69,7 +69,7 @@ void AFactory_3::LevelStart(ULevel* _PrevLevel)
 
 	std::shared_ptr<ADoor> Door1 = GetWorld()->SpawnActor<ADoor>("Gangster");
 	Door1->SetActorLocation({ 1420.0f, -607.0f, 200.0f });
-	Door1->SetDir(EActorDir::Right);
+	Door1->SetDir(EEngineDir::Right);
 
 	std::shared_ptr<ALaserLauncher> Laser1 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser1->SetActorLocation({ 650.f, -450.f, 200.0f });
@@ -89,7 +89,7 @@ void AFactory_3::LevelStart(ULevel* _PrevLevel)
 
 	std::shared_ptr<ADoor> Door2 = GetWorld()->SpawnActor<ADoor>("Gangster");
 	Door2->SetActorLocation({ 1070.0f, -320.0f, 200.0f });
-	Door2->SetDir(EActorDir::Right);
+	Door2->SetDir(EEngineDir::Right);
 
 	std::shared_ptr<ALaserLauncher> Laser5 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser5->SetActorLocation({ 1715.f, -225.f, 200.0f });

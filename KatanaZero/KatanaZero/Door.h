@@ -16,10 +16,10 @@ public:
 	ADoor& operator=(const ADoor& _Other) = delete;
 	ADoor& operator=(ADoor&& _Other) noexcept = delete;
 
-	void SetDir(EActorDir _Dir)
+	void SetDir(EEngineDir _Dir)
 	{
 		Dir = _Dir;
-		if (Dir == EActorDir::Left)
+		if (Dir == EEngineDir::Left)
 		{
 			FVector Scale = GetActorScale3D();
 			Scale.X = -Scale.X;
@@ -31,7 +31,7 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	EActorDir Dir = EActorDir::None;
+	EEngineDir Dir = EEngineDir::MAX;
 
 private:
 	USpriteRenderer* Renderer = nullptr;

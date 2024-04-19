@@ -45,12 +45,16 @@ void APlayer::BeginPlay()
 	ColliderInit();
 	RendererInit();
 	StateInit();
+	SetActor(this);
 }
 
 void APlayer::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+	if(State.GetCurStateName() != "Replay") Recording(_DeltaTime);
+
+	DeathCheck();
 	LayerCheck();
 	CheckPosInit();
 	if (LandCheck() == false)
@@ -74,12 +78,6 @@ void APlayer::Tick(float _DeltaTime)
 	ObjectInteract();
 
 	DebugMessageFunction();
-	
-	Color8Bit Color = UConstValue::MapTex->GetColor(RightCheckPos, Color8Bit::Black);
-	if (Color == Color8Bit::Green)
-	{
-		NextLevel = true;
-	}
 }
 
 void APlayer::RendererInit()
@@ -95,6 +93,8 @@ void APlayer::RendererInit()
 	Renderer->CreateAnimation("Attack", "Attack", 0.05f, false);
 	Renderer->CreateAnimation("WallSlide", "WallSlide", 0.08f, false);
 	Renderer->CreateAnimation("Flip", "Flip", 0.05f, false);
+	Renderer->CreateAnimation("DeathInAir", "DeathInAir", 0.05f, false);
+	Renderer->CreateAnimation("Death", "Death", 0.05f, false);
 
 	Renderer->SetAutoSize(2.0f, true);
 	Renderer->SetOrder(ERenderOrder::Player);
@@ -158,17 +158,17 @@ void APlayer::DebugMessageFunction()
 
 	{
 		std::string temp;
-		if (CurDir == EActorDir::Left)
+		if (CurDir == EEngineDir::Left)
 		{
 			temp = "Left";
 		}
-		else if (CurDir == EActorDir::Right)
+		else if (CurDir == EEngineDir::Right)
 		{
 			temp = "Right";
 		}
 		else
 		{
-			temp = "None";
+			temp = "MAX";
 		}
 
 		std::string Msg = std::format("CurDir : {}\n", temp);

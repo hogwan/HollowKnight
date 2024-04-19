@@ -4,6 +4,7 @@
 #include <EngineCore/StateManager.h>
 #include <EngineCore/DefaultSceneComponent.h>
 #include "Player.h"
+#include "RecordingObject.h"
 
 enum class EEnemyPattern
 {
@@ -12,7 +13,7 @@ enum class EEnemyPattern
 };
 
 // Ό³Έν :
-class AEnemy : public AActor
+class AEnemy : public AActor, public URecordingObject
 {
 	GENERATED_BODY(AActor)
 public:
@@ -40,7 +41,7 @@ protected:
 	UCollision* Collider = nullptr;
 	int LayerLevel = 0;
 
-	EActorDir CurDir = EActorDir::Right;
+	EEngineDir CurDir = EEngineDir::Right;
 	EEnemyPattern CurPattern = EEnemyPattern::Patrol;
 	FVector MoveVector = FVector::Zero;
 	FVector GravityVector = FVector(0.f, -1000.f, 0.f);

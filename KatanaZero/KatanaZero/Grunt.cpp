@@ -135,7 +135,7 @@ void AGrunt::AttackStart()
 {
 	Super::AttackStart();
 	std::shared_ptr<AGruntSlashFX> GruntSlashFX = GetWorld()->SpawnActor<AGruntSlashFX>("PompSlashFX");
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		GruntSlashFX->SetActorLocation(GetActorLocation() + FVector(-30.f, 50.f, 0.f));
 		GruntSlashFX->ReverseX();

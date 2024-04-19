@@ -27,6 +27,10 @@ void APlayer::StateInit()
 	State.CreateState("Attack");
 	State.CreateState("WallSlide");
 	State.CreateState("Flip");
+	State.CreateState("Replay");
+	State.CreateState("Revert");
+	State.CreateState("DeathInAir");
+	State.CreateState("Death");
 
 	State.SetUpdateFunction("None", std::bind(&APlayer::None, this, std::placeholders::_1));
 	State.SetStartFunction("None", std::bind(&APlayer::NoneStart, this));
@@ -65,6 +69,12 @@ void APlayer::StateInit()
 	State.SetUpdateFunction("Flip", std::bind(&APlayer::Flip, this, std::placeholders::_1));
 	State.SetStartFunction("Flip", std::bind(&APlayer::FlipStart, this));
 
+	State.SetUpdateFunction("Replay", std::bind(&APlayer::Replay, this, std::placeholders::_1));
+	State.SetStartFunction("Replay", std::bind(&APlayer::ReplayStart, this));
+
+	State.SetUpdateFunction("Revert", std::bind(&APlayer::Revert, this, std::placeholders::_1));
+	State.SetStartFunction("Revert", std::bind(&APlayer::RevertStart, this));
+
 	State.ChangeState("None");
 }
 
@@ -74,13 +84,13 @@ void APlayer::DirCheck()
 	if ((true == IsPress('A') || true == IsPress('a')) &&
 		(false == IsPress('D') && false == IsPress('d')))
 	{
-		CurDir = EActorDir::Left;
+		CurDir = EEngineDir::Left;
 	}
 
 	if ((true == IsPress('D') || true == IsPress('d')) &&
 		(false == IsPress('A') && false == IsPress('a')))
 	{
-		CurDir = EActorDir::Right;
+		CurDir = EEngineDir::Right;
 	}
 }
 
@@ -88,7 +98,7 @@ void APlayer::DirUpdate()
 {
 	FVector Scale = GetActorScale3D();
 
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		if (Scale.X > 0.f)
 		{
@@ -96,7 +106,7 @@ void APlayer::DirUpdate()
 			SetActorScale3D(Scale);
 		}
 	}
-	else if(CurDir == EActorDir::Right)
+	else if(CurDir == EEngineDir::Right)
 	{
 		if (Scale.X < 0.f)
 		{
@@ -348,7 +358,7 @@ void APlayer::RunToIdle(float _DeltaTime)
 void APlayer::Roll(float _DeltaTime)
 {
 	FVector MoveDir = FVector::Zero;
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		MoveDir = FVector::Left;
 		if (OnLeftUpStep)
@@ -434,7 +444,7 @@ void APlayer::Jump(float _DeltaTime)
 		return;
 	}
 
-	if (CurDir == EActorDir::Right)
+	if (CurDir == EEngineDir::Right)
 	{
 		if (RightWallCheck())
 		{
@@ -450,7 +460,7 @@ void APlayer::Jump(float _DeltaTime)
 		}
 
 	}
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		if (LeftWallCheck())
 		{
@@ -511,7 +521,7 @@ void APlayer::Fall(float _DeltaTime)
 		return;
 	}
 
-	if (CurDir == EActorDir::Right)
+	if (CurDir == EEngineDir::Right)
 	{
 		if (RightWallCheck())
 		{
@@ -528,7 +538,7 @@ void APlayer::Fall(float _DeltaTime)
 		}
 
 	}
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		if (LeftWallCheck())
 		{
@@ -622,7 +632,7 @@ void APlayer::WallSlide(float _DeltaTime)
 	{
 		AccDustFXRespawn = 0.f;
 		std::shared_ptr<PlayerDustFX> DustFX = GetWorld()->SpawnActor<PlayerDustFX>("DustFX");
-		if (CurDir == EActorDir::Left)
+		if (CurDir == EEngineDir::Left)
 		{
 			DustFX->SetActorLocation(GetActorLocation() + LeftWallSlideFXOffset);
 		}
@@ -634,7 +644,7 @@ void APlayer::WallSlide(float _DeltaTime)
 	}
 
 
-	if (CurDir == EActorDir::Right)
+	if (CurDir == EEngineDir::Right)
 	{
 		if (IsPress('a') || IsPress('A'))
 		{
@@ -653,7 +663,7 @@ void APlayer::WallSlide(float _DeltaTime)
 		}
 	}
 
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		if (IsPress('d') || IsPress('D'))
 		{
@@ -676,13 +686,13 @@ void APlayer::WallSlide(float _DeltaTime)
 	Color8Bit Color = UConstValue::MapTex->GetColor(BottomCheckPos, Color8Bit::Black);
 	if (Color == Color8Bit::Black)
 	{
-		if (CurDir == EActorDir::Right)
+		if (CurDir == EEngineDir::Right)
 		{
-			CurDir = EActorDir::Left;
+			CurDir = EEngineDir::Left;
 		}
 		else
 		{
-			CurDir = EActorDir::Right;
+			CurDir = EEngineDir::Right;
 		}
 
 		State.ChangeState("RunToIdle");
@@ -697,17 +707,17 @@ void APlayer::WallSlide(float _DeltaTime)
 
 	if (IsDown('w') || IsDown('W'))
 	{
-		if (CurDir == EActorDir::Right)
+		if (CurDir == EEngineDir::Right)
 		{
 			AddActorLocation(FVector::Left * 10.f);
-			CurDir = EActorDir::Left;
+			CurDir = EEngineDir::Left;
 			State.ChangeState("Flip");
 			return;
 		}
 		else
 		{
 			AddActorLocation(FVector::Right * 10.f);
-			CurDir = EActorDir::Right;
+			CurDir = EEngineDir::Right;
 			State.ChangeState("Flip");
 			return;
 		}
@@ -723,7 +733,7 @@ void APlayer::WallSlide(float _DeltaTime)
 void APlayer::Flip(float _DeltaTime)
 {
 	FVector FlipDirVector = FVector::Zero;
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		FlipDirVector = { -1.f,1.f,0.f };
 	}
@@ -772,6 +782,39 @@ void APlayer::Flip(float _DeltaTime)
 		return;
 		});
 	
+}
+
+void APlayer::DeathInAir(float _DeltaTime)
+{
+	if (LandCheck())
+	{
+		State.ChangeState("Death");
+		return;
+	}
+}
+
+void APlayer::Death(float _DeltaTime)
+{
+	if (Renderer->IsCurAnimationEnd())
+	{
+		State.ChangeState("Revert");
+	}
+}
+
+void APlayer::Replay(float _DeltaTime)
+{
+	if (Replaying(_DeltaTime))
+	{
+		NextLevel = true;
+	}
+}
+
+void APlayer::Revert(float _DeltaTime)
+{
+	if (Reverting(_DeltaTime))
+	{
+		ReStart = true;
+	}
 }
 
 void APlayer::Crouch(float _DeltaTime)
@@ -916,12 +959,12 @@ void APlayer::AttackStart()
 
 	if (MoveVector.X > 0.f)
 	{
-		CurDir = EActorDir::Right;
+		CurDir = EEngineDir::Right;
 	}
 
 	else
 	{
-		CurDir = EActorDir::Left;
+		CurDir = EEngineDir::Left;
 	}
 	GetWorld()->SpawnActor<PlayerSlashFX>("Slash");
 
@@ -938,7 +981,7 @@ void APlayer::WallSlideStart()
 void APlayer::FlipStart()
 {
 	std::shared_ptr<PlayerJumpFX> FlipFX = GetWorld()->SpawnActor<PlayerJumpFX>("FlipFX");
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		FlipFX->SetActorRotation({ 0.f,0.f,90.f });
 		FlipFX->SetActorLocation(GetActorLocation() + LeftFlipFXOffset);
@@ -951,6 +994,28 @@ void APlayer::FlipStart()
 
 	Renderer->ChangeAnimation("Flip");
 	return;
+}
+
+void APlayer::DeathInAirStart()
+{
+	Renderer->ChangeAnimation("DeathInAir");
+	return;
+}
+
+void APlayer::DeathStart()
+{
+	Renderer->ChangeAnimation("Death");
+	return;
+}
+
+void APlayer::ReplayStart()
+{
+	SetReplayStart();
+}
+
+void APlayer::RevertStart()
+{
+	SetRevertStart();
 }
 
 void APlayer::CrouchStart()
@@ -1037,7 +1102,7 @@ bool APlayer::RightWallCheck()
 {
 	Color8Bit Color = UConstValue::MapTex->GetColor(RightCheckPos, Color8Bit::Black);
 	Check = false;
-	if (CurDir == EActorDir::Right)
+	if (CurDir == EEngineDir::Right)
 	{
 		FrontCol->CollisionStay(ECollisionOrder::WallObject, [=](std::shared_ptr<UCollision> _Collision)
 			{
@@ -1064,7 +1129,7 @@ bool APlayer::LeftWallCheck()
 	Color8Bit Color = UConstValue::MapTex->GetColor(LeftCheckPos, Color8Bit::Black);
 	bool Check = false;
 
-	if (CurDir == EActorDir::Left)
+	if (CurDir == EEngineDir::Left)
 	{
 		FrontCol->CollisionStay(ECollisionOrder::WallObject, [&](std::shared_ptr<UCollision> _Collision)
 			{
@@ -1215,6 +1280,23 @@ void APlayer::ThrowItem()
 
 		PossessItem = EItemType::None;
 	}
+}
+
+void APlayer::DeathCheck()
+{
+	Collider->CollisionEnter(ECollisionOrder::EnemyAttack,[=](std::shared_ptr<UCollision> _Collision)
+		{
+			State.ChangeState("DeathInAir");
+			return;
+		}
+	);
+
+	Collider->CollisionEnter(ECollisionOrder::Bullet, [=](std::shared_ptr<UCollision> _Collision)
+		{
+			State.ChangeState("DeathInAir");
+			return;
+		}
+	);
 }
 
 bool APlayer::FallCheck()

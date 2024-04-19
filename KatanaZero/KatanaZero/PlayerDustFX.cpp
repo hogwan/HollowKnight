@@ -21,7 +21,7 @@ void PlayerDustFX::BeginPlay()
 	Renderer->SetAutoSize(2.f, true);
 	Renderer->SetOrder(ERenderOrder::FX);
 
-	if (UConstValue::Player->GetCurDir() == EActorDir::Right)
+	if (UConstValue::Player->GetCurDir() == EEngineDir::Right)
 	{
 		Reverse = true;
 		MoveVector.X = -5.f;
