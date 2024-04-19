@@ -11,6 +11,7 @@ public:
 	static float4 MapTexScale;
 	static float Ratio;
 	static float recording_delay;
+	static bool EnemyAllDie;
 };
 
 

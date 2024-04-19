@@ -201,6 +201,12 @@ void APlayer::Idle(float _DeltaTime)
 		State.ChangeState("Fall");
 		return;
 	}
+
+	if (IsDown('r') || IsDown('R'))
+	{
+		State.ChangeState("DeathInAir");
+		return;
+	}
 }
 
 void APlayer::Run(float _DeltaTime)

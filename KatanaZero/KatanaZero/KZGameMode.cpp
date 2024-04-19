@@ -30,6 +30,13 @@ void KZGameMode::Tick(float _DeltaTime)
 	FVector PlayerPos = UConstValue::Player->GetActorLocation();
 	PlayerPos.Z = -1000;
 	Camera->SetActorLocation(PlayerPos);
+
+	if (UEngineInput::IsDown('p') || UEngineInput::IsDown('P'))
+	{
+		LevelRestart();
+	}
+
+	UConstValue::EnemyAllDie = EnemyAllDeathCheck();
 }
 
 void KZGameMode::LevelStart(ULevel* _PrevLevel)
@@ -39,10 +46,8 @@ void KZGameMode::LevelStart(ULevel* _PrevLevel)
 	Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation(FVector(640.0f, -360.0f, -100.0f));
 
-	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
-	UConstValue::Player->SetActorLocation({ 200.0f, -660.0f, 200.0f });
-
 	UConstValue::MainCursor = GetWorld()->SpawnActor<ACursor>("Cursor");
+	AllActors.push_back(UConstValue::MainCursor);
 
 	UIBoard = GetWorld()->SpawnActor<AUIBoard>("UIBoard");
 	BatteryBody = GetWorld()->SpawnActor<ABatteryBody>("BatteryBody");
@@ -57,9 +62,17 @@ void KZGameMode::LevelStart(ULevel* _PrevLevel)
 void KZGameMode::LevelEnd(ULevel* _NextLevel)
 {
 	Super::LevelEnd(_NextLevel);
+
+	for (std::shared_ptr<AActor> Actor : AllActors)
+	{
+		Actor->Destroy();
+	}
+
+	AllActors.clear();
+	EnemyVec.clear();
+	UConstValue::LayerChangePos.clear();
+
 	Camera->Destroy();
-	UConstValue::Player->Destroy();
-	UConstValue::MainCursor->Destroy();
 	UIBoard->Destroy();
 	BatteryBody->Destroy();
 	TimerBoard->Destroy();
@@ -70,7 +83,7 @@ void KZGameMode::LevelEnd(ULevel* _NextLevel)
 
 void KZGameMode::MoveNextLevel(std::string_view _NextLevel)
 {
-	if (EnemyAllDeathCheck())
+	if (UConstValue::EnemyAllDie)
 	{
 		if (UConstValue::Player->NextLevel)
 		{
@@ -80,9 +93,11 @@ void KZGameMode::MoveNextLevel(std::string_view _NextLevel)
 
 		if (UConstValue::Player->State.GetCurStateName() == "Replay")
 		{
-			UEngineInput::IsDown(VK_RBUTTON);
-			GEngine->ChangeLevel(_NextLevel);
-			return;
+			if(UEngineInput::IsDown(VK_RBUTTON))
+			{
+				GEngine->ChangeLevel(_NextLevel);
+				return;
+			}
 		}
 	}
 }
@@ -97,9 +112,11 @@ void KZGameMode::RestartLevel(std::string_view _RestartLevel)
 
 	if (UConstValue::Player->State.GetCurStateName() == "Revert")
 	{
-		UEngineInput::IsDown(VK_RBUTTON);
-		GEngine->ChangeLevel(_RestartLevel);
-		return;
+		if(UEngineInput::IsDown(VK_RBUTTON))
+		{
+			GEngine->ChangeLevel(_RestartLevel);
+			return;
+		}
 	}
 }
 
@@ -113,5 +130,11 @@ bool KZGameMode::EnemyAllDeathCheck()
 		}
 	}
 	return true;
+}
+
+void KZGameMode::LevelRestart()
+{
+	LevelEnd(GetWorld());
+	LevelStart(GetWorld());
 }
 

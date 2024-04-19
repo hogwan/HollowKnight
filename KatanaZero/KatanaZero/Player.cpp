@@ -5,6 +5,7 @@
 #include <EngineCore/EngineDebugMsgWindow.h>
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/Camera.h>
+#include "KZGameMode.h"
 
 
 APlayer::APlayer() 
@@ -77,6 +78,16 @@ void APlayer::Tick(float _DeltaTime)
 	ObjectInteract();
 
 	DebugMessageFunction();
+
+	Color8Bit Color = UConstValue::MapTex->GetColor(RightCheckPos, Color8Bit::Black);
+	if (Color == Color8Bit::Green)
+	{
+		if (UConstValue::EnemyAllDie)
+		{
+			State.ChangeState("Replay");
+			return;
+		}
+	}
 }
 
 void APlayer::RendererInit()

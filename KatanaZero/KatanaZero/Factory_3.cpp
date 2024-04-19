@@ -38,41 +38,51 @@ void AFactory_3::LevelStart(ULevel* _PrevLevel)
 
 	std::shared_ptr<ABackMap_F3> BackMap = GetWorld()->SpawnActor<ABackMap_F3>("BackMap");
 	BackMap->SetActorLocation({ ImageScale.hX(), -ImageScale.hY(), 500.0f });
+	AllActors.push_back(BackMap);
 
 	std::shared_ptr<ALaserSwitch> LaserSwitch = GetWorld()->SpawnActor<ALaserSwitch>("LaserSwitch");
 	LaserSwitch->SetActorLocation({ 1520.f, -300.f, 200.0f });
+	AllActors.push_back(LaserSwitch);
 
 	std::shared_ptr<ADoor> Door1 = GetWorld()->SpawnActor<ADoor>("Gangster");
 	Door1->SetActorLocation({ 1420.0f, -607.0f, 200.0f });
 	Door1->SetDir(EEngineDir::Right);
+	AllActors.push_back(Door1);
 
 	std::shared_ptr<ALaserLauncher> Laser1 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser1->SetActorLocation({ 650.f, -450.f, 200.0f });
 	Laser1->SetLaserSize(220.f);
+	AllActors.push_back(Laser1);
 
 	std::shared_ptr<ALaserLauncher> Laser2 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser2->SetActorLocation({ 680.f, -450.f, 200.0f });
 	Laser2->SetLaserSize(220.f);
+	AllActors.push_back(Laser2);
 
 	std::shared_ptr<ALaserLauncher> Laser3 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser3->SetActorLocation({ 750.f, -160.f, 200.0f });
 	Laser3->SetLaserSize(220.f);
+	AllActors.push_back(Laser3);
 
 	std::shared_ptr<ALaserLauncher> Laser4 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser4->SetActorLocation({ 780.f, -160.f, 200.0f });
 	Laser4->SetLaserSize(220.f);
+	AllActors.push_back(Laser4);
 
 	std::shared_ptr<ADoor> Door2 = GetWorld()->SpawnActor<ADoor>("Gangster");
 	Door2->SetActorLocation({ 1070.0f, -320.0f, 200.0f });
 	Door2->SetDir(EEngineDir::Right);
+	AllActors.push_back(Door2);
 
 	std::shared_ptr<ALaserLauncher> Laser5 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser5->SetActorLocation({ 1715.f, -225.f, 200.0f });
 	Laser5->SetLaserSize(155.f);
+	AllActors.push_back(Laser5);
 
 	std::shared_ptr<ALaserLauncher> Laser6 = GetWorld()->SpawnActor<ALaserLauncher>("Laser");
 	Laser6->SetActorLocation({ 1745.f, -225.f, 200.0f });
 	Laser6->SetLaserSize(155.f);
+	AllActors.push_back(Laser6);
 
 	LaserSwitch->PushLaser(Laser1);
 	LaserSwitch->PushLaser(Laser2);

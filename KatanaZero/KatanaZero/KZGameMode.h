@@ -17,6 +17,7 @@ public:
 	KZGameMode(KZGameMode&& _Other) noexcept = delete;
 	KZGameMode& operator=(const KZGameMode& _Other) = delete;
 	KZGameMode& operator=(KZGameMode&& _Other) noexcept = delete;
+	bool EnemyAllDeathCheck();
 
 protected:
 	void BeginPlay() override;
@@ -28,15 +29,17 @@ protected:
 	void RestartLevel(std::string_view _RestartLevel);
 	bool Start = false;
 	std::vector<std::shared_ptr<AEnemy>> EnemyVec;
-	bool EnemyAllDeathCheck();
+	std::vector<std::shared_ptr<AActor>> AllActors;
+
+	void LevelRestart();
 
 private:
 	std::shared_ptr<UCamera> Camera;
-	std::shared_ptr<AUIBoard> UIBoard;
-	std::shared_ptr<ABatteryBody> BatteryBody;
-	std::shared_ptr<ATimerBoard> TimerBoard;
-	std::shared_ptr<AWeaponSlot> WS;
-	std::shared_ptr<AItemIcon> ItemIcon;
-	std::shared_ptr<AKatanaIcon> KatanaIcon;
+	std::shared_ptr<class AUIBoard> UIBoard;
+	std::shared_ptr<class ABatteryBody> BatteryBody;
+	std::shared_ptr<class ATimerBoard> TimerBoard;
+	std::shared_ptr<class AWeaponSlot> WS;
+	std::shared_ptr<class AItemIcon> ItemIcon;
+	std::shared_ptr<class AKatanaIcon> KatanaIcon;
 };
 

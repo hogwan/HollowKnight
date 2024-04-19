@@ -65,7 +65,7 @@ void URecordingObject::SetReplayStart()
 
 bool URecordingObject::Replaying(float _DeltaTime)
 {
-	if (AllRecordInfo.size() <= CurIndex)
+	if (AllRecordInfo.size()-1 <= CurIndex)
 	{
 		return true;
 	}
@@ -109,7 +109,7 @@ void URecordingObject::SetRevertStart()
 
 bool URecordingObject::Reverting(float _DeltaTime)
 {
-	if (0 > CurIndex)
+	if (0 >= CurIndex)
 	{
 		return true;
 	}

@@ -38,7 +38,7 @@ void AEnemy::Tick(float _DeltaTime)
 
 	if (State.GetCurStateName() != "Replay")
 	{
-		Recording(_DeltaTime);
+		//Recording(_DeltaTime);
 	}
 
 	DirUpdate();
@@ -243,19 +243,21 @@ void AEnemy::Run(float _DeltaTime)
 		if (OnLeftUpStep)
 		{
 			Dir = { -1.f,1.f,0.f };
+			Dir.Normalize3D();
 			MoveVector = Dir * MoveSpeed;
 		}
 		else if (OnRightUpStep)
 		{
 			Dir = { -1.f,-1.f,0.f };
+			Dir.Normalize3D();
 			MoveVector = Dir * MoveSpeed;
 		}
 		else
 		{
 			Dir = { -1.f,0.f,0.f };
+			Dir.Normalize3D();
 			MoveVector.X = Dir.X * MoveSpeed;
 		}
-		Dir.Normalize3D();
 	}
 	else if (CurDir == EEngineDir::Right)
 	{
@@ -270,16 +272,19 @@ void AEnemy::Run(float _DeltaTime)
 		if (OnLeftUpStep)
 		{
 			Dir = { 1.f,-1.f,0.f };
+			Dir.Normalize3D();
 			MoveVector = Dir * MoveSpeed;
 		}
 		else if (OnRightUpStep)
 		{
 			Dir = { 1.f,1.f,0.f };
+			Dir.Normalize3D();
 			MoveVector = Dir * MoveSpeed;
 		}
 		else
 		{
 			Dir = { 1.f,0.f,0.f };
+			Dir.Normalize3D();
 			MoveVector.X = Dir.X * MoveSpeed;
 		}
 		Dir.Normalize3D();
@@ -319,12 +324,6 @@ void AEnemy::Death(float _DeltaTime)
 
 void AEnemy::DeathInAir(float _DeltaTime)
 {
-	if (TopWallCheck())
-	{
-		AddActorLocation(FVector::Down * 5.f);
-		MoveVector.Y = 0.f;
-		return;
-	}
 
 	if (LandCheck())
 	{
@@ -459,8 +458,8 @@ void AEnemy::CheckPosInit()
 {
 	FVector Pos = GetActorLocation();
 	BottomCheckPos = Pos;
-	RightCheckPos = Pos + FVector(20.f, 30.f, 0.f);
-	LeftCheckPos = Pos + FVector(-20.f, 30.f, 0.f);
+	RightCheckPos = Pos + FVector(20.f, 10.f, 0.f);
+	LeftCheckPos = Pos + FVector(-20.f, 10.f, 0.f);
 	TopCheckPos = Pos + FVector(0.f, 40.f, 0.f);
 	FallCheckPos = Pos + FVector(0.f, -1.f, 0.f);
 
@@ -510,7 +509,7 @@ void AEnemy::GravityCheck(float _DeltaTime)
 {
 	if (!LandCheck())
 	{
-		MoveVector += GravityVector * _DeltaTime;
+		AddActorLocation(GravityVector * _DeltaTime);
 	}
 	else
 	{
@@ -541,6 +540,8 @@ void AEnemy::DeathCheck()
 
 				std::shared_ptr<ABloodFX> BloodFX = GetWorld()->SpawnActor<ABloodFX>("BloodFX");
 				BloodFX->SetActorLocation(GetActorLocation());
+
+				Item->Destroy();
 			}
 
 			IsDeath = true;

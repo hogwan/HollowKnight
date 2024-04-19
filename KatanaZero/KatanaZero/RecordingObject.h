@@ -52,7 +52,7 @@ protected:
 private:
 	AActor* Actor = nullptr;
 
-	int MaxSize = 10000;
+	int MaxSize = 100000;
 	int CurIndex = 0;
 	float TimeCount = UConstValue::recording_delay;
 

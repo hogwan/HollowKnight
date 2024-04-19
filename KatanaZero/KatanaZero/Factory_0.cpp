@@ -48,34 +48,46 @@ void AFactory_0::LevelStart(ULevel* _PrevLevel)
 
 	std::shared_ptr<BackMap_F0> BackMap = GetWorld()->SpawnActor<BackMap_F0>("BackMap");
 	BackMap->SetActorLocation({ ImageScale.hX(), -ImageScale.hY(), 500.0f });
+	AllActors.push_back(BackMap);
+
+	UConstValue::Player = GetWorld()->SpawnActor<APlayer>("Player");
+	UConstValue::Player->SetActorLocation({ 200.0f, -660.0f, 200.0f });
+	AllActors.push_back(UConstValue::Player);
 
 	UConstValue::LayerChangePos.push_back(FVector(1100.f, -400.f, 200.f));
 	std::shared_ptr<AGrunt> Grunt1 = GetWorld()->SpawnActor<AGrunt>("Grunt1");
+	EnemyVec.push_back(Grunt1);
+	AllActors.push_back(Grunt1);
 	Grunt1->SetActorLocation(FVector(300.f, -300.f, 200.f));
 	Grunt1->SetLayerLevel(1);
-	EnemyVec.push_back(Grunt1);
 
 	std::shared_ptr<AGrunt> Grunt2 = GetWorld()->SpawnActor<AGrunt>("Grunt1");
+	EnemyVec.push_back(Grunt2);
+	AllActors.push_back(Grunt2);
 	Grunt2->SetActorLocation(FVector(1400.f, -300.f, 200.f));
 	Grunt2->SetLayerLevel(1);
-	EnemyVec.push_back(Grunt2);
 
 	std::shared_ptr<ACop> Gangster = GetWorld()->SpawnActor<ACop>("Gangster");
+	EnemyVec.push_back(Gangster);
+	AllActors.push_back(Gangster);
 	Gangster->SetActorLocation(FVector(500.f, -300.f, 200.f));
 	Gangster->SetLayerLevel(1);
-	EnemyVec.push_back(Gangster);
 
 	std::shared_ptr<AKnife> Knife = GetWorld()->SpawnActor<AKnife>("Gangster");
 	Knife->SetActorLocation({ 200.0f, -660.0f, 200.0f });
+	AllActors.push_back(Knife);
 
 	std::shared_ptr<AFireBottle> FireBottle = GetWorld()->SpawnActor<AFireBottle>("Gangster");
 	FireBottle->SetActorLocation({ 300.0f, -660.0f, 200.0f });
+	AllActors.push_back(FireBottle);
 
 	std::shared_ptr<ADoor> Door = GetWorld()->SpawnActor<ADoor>("Gangster");
 	Door->SetActorLocation({ 570.0f, -320.0f, 200.0f });
 	Door->SetDir(EEngineDir::Left);
+	AllActors.push_back(Door);
 }
 
 void AFactory_0::LevelEnd(ULevel* _NextLevel)
 {
+	Super::LevelEnd(_NextLevel);
 }
